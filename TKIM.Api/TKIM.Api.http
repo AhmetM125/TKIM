@@ -1,0 +1,6 @@
+@TKIM.Api_HostAddress = http://localhost:5071
+
+GET {{TKIM.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
