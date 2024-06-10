@@ -1,0 +1,88 @@
+﻿@inherits RazorComponentBase
+
+
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-11 card">
+        <div class="card-body">
+            <div class="d-flex">
+                <div class="width-15">
+                    <p>
+                        Ürün İsmi
+                    </p>
+                    <input placeholder="Ürün İsmi" type="text" class="form-control" />
+                </div>
+                <div class="width-15 ml-4">
+                    <p>
+                        Barkod
+                    </p>
+                    <input type="text" class="form-control" />
+                </div>
+                <div class="width-15 ml-4">
+                    <p>
+                        Kategori
+                    </p>
+                    <select class="form-control">
+                        <option>Ürün Tipi</option>
+                        <option>Ürün Tipi 1</option>
+                        <option>Ürün Tipi 2</option>
+                        <option>Ürün Tipi 3</option>
+                    </select>
+                </div>
+                <div class="width-25 ml-4">
+                    <p>
+                        Görsel
+                    </p>
+                    <input type="file" class="form-control" />
+                </div>
+                <div class="width-30 ml-4">
+                    <p>
+                        Açıklama
+                    </p>
+                    <textarea class="form-control" />
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="width-15">
+                    <p>
+                        Şirket
+                    </p>
+                    <select class="form-control text-center">
+                        <option>--Seçiniz--</option>
+                    </select>
+                </div>
+                <div class="width-15 ml-4">
+                </div>
+                <div class="width-15 ml-4">
+                </div>
+                <div class="width-25 ml-4">
+                </div>
+                <div class="width-30 ml-4">
+                </div>
+
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <div class="width-25">
+                    <button class="btn btn-primary width-100">
+                        Kaydet
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-11 card">
+        <div class="card-body">
+            <p> Seçilen Fotoğraflar </p>
+            @* Foreach *@
+            @* <img src="https://w.forfun.com/fetch/43/43a27bc56000c1a3cb5af2751fb69ff2.jpeg" width="200" height="150" /> *@
+        </div>
+    </div>
+</div>
+
+
+

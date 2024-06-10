@@ -9,12 +9,13 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     public void Configure(EntityTypeBuilder<Category> builder)
     {
         builder.HasKey(x => x.ID);
-        builder.Property(x => x.NAME).HasColumnType("nvarchar").HasMaxLength(100);
-        builder.Property(x => x.DESCRIPTION).HasMaxLength(200).HasColumnType("nvarchar");
+        builder.Property(x => x.NAME).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
+        builder.Property(x => x.DESCRIPTION).HasMaxLength(200).HasColumnType("nvarchar").IsRequired(false);
+
         builder.HasMany(x => x.Products).WithOne(x => x.Category).HasForeignKey(x => x.ID);
 
-        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20);
-        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired();
+        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired();
 
     }
 }

@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+@using Blazored.Toast
+@using Blazored.Toast.Configuration
+@using TKIM.Panel.Base
+
+
+@inject MainLayoutCascadingValue MainLayoutCascadingValue
+
+<CascadingValue Value="MainLayoutCascadingValue">
+    @Body
+</CascadingValue>
+<BlazoredToasts Position="ToastPosition.TopCenter"
+                Timeout="7"
+                SuccessClass="success-toast-override" />
+
+<script src="js/localStorageInterop.js"></script>
+<style>
+    .blazored-toast-container {
+        z-index: 1056 !important
+    }
+</style>

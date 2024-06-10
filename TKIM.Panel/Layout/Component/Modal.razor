@@ -1,0 +1,37 @@
+﻿@inherits RazorComponentBase
+
+<div class="modal fade @CustomClass" id="@Id" tabindex="-1" aria-labelledby="@(Id)Label" data-backdrop="@(CloseBackdrop?"static":"true")" aria-hidden="true">
+    <div class="modal-dialog @(Size ==  ModalSize.DefaultSize ? "" : "modal-" + Size)">
+        <div class="modal-content">
+            @* @if (!string.IsNullOrWhiteSpace(Title))
+            {
+            <div class="modal-header">
+            <h5 class="modal-title">@Title</h5>
+            <button type="button" class="close" @onclick="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            }
+            else
+            {
+            <button type="button" class="close close-singel" @onclick="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+            } *@
+            <div class="modal-header">
+
+                <h5 class="modal-title">@Title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close" @onclick="Close"></button>
+            </div>
+            <div class="modal-body">
+                @Body
+            </div>
+            @if (Footer != null)
+            {
+                <div class="modal-footer">
+                    @Footer
+                </div>
+            }
+        </div>
+    </div>
+</div>

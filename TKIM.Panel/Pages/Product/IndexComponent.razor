@@ -1,0 +1,41 @@
+﻿@inherits RazorComponentBase
+@page "/product"
+
+
+
+<div class="row justify-content-center">
+    <div class="col-11 card">
+        <div class="card-body">
+            <div class="d-flex justify-content-start">
+                <div class="width-15 text-center">
+                    <button class="btn btn-outline-primary width-75" @onclick="@(()=>ChangePage(PageType.Insert))">
+                        Ürün Tanımlama
+                    </button>
+                </div>
+                <div class="width-15 text-center">
+                    <button class="btn btn-outline-primary width-75" @onclick="@(()=>ChangePage(PageType.List))">
+                        Ürün Listesi
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@switch (PageType)
+{
+    case PageType.Main:
+        break;
+    case PageType.Insert:
+        <CreateProduct />
+        break;
+    case PageType.List:
+        <ListComponent />
+        break;
+    case PageType.Update:
+        break;
+
+}
+
+
+

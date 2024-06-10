@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Panel", "TKIM.Panel\TKIM.Panel.csproj", "{F52BDF27-B93E-438D-ACD6-A4931B22669A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Panel", "TKIM.Panel\TKIM.Panel.csproj", "{F52BDF27-B93E-438D-ACD6-A4931B22669A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Api", "TKIM.Api\TKIM.Api.csproj", "{DA561537-D934-4970-8825-96DB7C2DB671}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Api", "TKIM.Api\TKIM.Api.csproj", "{DA561537-D934-4970-8825-96DB7C2DB671}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Application", "TKIM.Application\TKIM.Application.csproj", "{4C1881C5-430F-4831-993E-1346559F12E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Application", "TKIM.Application\TKIM.Application.csproj", "{4C1881C5-430F-4831-993E-1346559F12E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Infastracture", "TKIM.Infastracture\TKIM.Infastracture.csproj", "{036628E3-84BD-45A6-B8A2-F91AA6FB0428}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Infastracture", "TKIM.Infastracture\TKIM.Infastracture.csproj", "{036628E3-84BD-45A6-B8A2-F91AA6FB0428}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Infastracture.IoC", "TKIM.Infastracture.IoC\TKIM.Infastracture.IoC.csproj", "{D9C1C0F2-C7B6-4EC7-917C-525137DABE32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Infastracture.IoC", "TKIM.Infastracture.IoC\TKIM.Infastracture.IoC.csproj", "{D9C1C0F2-C7B6-4EC7-917C-525137DABE32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Entity", "TKIM.Entity\TKIM.Entity.csproj", "{E7B58D14-1C10-4AC3-BE05-EAE08F3559D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Entity", "TKIM.Entity\TKIM.Entity.csproj", "{E7B58D14-1C10-4AC3-BE05-EAE08F3559D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
