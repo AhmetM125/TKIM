@@ -15,4 +15,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.4" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Pages\Company\" />
+    <Folder Include="Pages\Customer\" />
+    <Folder Include="Pages\Finance\" />
+    <Folder Include="Pages\Receipt\" />
+    <Folder Include="ViewModels\" />
+  </ItemGroup>
+
 </Project>
