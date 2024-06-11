@@ -6,9 +6,9 @@ using TKIM.Infastracture.DA.Abstract;
 
 namespace TKIM.Application.Category;
 
-public record class CreateCategoryCommand : Command<Guid>
+public record class CategoryCreateCommand : Command<Guid>
 {
-    public CreateCategoryCommand(string name, string description)
+    public CategoryCreateCommand(string name, string description)
     {
         Name = name;
         Description = description;
@@ -21,7 +21,7 @@ public record class CreateCategoryCommand : Command<Guid>
         return new CreateCategoryValidator().Validate(this);
     }
 }
-public class CreateCategoryValidator : AbstractValidator<CreateCategoryCommand>
+public class CreateCategoryValidator : AbstractValidator<CategoryCreateCommand>
 {
     public CreateCategoryValidator()
     {
@@ -30,7 +30,7 @@ public class CreateCategoryValidator : AbstractValidator<CreateCategoryCommand>
         RuleFor(x => x.Description).MaximumLength(200).WithMessage("Description must not exceed 200 characters");
     }
 }
-public class CreateCategoryCommandHandler : CommandHandler<CreateCategoryCommand, Guid>
+public class CreateCategoryCommandHandler : CommandHandler<CategoryCreateCommand, Guid>
 {
     private readonly ICategoryService _categoryService;
 
@@ -39,7 +39,7 @@ public class CreateCategoryCommandHandler : CommandHandler<CreateCategoryCommand
         _categoryService = categoryService;
     }
 
-    public override async Task<Guid> ExecuteCommand(CreateCategoryCommand command, CancellationToken cancellationToken = default)
+    public override async Task<Guid> ExecuteCommand(CategoryCreateCommand command, CancellationToken cancellationToken = default)
     {
         try
         {

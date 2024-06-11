@@ -15,7 +15,7 @@ public class CategoryController : BaseController
     [ProducesResponseType((int)StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest command)
-     => await HandleResponse(new CreateCategoryCommand(command.Name, command.Description));
+     => await HandleResponse(new CategoryCreateCommand(command.Name, command.Description));
 
     [HttpGet("get/modify")]
     [ProducesResponseType(typeof(CategoryModifyResponse), (int)StatusCodes.Status200OK)]
@@ -27,7 +27,7 @@ public class CategoryController : BaseController
     [ProducesResponseType(typeof(List<CategoryResponse>), (int)StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllCategories()
-     => await HandleResponse(new GetAllCategoriesQuery());
+     => await HandleResponse(new CategoryGetAllQuery());
 
 
 }

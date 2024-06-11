@@ -16,8 +16,6 @@
     <Folder Include="Product\" />
     <Folder Include="People\" />
     <Folder Include="Invoice\" />
-    <Folder Include="Customer\" />
-    <Folder Include="Company\" />
   </ItemGroup>
 
   <ItemGroup>
