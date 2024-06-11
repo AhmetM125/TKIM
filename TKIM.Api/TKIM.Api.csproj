@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TKIM.Application\TKIM.Application.csproj" />
     <ProjectReference Include="..\TKIM.Infastracture.IoC\TKIM.Infastracture.IoC.csproj" />
   </ItemGroup>
 
