@@ -1,6 +1,6 @@
-﻿namespace TKIM.Panel.Services.Concrete
+﻿namespace TKIM.Panel.Services.Concrete;
+
+public class CategoryService
 {
-    public class CategoryService
-    {
-    }
+
 }
