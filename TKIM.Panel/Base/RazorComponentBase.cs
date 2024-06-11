@@ -12,10 +12,17 @@ public class RazorComponentBase : ComponentBase
 
     [CascadingParameter]
     public MainLayoutCascadingValue LayoutValue { get; set; }
-    [CascadingParameter]
-    private Task<AuthenticationState>? AuthenticationState { get; set; }
+    //[CascadingParameter]
+    //private Task<AuthenticationState>? AuthenticationState { get; set; }
+    protected PageType PageType { get; set; } = PageType.Main;
 
+}
 
+public enum PageType
+{
+    Main = 0,
+    Insert = 1,
+    List = 3
 }
 public enum MessageType
 {
@@ -30,7 +37,5 @@ public enum PageStatus
     Update,
     Create,
     Delete,
-    ViewItem,
-    CSBINS,
     History
 }

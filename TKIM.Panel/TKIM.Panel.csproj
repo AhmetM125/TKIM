@@ -20,7 +20,14 @@
     <Folder Include="Pages\Customer\" />
     <Folder Include="Pages\Finance\" />
     <Folder Include="Pages\Receipt\" />
-    <Folder Include="ViewModels\" />
+    <Folder Include="Services\BaseService\" />
+    <Folder Include="ViewModels\BaseRequest\" />
+    <Folder Include="ViewModels\BaseResponse\" />
+    <Folder Include="ViewModels\Category\" />
+    <Folder Include="ViewModels\Customer\" />
+    <Folder Include="ViewModels\Finance\" />
+    <Folder Include="ViewModels\Product\" />
+    <Folder Include="ViewModels\Receipt\" />
   </ItemGroup>
 
 </Project>

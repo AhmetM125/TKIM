@@ -19,25 +19,31 @@
         </a>
     </li>
     <li class="nav-item">
+        <a class="nav-link @(IsActiveLink("/category")) cursor-pointer" @onclick='()=>ActiveNavigator("/category")'>
+            <i class="fa-solid fa-k"></i>
+            <span> Kategori</span>
+        </a>
+    </li>
+    <li class="nav-item">
         <a class="nav-link @(IsActiveLink("/product")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")' >
-            <i class="fa-brands fa-product-hunt"></i>
+            <i class="fa-solid fa-box"></i>
             <span> Ürün</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/company")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")'>
+        <a class="nav-link @(IsActiveLink("/company")) cursor-pointer" @onclick='()=>ActiveNavigator("/company")'>
             <i class="fa-solid fa-building"></i>
             <span> Şirket</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/customer")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")'>
-            <i class="fa-brands fa-product-hunt"></i>
+        <a class="nav-link @(IsActiveLink("/customer")) cursor-pointer" @onclick='()=>ActiveNavigator("/customer")'>
+            <i class="fa-regular fa-address-book"></i>
             <span> Müşteriler</span>
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/finance")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")'>
+        <a class="nav-link @(IsActiveLink("/finance")) cursor-pointer" @onclick='()=>ActiveNavigator("/finance")'>
             <i class="fa-solid fa-chart-simple"></i>
             <span> Finans</span>
         </a>

@@ -9,9 +9,14 @@
 <CascadingValue Value="MainLayoutCascadingValue">
     @Body
 </CascadingValue>
+
 <BlazoredToasts Position="ToastPosition.TopCenter"
                 Timeout="7"
-                SuccessClass="success-toast-override" />
+                SuccessClass="success-toast-override"
+                MaxToastCount="3"
+                ShowProgressBar="true"
+                PauseProgressOnHover="true"
+                />
 
 <script src="js/localStorageInterop.js"></script>
 <style>
