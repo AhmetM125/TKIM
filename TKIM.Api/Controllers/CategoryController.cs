@@ -11,10 +11,10 @@ public class CategoryController : BaseController
     {
     }
 
-    [HttpPost("create")]
+    [HttpPost("Create")]
     [ProducesResponseType((int)StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateCategory([FromBody] CreateCategoryRequest command)
+    public async Task<IActionResult> CreateCategory( CreateCategoryRequest command)
      => await HandleResponse(new CategoryCreateCommand(command.Name, command.Description));
 
     [HttpGet("get/modify")]

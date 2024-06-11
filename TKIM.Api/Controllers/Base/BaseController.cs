@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using TKIM.Application.Core.CQRS.CommandHandling;
 using TKIM.Application.Core.CQRS.QueryHandling;
@@ -8,6 +9,8 @@ namespace TKIM.Api.Controllers.Base;
 [Route("api/v{version}/[controller]")]
 [ApiVersion("1.0")]
 [ApiController]
+[EnableCors("AllowOrigin")]
+
 public class BaseController : ControllerBase
 {
     private readonly IMediator _mediator;

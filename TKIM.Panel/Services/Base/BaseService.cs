@@ -1,27 +1,28 @@
 ﻿using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
 
-namespace TKIM.Panel.Services.BaseService;
+namespace TKIM.Panel.Services.Base;
 public class BaseService
 {
     protected string ApiName { get; set; }
-    protected HttpClient _httpClient;
+    protected HttpClient _httpClient { get; init; }
 
     public BaseService(HttpClient httpClient)
     {
         _httpClient = httpClient;
     }
 
-    public async Task<List<T>> HandleReadResponse<T>(string requestUrl)
+    public async Task<T?> HandleReadResponse<T>(string requestUrl)
     {
         try
         {
-            var response = await _httpClient.GetAsync(requestUrl);
+            var response = await _httpClient.GetAsync($"{ApiName}/{requestUrl}");
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<List<T>>();
-                return result ?? new List<T>();
+                var result = await response.Content.ReadFromJsonAsync<T>();
+                return result ?? default(T);
             }
             else
             {
@@ -34,6 +35,25 @@ public class BaseService
             Console.WriteLine("Error");
             throw;
         }
+    }
+    public async Task HandlePostResponse<T>(string requestUrl, T entity)
+    {
+        try
+        {
+            HttpContent content = new StringContent(JsonSerializer.Serialize(entity), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PostAsync($"{ApiName}/{requestUrl}", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception ex)
+        {
+            throw;
+        }
+
     }
 
     //public async Task<T> GetByIdAsync(int id)

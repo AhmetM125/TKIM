@@ -36,20 +36,20 @@ public class CompanyCreateValidator : AbstractValidator<CompanyCreateCommand>
         RuleFor(x => x.Description).MaximumLength(200).WithMessage("Açıklama maksimum 200 karakter olabilir");
     }
 }
-public class CompanyCreateHandler : CommandHandler<CompanyCreateCommand, Guid>
-{
-    private readonly ICompanyService _companyService;
+//public class CompanyCreateHandler : CommandHandler<CompanyCreateCommand, Guid>
+//{
+//    private readonly ICompanyService _companyService;
 
-    public CompanyCreateHandler(ICompanyService companyService)
-    {
-        _companyService = companyService;
-    }
+//    public CompanyCreateHandler(ICompanyService companyService)
+//    {
+//        _companyService = companyService;
+//    }
 
-    public override Task<Guid> ExecuteCommand(CompanyCreateCommand command, CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
-}
+//    public override Task<Guid> ExecuteCommand(CompanyCreateCommand command, CancellationToken cancellationToken = default)
+//    {
+//        throw new NotImplementedException();
+//    }
+//}
 
 public record CompanyCreateVM
 {

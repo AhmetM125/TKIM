@@ -1,6 +1,6 @@
-﻿namespace TKIM.Panel.ViewModels.Company
+﻿namespace TKIM.Panel.ViewModels.Company;
+
+public record CompanyListResponse
 {
-    public class CompanyListResponse
-    {
-    }
+
 }

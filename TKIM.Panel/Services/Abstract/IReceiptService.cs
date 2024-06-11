@@ -1,6 +1,6 @@
 ﻿namespace TKIM.Panel.Services.Abstract
 {
-    public interface ReceiptService
+    public interface IReceiptService
     {
     }
 }

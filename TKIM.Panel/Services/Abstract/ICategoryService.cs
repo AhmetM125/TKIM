@@ -1,6 +1,9 @@
-﻿namespace TKIM.Panel.Services.Abstract
+﻿using TKIM.Panel.ViewModels.Category;
+
+namespace TKIM.Panel.Services.Abstract;
+
+public interface ICategoryService
 {
-    public interface CategoryService
-    {
-    }
+    Task CreateCategory(CategoryInsertRequest request);
+    Task<List<CategoryListResponse>?> GetAllCategory();
 }
