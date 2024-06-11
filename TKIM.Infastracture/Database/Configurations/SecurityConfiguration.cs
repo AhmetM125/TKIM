@@ -11,5 +11,10 @@ public class SecurityConfiguration : IEntityTypeConfiguration<Security>
         builder.HasKey(x => x.ID);
         builder.Property(x => x.USERNAME).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
         builder.Property(x => x.PASSWORD).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
+
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
     }
 }

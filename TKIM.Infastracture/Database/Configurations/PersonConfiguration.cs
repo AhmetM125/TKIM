@@ -16,8 +16,10 @@ public class PersonConfiguration : IEntityTypeConfiguration<Person>
 
         builder.HasOne(x => x.Security).WithOne(x => x.Person).HasForeignKey<Person>(x => x.ID);
 
-        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20);
-        builder.Property(x => x.UpdateDate).HasColumnType("nvarchar").HasMaxLength(20);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
     }
 }

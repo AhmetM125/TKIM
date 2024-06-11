@@ -21,10 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DA\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\TKIM.Entity\TKIM.Entity.csproj" />
   </ItemGroup>
 

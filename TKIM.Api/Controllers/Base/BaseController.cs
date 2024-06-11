@@ -17,7 +17,7 @@ public class BaseController : ControllerBase
         _mediator = mediator;
     }
 
-    protected async new Task<IActionResult> ResponseContent<TResult>(Query<TResult> query)
+    protected async new Task<IActionResult> HandleResponse<TResult>(Query<TResult> query)
     {
         try
         {
@@ -35,7 +35,7 @@ public class BaseController : ControllerBase
         }
     }
 
-    protected async new Task<IActionResult> ResponseContent<TResult>(Command<TResult> command)
+    protected async new Task<IActionResult> HandleResponse<TResult>(Command<TResult> command)
     {
         try
         {

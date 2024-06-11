@@ -11,4 +11,18 @@
     <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Security\" />
+    <Folder Include="Product\" />
+    <Folder Include="People\" />
+    <Folder Include="Invoice\" />
+    <Folder Include="Customer\" />
+    <Folder Include="Company\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TKIM.Entity\TKIM.Entity.csproj" />
+    <ProjectReference Include="..\TKIM.Infastracture\TKIM.Infastracture.csproj" />
+  </ItemGroup>
+
 </Project>

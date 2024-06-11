@@ -14,8 +14,10 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(x => x.ADDRESS).HasMaxLength(200).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.PHONE_NUMBER).HasMaxLength(30).HasColumnType("nvarchar").IsRequired(false);
 
-        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20);
-        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
     }
 }

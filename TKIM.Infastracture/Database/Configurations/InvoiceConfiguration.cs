@@ -15,8 +15,10 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.Property(x => x.INVOICE_PDF).IsRequired();
         builder.Property(x => x.TOTAL).HasColumnType("decimal").IsRequired();
 
-        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20);
-        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false); 
+        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false); 
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false); 
 
         builder.HasMany(x => x.Products).WithMany(x => x.Invoices);
         builder.HasOne(x => x.Customer).WithMany(x => x.Invoices).HasForeignKey(x => x.CUSTOMER_ID);

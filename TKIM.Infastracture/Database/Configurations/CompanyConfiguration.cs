@@ -15,10 +15,10 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(x => x.PHONE_NUMBER).HasMaxLength(30).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.NUMBER).HasMaxLength(30).HasColumnType("nvarchar").IsRequired(false);
 
-        builder.Property(x => x.InsertUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired();
-        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired();
-        builder.Property(x => x.UpdateUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired();
-        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired();
+        builder.Property(x => x.InsertUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired(false);
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
 
     }

@@ -15,8 +15,10 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(x => x.STOCK).HasColumnType("int").IsRequired();
         builder.Property(x => x.IMAGE);
 
-        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20);
-        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20);
+        builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
+        builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
         builder.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CATEGORY_ID);
     }
