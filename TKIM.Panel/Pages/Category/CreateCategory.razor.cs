@@ -14,14 +14,13 @@ public partial class CreateCategory : RazorComponentBase
         try
         {
             await _categoryService.CreateCategory(Category);
-            await _categoryService.GetAllCategory();
             LayoutValue.ShowMessage("Category created successfully", MessageType.Success);
+            Category = new CategoryInsertRequest();
 
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            LayoutValue.ShowMessage("Error", MessageType.Error);
-            throw;
+            LayoutValue.ShowMessage("Beklenmeyen bir  hata oluştu lütfen sistem yöneticisine bildiriniz.", MessageType.Error);
         }
     }
 }

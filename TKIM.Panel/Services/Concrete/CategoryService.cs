@@ -16,4 +16,13 @@ public class CategoryService : BaseService, ICategoryService
 
     public async Task<List<CategoryListResponse>?> GetAllCategory()
      => await HandleReadResponse<List<CategoryListResponse>>($"get/all");
+
+    public async Task<CategoryModifyVM?> GetCategoryForModify(Guid id)
+    => await HandleReadResponse<CategoryModifyVM>($"get/modify/{id}");
+
+    public async Task ChangeCategoryStatus(Guid id)
+    => await HandlePutResponse($"ChangeInUse/{id}");
+
+    public async Task UpdateCategory(CategoryModifyVM model)
+    => await HandlePutResponse($"Update", model);
 }

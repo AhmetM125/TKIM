@@ -8,13 +8,13 @@
                     <p>
                         Kategori İsmi
                     </p>
-                    <input placeholder="Kategori İsmi" type="text" @bind="@Category.Name" class="form-control" />
+                    <input maxlength="100" placeholder="Kategori İsmi" type="text" @bind="@Category.Name" class="form-control" />
                 </div>
                 <div class="width-40 ml-4">
                     <p>
                         Kategori Açıklama
                     </p>
-                    <textarea rows="5" class="form-control" @bind="@Category.Description" placeholder="Ürün Açıklama">
+                    <textarea rows="5" maxlength="200" class="form-control" @bind="@Category.Description" placeholder="Ürün Açıklama">
 
                     </textarea>
                 </div>

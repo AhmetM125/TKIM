@@ -30,7 +30,8 @@ public class GetAllCategoriesQueryHandler : QueryHandler<CategoryGetAllQuery, Li
         {
             Description = x.DESCRIPTION,
             Id = x.ID,
-            Name = x.NAME
+            Name = x.NAME,
+            IsActive = x.IS_ACTIVE
         }).ToList();
     }
 }
@@ -39,4 +40,5 @@ public record class CategoryResponse
     public Guid Id { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
+    public bool IsActive { get; init; }
 }

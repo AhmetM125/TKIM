@@ -1,4 +1,5 @@
 //Modal Open/Close
+
 window.openModal = (id) => {
     $("#" + id).modal();
     $("#" + id).modal('show');

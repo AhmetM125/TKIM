@@ -1,11 +1,15 @@
 ﻿@inherits RazorComponentBase
 
+@if (ShowLoader)
+{
+    <Loader IsLoading="@ShowLoader" />
+}
 <div class="row justify-content-center mt-4">
     <div class="col-11 card">
         <div class="card-body">
             <div class="d-flex flex-row-reverse">
                 <div class="width-25">
-                    <input type="text" placeholder="Ara..." class="form-control" />
+                    <input type="text" placeholder="Ara..." class="form-control" data-toggle="tooltip" data-placement="top" title="Kategori Ismine Göre Ara." />
                 </div>
                 <div class="width-5 text-center pe-2">
                     <button class="btn btn-outline-primary width-100 ">
@@ -17,30 +21,66 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Kategori İsmi</th>
-                            <th>Açıklama</th>
-                            <th>Toplam Kalem Ürün</th>
-                            <th class="width-10"></th>
+                            <th class="width-10">Kategori İsmi</th>
+                            <th class="width-25">Açıklama</th>
+                            <th class="width-5">Aktif/Pasif</th>
+                            @* <th class="width-10">Toplam Kalem Ürün</th> *@
+                            <th class="width-5"></th>
                         </tr>
 
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Veri</td>
-                            <td>Veri</td>
-                            <td>Veri</td>
-                            <td class="d-flex justify-content-evenly">
-                                <button class="btn btn-outline-danger">
-                                    <i class="fas fa-solid fa-trash"></i>
-                                </button>
-                                <button class="btn btn-outline-secondary">
-                                    <i class="fa-solid fa-gear"></i>
-                                </button>
-                            </td>
-                        </tr>
+                        @if (Categories != null && Categories.Any())
+                        {
+                            @foreach (var item in Categories)
+                            {
+                                <tr>
+
+                                    <td>@item.Name</td>
+                                    <td>
+                                        @item.Description
+                                    </td>
+                                    <td class="text-center">
+                                        @if (item.IsActive)
+                                        {
+                                            <div class="form-check form-switch">
+                                                <input @onclick="()=>ChangeStatus(item.Id)" class="form-check-input cursor-pointer" type="checkbox" id="flexSwitchCheckDefault" checked>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="form-check form-switch">
+                                                <input @onclick="()=>ChangeStatus(item.Id)" class="form-check-input cursor-pointer" type="checkbox" id="flexSwitchCheckDefault">
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="d-flex justify-content-evenly">
+                                        <button class="btn btn-outline-secondary" @onclick="()=>Modify(item.Id)">
+                                            <i class="fa-solid fa-gear"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+
+
+<Modal Id="CategoryModalId">
+    <Body>
+        <ModifyComponent Id="SelectedEmployeeId" OnSubmit="LoadData"></ModifyComponent>
+    </Body>
+</Modal>
+
+<style>
+    td {
+        max-width: 100px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

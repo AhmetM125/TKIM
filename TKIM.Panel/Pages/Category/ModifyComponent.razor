@@ -1,0 +1,26 @@
+﻿@inherits RazorComponentBase
+
+@if (Model is not null)
+{
+
+    <div class="row">
+        <div class="col-12">
+            <label>
+                Kategori Ismi
+            </label>
+            <input type="text" @bind="@Model.Name" class="form-control" />
+        </div>
+        <div class="col-12">
+            <label>Kategori Açıklama</label>
+            <textarea class="form-control" @bind="@Model.Description"></textarea>
+        </div>
+
+        <div class="row justify-content-center mt-5">
+            <div class="col-10">
+                <button class="btn btn-outline-primary w-100" @onclick="Submit">
+                    Kaydet
+                </button>
+            </div>
+        </div>
+    </div>
+}

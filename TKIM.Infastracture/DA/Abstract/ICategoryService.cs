@@ -8,4 +8,5 @@ public interface ICategoryService
     Task<Category> GetAsync(Guid id, CancellationToken cancellationToken);
     Task<List<Category>> GetAllAsync(CancellationToken cancellationToken);
     Task UpdateAsync(Category category, CancellationToken cancellationToken);
+    Task ChangeCategoryStatus(Guid id);
 }

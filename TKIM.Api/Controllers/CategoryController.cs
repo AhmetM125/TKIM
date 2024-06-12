@@ -17,10 +17,10 @@ public class CategoryController : BaseController
     public async Task<IActionResult> CreateCategory( CreateCategoryRequest command)
      => await HandleResponse(new CategoryCreateCommand(command.Name, command.Description));
 
-    [HttpGet("get/modify")]
+    [HttpGet("get/modify/{id:guid}")]
     [ProducesResponseType(typeof(CategoryModifyResponse), (int)StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetModifyCategory([FromQuery] Guid id)
+    public async Task<IActionResult> GetModifyCategory( Guid id)
      => await HandleResponse(new CategoryModifyQuery(id));
 
     [HttpGet("get/all")]
@@ -28,6 +28,18 @@ public class CategoryController : BaseController
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetAllCategories()
      => await HandleResponse(new CategoryGetAllQuery());
+
+    [HttpPut("ChangeInUse/{id:guid}")]
+    [ProducesResponseType((int)StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> ChangeCategoryStatus(Guid id)
+     => await HandleResponse(new CategoryChangeStatusCommand(id));
+
+    [HttpPut("Update")]
+    [ProducesResponseType((int)StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateCategory([FromBody]UpdateCategoryRequest command)
+     => await HandleResponse(new CategoryUpdateCommand(command.Id, command.Name, command.Description));
 
 
 }

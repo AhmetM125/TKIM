@@ -1,6 +1,7 @@
 ﻿using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using TKIM.Panel.ViewModels.BaseResponse;
 
 namespace TKIM.Panel.Services.Base;
 public class BaseService
@@ -13,7 +14,7 @@ public class BaseService
         _httpClient = httpClient;
     }
 
-    public async Task<T?> HandleReadResponse<T>(string requestUrl)
+    public async Task<TItem?> HandleReadResponse<TItem>(string requestUrl)
     {
         try
         {
@@ -21,8 +22,8 @@ public class BaseService
 
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadFromJsonAsync<T>();
-                return result ?? default(T);
+                var result = await response.Content.ReadFromJsonAsync<BaseResponse<TItem>>();
+                return result.Data;
             }
             else
             {
@@ -49,11 +50,47 @@ public class BaseService
                 throw new Exception(errorMessage);
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             throw;
         }
 
+    }
+    public async Task HandlePutResponse<TItem>(string requestUrl, TItem item)
+    {
+        try
+        {
+            HttpContent content = new StringContent(JsonSerializer.Serialize(item), Encoding.UTF8, "application/json");
+            var response = await _httpClient.PutAsync($"{ApiName}/{requestUrl}", content);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task HandlePutResponse(string requestUrl)
+    {
+        try
+        {
+            var response = await _httpClient.PutAsync($"{ApiName}/{requestUrl}", null);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception(errorMessage);
+            }
+        }
+        catch (Exception)
+        {
+            throw;
+        }
     }
 
     //public async Task<T> GetByIdAsync(int id)

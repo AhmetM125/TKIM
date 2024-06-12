@@ -13,9 +13,9 @@ public record class CategoryUpdateCommand : Command<Guid>
         Name = name;
         Description = description;
     }
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public string Description { get; init; }
 
     public override ValidationResult Validate()
     {
@@ -51,3 +51,10 @@ public class UpdateCategoryValidator : AbstractValidator<CategoryUpdateCommand>
         RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required");
     }
 }
+public record class UpdateCategoryRequest
+{
+    public Guid Id { get; init; }
+    public string Name { get; init; }
+    public string Description { get; init; }
+}
+

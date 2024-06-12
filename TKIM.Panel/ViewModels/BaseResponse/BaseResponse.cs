@@ -1,6 +1,6 @@
 ﻿namespace TKIM.Panel.ViewModels.BaseResponse;
 
-public class BaseResponse<T> where T : class
+public class BaseResponse<T> 
 {
     public bool IsSuccess { get; set; }
     public string? Message { get; set; }
