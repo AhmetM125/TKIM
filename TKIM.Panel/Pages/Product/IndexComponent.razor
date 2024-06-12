@@ -15,12 +15,12 @@
         <div class="card-body">
             <div class="d-flex justify-content-start">
                 <div class="width-15 text-center">
-                    <button class="btn btn-outline-primary width-75" @onclick="@(()=>ChangePage(PageType.Insert))">
+                    <button class="btn @(IsButtonActive(PageType.Insert)) width-90" @onclick="@(()=>ChangePage(PageType.Insert))">
                         Ürün Tanımlama
                     </button>
                 </div>
                 <div class="width-15 text-center">
-                    <button class="btn btn-outline-primary width-75" @onclick="@(()=>ChangePage(PageType.List))">
+                    <button class="btn @(IsButtonActive(PageType.List)) width-90" @onclick="@(()=>ChangePage(PageType.List))">
                         Ürün Listesi
                     </button>
                 </div>

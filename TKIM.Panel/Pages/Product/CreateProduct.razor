@@ -3,68 +3,78 @@
 
 
 
-<div class="row justify-content-center mt-4">
+<div class="row justify-content-center mt-4 ">
     <div class="col-11 card">
         <div class="card-body">
             <div class="d-flex">
-                <div class="width-15">
+                <div class="width-25">
                     <p>
                         Ürün İsmi
                     </p>
-                    <input placeholder="Ürün İsmi" type="text" class="form-control" />
+                    <input @bind="@Model.Name"  placeholder="Ürün İsmi" type="text" class="form-control" />
                 </div>
-                <div class="width-15 ml-4">
+                <div class="width-25 ml-4">
                     <p>
                         Barkod
                     </p>
-                    <input type="text" class="form-control" />
+                    <input @bind="@Model.Barcode" type="text"  class="form-control" />
                 </div>
-                <div class="width-15 ml-4">
+                <div class="width-25 ml-4">
                     <p>
                         Kategori
                     </p>
-                    <select class="form-control">
-                        <option>Ürün Tipi</option>
-                        <option>Ürün Tipi 1</option>
-                        <option>Ürün Tipi 2</option>
-                        <option>Ürün Tipi 3</option>
+                    <select @bind="@Model.Category" class="form-control" >
+                        <option>--Lütfen Kategori Seçiniz--</option>
                     </select>
                 </div>
                 <div class="width-25 ml-4">
                     <p>
                         Görsel
                     </p>
-                    <input type="file" class="form-control" />
-                </div>
-                <div class="width-30 ml-4">
-                    <p>
-                        Açıklama
-                    </p>
-                    <textarea class="form-control" />
-                </div>
-            </div>
-            <div class="d-flex">
-                <div class="width-15">
-                    <p>
-                        Şirket
-                    </p>
-                    <select class="form-control text-center">
-                        <option>--Seçiniz--</option>
-                    </select>
-                </div>
-                <div class="width-15 ml-4">
-                </div>
-                <div class="width-15 ml-4">
-                </div>
-                <div class="width-25 ml-4">
-                </div>
-                <div class="width-30 ml-4">
+                    <input id="file-product" @onchange="FileInput" type="file" multiple class="form-control" />
                 </div>
 
             </div>
-            <div class="d-flex flex-row-reverse">
+            <div class="d-flex mt-5">
                 <div class="width-25">
-                    <button class="btn btn-primary width-100">
+                    <p>
+                        Şirket
+                    </p>
+                    <select @bind="@Model.Company" class="form-control text-center">
+                        <option>--Seçiniz--</option>
+                    </select>
+                </div>
+                <div class="width-25 ml-4">
+                    <p>
+                        Açıklama
+                    </p>
+                    <textarea @bind="@Model.Description" class="form-control" />
+                </div>
+                <div class="width-25 ml-4">
+                    <div class="d-flex ">
+                        <p>Son Kullanma Tarihi</p>
+                        <div class="d-flex flex-column-reverse justify-content-end ml-3">
+                            <div>
+                                <input type="checkbox" @onclick="()=>{ HasBestUsageDate = !HasBestUsageDate; }" class="form-check" />
+                            </div>
+                            <div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    @if (!HasBestUsageDate)
+                    {
+                        <input @bind="@Model.BestBeforeDate" type="date" class="form-control" />
+                    }
+                </div>
+                <div class="width-25 ml-4">
+                </div>
+            </div>
+            <div class="d-flex flex-row-reverse mt-5">
+                <div class="width-25">
+                    <button @onclick="Submit" class="btn btn-outline-primary width-100">
                         Kaydet
                     </button>
                 </div>
@@ -78,6 +88,7 @@
     <div class="col-11 card">
         <div class="card-body">
             <p> Seçilen Fotoğraflar </p>
+            <div id="image-gallery"></div>
             @* Foreach *@
             @* <img src="https://w.forfun.com/fetch/43/43a27bc56000c1a3cb5af2751fb69ff2.jpeg" width="200" height="150" /> *@
         </div>

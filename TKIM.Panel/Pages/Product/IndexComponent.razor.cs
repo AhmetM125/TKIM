@@ -10,6 +10,11 @@ public partial class IndexComponent : RazorComponentBase
         PageType = pageType;
     }
 
+    private string IsButtonActive(PageType pageType)
+    {
+        return PageType != pageType ? "btn-outline-primary" : "btn-primary";    
+    }
+
 }
 
 
