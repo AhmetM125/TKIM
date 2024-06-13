@@ -14,6 +14,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(x => x.ADDRESS).HasMaxLength(200).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.PHONE_NUMBER).HasMaxLength(30).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.NUMBER).HasMaxLength(30).HasColumnType("nvarchar").IsRequired(false);
+        builder.Property(x => x.EMAIL).HasMaxLength(50).HasColumnType("nvarchar").IsRequired(false);
 
         builder.Property(x => x.InsertUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);

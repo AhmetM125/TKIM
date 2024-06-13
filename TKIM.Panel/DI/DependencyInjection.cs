@@ -8,5 +8,6 @@ public static class DependencyInjection
     public static void AddServices(this IServiceCollection services)
     {
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ICompanyService, CompanyService>();
     }
 }

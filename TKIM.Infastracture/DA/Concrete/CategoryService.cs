@@ -42,12 +42,21 @@ public class CategoryService : ICategoryService
             ID = x.ID,
             NAME = x.NAME,
             IS_ACTIVE = x.IS_ACTIVE
-        }).AsNoTracking().OrderBy(x=>x.NAME).ToListAsync(cancellationToken);
+        }).AsNoTracking().OrderBy(x => x.NAME).ToListAsync(cancellationToken);
     }
 
     public async Task<Category> GetAsync(Guid id, CancellationToken cancellationToken)
     {
         return await _context.Categories.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id, cancellationToken) ?? new Category();
+    }
+
+    public async Task<List<Category>> GetCategoryForDropdown()
+    {
+        return await _context.Categories.Where(x => x.IS_ACTIVE).Select(x => new Category
+        {
+            ID = x.ID,
+            NAME = x.NAME
+        }).AsNoTracking().ToListAsync();
     }
 
     public async Task UpdateAsync(Category category, CancellationToken cancellationToken)

@@ -1,6 +1,8 @@
-﻿namespace TKIM.Panel.Services.Abstract
+﻿using TKIM.Panel.ViewModels.Company;
+
+namespace TKIM.Panel.Services.Abstract;
+
+public interface ICompanyService
 {
-    public interface ICompanyService
-    {
-    }
+    Task CreateCompany(CompanyInsertRequest request);
 }

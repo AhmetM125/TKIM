@@ -14,6 +14,7 @@ public static class ServiceInjectionExtension
     public static void AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ICompanyService, CompanyService>();
 
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(typeof(ApplicationBase).Assembly));

@@ -25,4 +25,7 @@ public class CategoryService : BaseService, ICategoryService
 
     public async Task UpdateCategory(CategoryModifyVM model)
     => await HandlePutResponse($"Update", model);
+
+    public async Task<List<CategoryDropdownResponse>?> GetCategoryForDropdown()
+        => await HandleReadResponse<List<CategoryDropdownResponse>>($"dropdown");
 }

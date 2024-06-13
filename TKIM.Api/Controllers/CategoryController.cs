@@ -14,13 +14,13 @@ public class CategoryController : BaseController
     [HttpPost("Create")]
     [ProducesResponseType((int)StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> CreateCategory( CreateCategoryRequest command)
+    public async Task<IActionResult> CreateCategory(CreateCategoryRequest command)
      => await HandleResponse(new CategoryCreateCommand(command.Name, command.Description));
 
     [HttpGet("get/modify/{id:guid}")]
     [ProducesResponseType(typeof(CategoryModifyResponse), (int)StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> GetModifyCategory( Guid id)
+    public async Task<IActionResult> GetModifyCategory(Guid id)
      => await HandleResponse(new CategoryModifyQuery(id));
 
     [HttpGet("get/all")]
@@ -38,8 +38,14 @@ public class CategoryController : BaseController
     [HttpPut("Update")]
     [ProducesResponseType((int)StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> UpdateCategory([FromBody]UpdateCategoryRequest command)
+    public async Task<IActionResult> UpdateCategory([FromBody] UpdateCategoryRequest command)
      => await HandleResponse(new CategoryUpdateCommand(command.Id, command.Name, command.Description));
+
+    [HttpGet("dropdown")]
+    [ProducesResponseType(typeof(List<CategoryDropdownResponse>), (int)StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ValidationProblemDetails), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetCategoryForDropdown()
+     => await HandleResponse(new CategoryDropdownQuery());
 
 
 }

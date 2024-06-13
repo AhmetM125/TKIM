@@ -9,4 +9,5 @@ public interface ICategoryService
     Task<CategoryModifyVM> GetCategoryForModify(Guid id);
     Task ChangeCategoryStatus(Guid id);
     Task UpdateCategory(CategoryModifyVM model);
+    Task<List<CategoryDropdownResponse>?> GetCategoryForDropdown();
 }

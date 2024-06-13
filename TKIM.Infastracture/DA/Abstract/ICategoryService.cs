@@ -9,4 +9,6 @@ public interface ICategoryService
     Task<List<Category>> GetAllAsync(CancellationToken cancellationToken);
     Task UpdateAsync(Category category, CancellationToken cancellationToken);
     Task ChangeCategoryStatus(Guid id);
+
+    Task<List<Category>> GetCategoryForDropdown();
 }

@@ -53,42 +53,52 @@ window.getFileBytes = async function (inputId) {
         reader.readAsArrayBuffer(file);
     });
 };
-window.setImageGallery = async function (inputId, displayGallery) {
+window.setImageGallery = async function (inputId, displayGalleryId) {
     //inputId: file input id, displayGallery: image gallery id
     return new Promise((resolve, reject) => {
         const fileInput = document.getElementById(inputId);
-        var content = document.getElementById(displayGallery);
-        const reader = new FileReader();
-        content.innerHTML = "";
+        const displayGallery = document.getElementsByClassName('carousel-inner')[0];
+        console.log(displayGallery);
 
-        var files = fileInput.files;
+        // Clear previous gallery content
+        displayGallery.innerHTML = "";
 
-        if (fileInput.files.length === 0) {
-            displayDiv.innerText = "No file selected";
+        if (!fileInput.files || fileInput.files.length === 0) {
+            displayGallery.innerText = "No files selected.";
+            resolve(); // Resolve the promise even if no files are selected
             return;
         }
 
-        for (var i = 0; i < files.length; i++) {
-            var img = document.createElement('img');
-            img.src = URL.createObjectURL(files[i]);
-            img.style ="width:100px;height:100px;margin-left:30px"
-            
-            content.appendChild(img);
+        const files = fileInput.files;
+
+        for (const file of files) {
+            const reader = new FileReader();
+
+            // Create an image element for each file
+            const img = document.createElement('img');
+            const div = document.createElement('div');
+            div.className = "carousel-item d-block w-100";
+            div.style= "height: 1000px;max-height:1000px;";
+            img.className = "width-90 d-block mx-auto h-100";
+            img.alt = "Product Image";
+            div.appendChild(img);
+            reader.onload = (event) => {
+                img.src = event.target.result;
+
+                // Append the image to the gallery
+                displayGallery.appendChild(div);
+            };
+
+            reader.onerror = (error) => {
+                console.error(`Error reading file: ${error}`);
+                displayGallery.innerText = `Error reading file: ${error}`;
+                reject(error); // Reject the promise on error
+            };
+
+            // Read the file as a Data URL (base64)
+            reader.readAsDataURL(file);
         }
 
-
-        reader.onerror = function (error) {
-            console.log("entered onerror")
-
-            content.innerText = `Error reading file: ${error}`;
-        };
-
-
-
-        if (fileInput.files.length === 0) {
-            console.log("No file selected.")
-            return;
-        }
-
+        resolve(true); // Resolve the promise once processing is done
     });
 }

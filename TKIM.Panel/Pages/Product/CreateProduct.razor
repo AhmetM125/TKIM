@@ -11,27 +11,35 @@
                     <p>
                         Ürün İsmi
                     </p>
-                    <input @bind="@Model.Name"  placeholder="Ürün İsmi" type="text" class="form-control" />
+                    <input @bind="@Model.Name" placeholder="Ürün İsmi" type="text" class="form-control" />
                 </div>
                 <div class="width-25 ml-4">
                     <p>
                         Barkod
                     </p>
-                    <input @bind="@Model.Barcode" type="text"  class="form-control" />
+                    <input @bind="@Model.Barcode" type="text" class="form-control" />
                 </div>
                 <div class="width-25 ml-4">
                     <p>
                         Kategori
                     </p>
-                    <select @bind="@Model.Category" class="form-control" >
+                    <select @bind="@Model.Category" class="form-control">
                         <option>--Lütfen Kategori Seçiniz--</option>
+                        @if(Categories != null)
+                        {
+                            @foreach (var item in Categories)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
+                        })
                     </select>
                 </div>
                 <div class="width-25 ml-4">
                     <p>
                         Görsel
                     </p>
-                    <input id="file-product" @onchange="FileInput" type="file" multiple class="form-control" />
+                    @* @onchange="FileInput" *@
+                    <input id="file-product"  type="file" multiple class="form-control" accept=".jpg,.png,.gif," />
                 </div>
 
             </div>
@@ -64,7 +72,7 @@
 
                     </div>
 
-                    @if (!HasBestUsageDate)
+                    @if (HasBestUsageDate)
                     {
                         <input @bind="@Model.BestBeforeDate" type="date" class="form-control" />
                     }
@@ -73,27 +81,52 @@
                 </div>
             </div>
             <div class="d-flex flex-row-reverse mt-5">
-                <div class="width-25">
-                    <button @onclick="Submit" class="btn btn-outline-primary width-100">
+                <div class="width-20 text-center">
+                    <button @onclick="Submit" class="btn btn-outline-primary width-75">
                         Kaydet
                     </button>
                 </div>
+                @* <div class="width-20 text-center">
+                    <button @onclick="()=>{ IsImageGalleryActive = !IsImageGalleryActive; }" class="btn btn-outline-secondary width-75">
+                        Resim Galerisini Aktif Et
+                    </button>
+                </div> *@
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="row justify-content-center mt-4">
-    <div class="col-11 card">
-        <div class="card-body">
-            <p> Seçilen Fotoğraflar </p>
-            <div id="image-gallery"></div>
-            @* Foreach *@
-            @* <img src="https://w.forfun.com/fetch/43/43a27bc56000c1a3cb5af2751fb69ff2.jpeg" width="200" height="150" /> *@
+@* @if (IsImageGalleryActive)
+{
+    <div class="row justify-content-center mt-4">
+        <div class="col-11 card" style="background-color:#a3a3a3">
+            <div class="card-body">
+                <p class="text-white">Seçilen Fotoğraflar</p>
+                <Carousel Interval="5000" ElementId="image-gallery" Display="Display.Block">
+                     <CarouselSlide Name="1">
+                        <Image Source="https://www.desktopbackground.org/download/2560x1600/2012/08/21/439979_silent-water-wallpaper-forest-image-stream-picture-jpg_2560x1600_h.jpg" Text="Lights image" Display="Display.Block" Width="Width.Is100" />
+                    </CarouselSlide>
+                    <CarouselSlide Name="2">
+                        <Image Source="https://www.desktopbackground.org/download/2560x1600/2012/08/21/439979_silent-water-wallpaper-forest-image-stream-picture-jpg_2560x1600_h.jpg" Text="Keyboard image" Display="Display.Block" Width="Width.Is100" />
+                    </CarouselSlide>
+                    <CarouselSlide Name="3">
+                        <Image Source="https://www.desktopbackground.org/download/2560x1600/2012/08/21/439979_silent-water-wallpaper-forest-image-stream-picture-jpg_2560x1600_h.jpg" Text="Road image" Display="Display.Block" Width="Width.Is100" />
+                    </CarouselSlide> 
+                </Carousel>
+            </div>
         </div>
     </div>
-</div>
+} *@
 
+@* <style>
+    .carousel-inner {
+        display: block !important;
+        width: 75%;
+        margin: auto;
+    }
 
-
+    .carousel-control-prev-icon {
+        color: black;
+    }
+</style>
+ *@
