@@ -13,4 +13,16 @@ public class CompanyService : BaseService, ICompanyService
 
     public async Task CreateCompany(CompanyInsertRequest request)
     => await HandlePostResponse($"Create", request);
+
+    public async Task<List<CompanyListResponse>?> GetAllCompanies()
+        => await HandleReadResponse<List<CompanyListResponse>>($"Get/All");
+
+    public async Task<CompanyModifyRequest?> GetCompanyForModify(Guid companyId)
+        => await HandleReadResponse<CompanyModifyRequest>($"Get/Modify/{companyId}");
+
+    public async Task ModifyCompany(CompanyModifyRequest company)
+    => await HandlePutResponse($"Modify", company);
+
+    public async Task<List<CompanyDropdownResponse>?> GetCompanyForDropdown()
+    => await HandleReadResponse<List<CompanyDropdownResponse>>($"dropdown");
 }

@@ -23,7 +23,10 @@ public class BaseService
             if (response.IsSuccessStatusCode)
             {
                 var result = await response.Content.ReadFromJsonAsync<BaseResponse<TItem>>();
-                return result.Data;
+                if(result != null)
+                    return result.Data;
+                else
+                    return default;
             }
             else
             {
@@ -50,7 +53,7 @@ public class BaseService
                 throw new Exception(errorMessage);
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             throw;
         }

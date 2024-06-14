@@ -27,30 +27,40 @@ $(function () {
 })
 
 window.getFileBytes = async function (inputId) {
-    //inputId: file input id
-    debugger;
     return new Promise((resolve, reject) => {
         const fileInput = document.getElementById(inputId);
-        console.log(fileInput);
-        if (fileInput.files.length === 0) {
-            console.log("No file selected.")
+        if (!fileInput || fileInput.files.length === 0) {
             reject("No file selected.");
             return;
         }
 
-        const file = fileInput.files[0];
-        const reader = new FileReader();
+        const files = fileInput.files;
+        const fileReaders = [];
 
-        reader.onload = function (e) {
-            const fileBytes = new Uint8Array(e.target.result);
-            resolve(fileBytes);
-        };
+        for (const file of files) {
+            const reader = new FileReader();
+            const filePromise = new Promise((res, rej) => {
+                reader.onload = (e) => {
+                    const arrayBuffer = e.target.result;
+                    // Convert ArrayBuffer to Base64 string
+                    const base64String = btoa(
+                        new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
+                    );
+                    res(base64String);
+                };
 
-        reader.onerror = function (error) {
-            reject(error);
-        };
+                reader.onerror = (error) => {
+                    rej(error);
+                };
 
-        reader.readAsArrayBuffer(file);
+                reader.readAsArrayBuffer(file); // Read as ArrayBuffer
+            });
+
+            fileReaders.push(filePromise);
+        }
+
+        // Wait for all file reads to complete and return as an array of base64 strings
+        Promise.all(fileReaders).then(resolve).catch(reject);
     });
 };
 window.setImageGallery = async function (inputId, displayGalleryId) {

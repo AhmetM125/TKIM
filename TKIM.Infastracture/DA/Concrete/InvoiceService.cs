@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using TKIM.Infastracture.DA.Abstract;
+using TKIM.Infastracture.Database.Context;
 
-namespace TKIM.Infastracture.DA.Concrete
+namespace TKIM.Infastracture.DA.Concrete;
+
+public class InvoiceService : IInvoiceService
 {
-    internal class InvoiceService
+    private readonly TKIM_DbContext _context;
+
+    public InvoiceService(TKIM_DbContext context)
     {
+        _context = context;
     }
+
+
 }

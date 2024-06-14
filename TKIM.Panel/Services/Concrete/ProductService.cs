@@ -1,6 +1,38 @@
-﻿namespace TKIM.Panel.Services.Concrete
+﻿using System.Text;
+using System.Text.Json;
+using TKIM.Panel.Services.Abstract;
+using TKIM.Panel.Services.Base;
+using TKIM.Panel.ViewModels.Product;
+
+namespace TKIM.Panel.Services.Concrete;
+
+public class ProductService : BaseService, IProductService
 {
-    public class ProductService
+    public ProductService(HttpClient httpClient) : base(httpClient)
     {
+        ApiName = "v1/Product";
+    }
+
+    public async Task CreateProductAsync(ProductInsertRequest model, List<string> files, bool HasBestBeforeDate)
+    {
+        if (HasBestBeforeDate)
+            model.BestBeforeDate = null;
+
+        var requestProduct = new RequestProduct
+        {
+            Model = model,
+            Files = files
+        };
+
+        var jsonRequest = JsonSerializer.Serialize(requestProduct);
+        var content = new StringContent(jsonRequest, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PostAsync($"{ApiName}/Create", content);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var errorMessage = await response.Content.ReadAsStringAsync();
+            throw new Exception(errorMessage);
+        }
     }
 }

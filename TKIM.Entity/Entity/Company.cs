@@ -9,6 +9,7 @@ public class Company : BaseEntity
     public string ADDRESS { get; set; }
     public string PHONE_NUMBER { get; set; }
     public string NUMBER { get; set; }
+    public bool IS_ACTIVE { get; set; }
 
     public IEnumerable<Invoice> Invoices { get; set; }
 

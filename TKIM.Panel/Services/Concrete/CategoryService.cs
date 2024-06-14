@@ -1,6 +1,7 @@
 ﻿using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.Services.Base;
 using TKIM.Panel.ViewModels.Category;
+using TKIM.Panel.ViewModels.Company;
 
 namespace TKIM.Panel.Services.Concrete;
 
@@ -28,4 +29,6 @@ public class CategoryService : BaseService, ICategoryService
 
     public async Task<List<CategoryDropdownResponse>?> GetCategoryForDropdown()
         => await HandleReadResponse<List<CategoryDropdownResponse>>($"dropdown");
+
+    
 }

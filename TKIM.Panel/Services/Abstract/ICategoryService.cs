@@ -1,4 +1,5 @@
 ﻿using TKIM.Panel.ViewModels.Category;
+using TKIM.Panel.ViewModels.Company;
 
 namespace TKIM.Panel.Services.Abstract;
 

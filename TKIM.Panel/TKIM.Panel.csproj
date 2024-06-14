@@ -23,7 +23,6 @@
     <Folder Include="Pages\Receipt\" />
     <Folder Include="ViewModels\Customer\" />
     <Folder Include="ViewModels\Finance\" />
-    <Folder Include="ViewModels\Product\" />
     <Folder Include="ViewModels\Receipt\" />
   </ItemGroup>
 

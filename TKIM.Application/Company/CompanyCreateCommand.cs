@@ -25,6 +25,8 @@ public record class CompanyCreateCommand : Command<Guid>
     public string Email { get; init; }
 
 
+
+
     public override ValidationResult Validate()
     {
         return new CompanyCreateValidator().Validate(this);
@@ -79,9 +81,9 @@ public record class CompanyCreateVM
     }
 
     public string Name { get; init; }
-    public string Address { get; init; }
-    public string PhoneNumber { get; init; }
-    public string Number { get; init; }
-    public string Email { get; init; }
-    public string Description { get; init; }
+    public string? Address { get; init; }
+    public string? PhoneNumber { get; init; }
+    public string? Number { get; init; }
+    public string? Email { get; init; }
+    public string? Description { get; init; }
 }

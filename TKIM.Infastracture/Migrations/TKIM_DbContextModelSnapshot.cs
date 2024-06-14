@@ -94,6 +94,11 @@ namespace TKIM.Infastracture.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar");
 
+                    b.Property<bool>("IS_ACTIVE")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
+
                     b.Property<DateTime?>("InsertDate")
                         .HasColumnType("datetime");
 
@@ -330,6 +335,40 @@ namespace TKIM.Infastracture.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("TKIM.Entity.Entity.ProductImage", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Image")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime?>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InsertUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<Guid>("PRODUCT_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdateUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PRODUCT_ID");
+
+                    b.ToTable("ProductImages");
+                });
+
             modelBuilder.Entity("TKIM.Entity.Entity.Security", b =>
                 {
                     b.Property<Guid>("ID")
@@ -421,6 +460,17 @@ namespace TKIM.Infastracture.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("TKIM.Entity.Entity.ProductImage", b =>
+                {
+                    b.HasOne("TKIM.Entity.Entity.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("PRODUCT_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TKIM.Entity.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -434,6 +484,11 @@ namespace TKIM.Infastracture.Migrations
             modelBuilder.Entity("TKIM.Entity.Entity.Customer", b =>
                 {
                     b.Navigation("Invoices");
+                });
+
+            modelBuilder.Entity("TKIM.Entity.Entity.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Security", b =>

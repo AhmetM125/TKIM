@@ -14,4 +14,5 @@ public class Product : BaseEntity
     public List<Invoice> Invoices { get; set; }
     public Guid CATEGORY_ID { get; set; }
     public Category Category { get; set; }
+    public List<ProductImage> ProductImages { get; set; }
 }

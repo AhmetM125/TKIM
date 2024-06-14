@@ -1,1 +1,50 @@
 ﻿@inherits RazorComponentBase
+
+
+
+@if (Company is not null)
+{
+    <div class="row">
+        <div class="col-12">
+            <label>
+                Şirket İsmi
+            </label>
+            <input type="text" class="form-control" @bind="Company.Name" />
+        </div>
+        <div class="col-12">
+            <p>
+                Açıklama
+            </p>
+            <input type="text" class="form-control" @bind="Company.Description" />
+        </div>
+        <div class="col-12">
+            <p>
+                Şirket Adresi
+            </p>
+            <input type="text" class="form-control" @bind="Company.Address" />
+        </div>
+        <div class="col-12">
+            <p>
+                Şirket Telefonu
+            </p>
+            <input type="text" class="form-control" @bind="Company.PhoneNumber" />
+        </div>
+        <div class="col-12">
+            <p>
+                Şirket Kurumsal Telefon
+            </p>
+            <input type="text" class="form-control" @bind="Company.Number" />
+        </div>
+        <div class="col-12">
+            <p>
+                Şirket E-posta
+            </p>
+            <input type="text" class="form-control" @bind="Company.Mail" />
+        </div> 
+        <div class="d-flex justify-content-center mt-4">
+            <button class="btn btn-outline-primary width-90" @onclick="@Submit">
+                Kaydet
+            </button>
+        </div>
+    </div>
+}

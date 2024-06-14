@@ -20,4 +20,8 @@
     <ProjectReference Include="..\TKIM.Infastracture.IoC\TKIM.Infastracture.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Invoice\" />
+  </ItemGroup>
+
 </Project>

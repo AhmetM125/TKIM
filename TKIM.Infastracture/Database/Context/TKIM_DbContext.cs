@@ -21,6 +21,7 @@ public class TKIM_DbContext : DbContext
     public DbSet<Company> Companies { get; set; }
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Security> Securities { get; set; }
+    public DbSet<ProductImage> ProductImages { get; set; }
 
     //public DbSet<PermissionRole> PermissionRoles { get; set; }
     //public DbSet<Permission> Permissions { get; set; }
@@ -49,7 +50,7 @@ public class TKIM_DbContext : DbContext
             }
         }
 
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        return await base.SaveChangesAsync(cancellationToken);
     }
     public override int SaveChanges()
     {

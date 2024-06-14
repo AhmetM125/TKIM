@@ -16,14 +16,16 @@ public class CategoryService : ICategoryService
 
     public async Task ChangeCategoryStatus(Guid id)
     {
-        await _context.Categories.FirstOrDefaultAsync(x => x.ID == id).ContinueWith(x =>
-          {
-              if (x.Result != null)
-              {
-                  x.Result.IS_ACTIVE = !x.Result.IS_ACTIVE;
-                  _context.SaveChanges();
-              }
-          });
+        var category = await _context.Categories.FirstOrDefaultAsync(x => x.ID == id);
+
+        if (category != null)
+        {
+            // Toggle the IS_ACTIVE property
+            category.IS_ACTIVE = !category.IS_ACTIVE;
+
+            // Save changes asynchronously
+            await _context.SaveChangesAsync();
+        }
     }
 
     public async Task<Guid> CreateAsync(Category category, CancellationToken cancellationToken)

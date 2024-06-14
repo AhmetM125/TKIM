@@ -31,7 +31,7 @@
                             {
                                 <option value="@item.ID">@item.Name</option>
                             }
-                        })
+                        }
                     </select>
                 </div>
                 <div class="width-25 ml-4">
@@ -50,6 +50,13 @@
                     </p>
                     <select @bind="@Model.Company" class="form-control text-center">
                         <option>--Seçiniz--</option>
+                        @if (Companies is not null)
+                        {
+                            @foreach (var item in Companies)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        }
                     </select>
                 </div>
                 <div class="width-25 ml-4">
@@ -63,7 +70,9 @@
                         <p>Son Kullanma Tarihi</p>
                         <div class="d-flex flex-column-reverse justify-content-end ml-3">
                             <div>
-                                <input type="checkbox" @onclick="()=>{ HasBestUsageDate = !HasBestUsageDate; }" class="form-check" />
+                                <input type="checkbox" @onclick="()=>{ HasBestUsageDate = !HasBestUsageDate; 
+                                Model.BestBeforeDate = DateTime.Now;
+                                }" class="form-check" />
                             </div>
                             <div>
                             </div>
