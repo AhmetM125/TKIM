@@ -11,8 +11,13 @@ public class Product : BaseEntity
     public int STOCK { get; set; }
     public decimal TAX { get; set; }
 
+    public Guid COMPANY_ID { get; set; }
+    public Company Company { get; set; }
+
     public List<Invoice> Invoices { get; set; }
+
     public Guid CATEGORY_ID { get; set; }
     public Category Category { get; set; }
+
     public List<ProductImage> ProductImages { get; set; }
 }

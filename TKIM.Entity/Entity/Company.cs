@@ -12,5 +12,6 @@ public class Company : BaseEntity
     public bool IS_ACTIVE { get; set; }
 
     public IEnumerable<Invoice> Invoices { get; set; }
+    public IEnumerable<Product> Products { get; set; }
 
 }

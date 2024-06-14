@@ -22,6 +22,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(x => x.UpdateUser).HasMaxLength(50).HasColumnType("nvarchar").IsRequired(false);
         builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
+        builder.HasMany(x => x.Products).WithOne(x => x.Company).HasForeignKey(x => x.COMPANY_ID).OnDelete(DeleteBehavior.NoAction);
 
     }
 }

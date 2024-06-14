@@ -19,7 +19,7 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
         builder.Property(x => x.UpdateDate).IsRequired(false);
 
         builder.HasOne(x => x.Product).WithMany(x => x.ProductImages)
-            .HasForeignKey(x => x.PRODUCT_ID).OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(x => x.PRODUCT_ID).OnDelete(DeleteBehavior.Cascade).HasForeignKey(x=>x.PRODUCT_ID);
 
     }
 }
