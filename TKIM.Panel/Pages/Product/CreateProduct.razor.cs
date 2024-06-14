@@ -1,5 +1,4 @@
-﻿using FluentValidation.Results;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using TKIM.Panel.Base;
 using TKIM.Panel.Services.Abstract;
@@ -32,7 +31,7 @@ public partial class CreateProduct : RazorComponentBase
         try
         {
             // Get the files as a list of base64 strings from JavaScript
-            var base64Files = await JsRuntime.InvokeAsync<List<string>>("getFileBytes", "file-product");
+            var base64Files = await JsRuntime.InvokeAsync<List<FileDetail>>("getFileBytes", "file-product");
 
             // Convert base64 strings to byte arrays
             //var files = base64Files.Select(base64 => Convert.FromBase64String(base64)).ToList();
@@ -42,17 +41,8 @@ public partial class CreateProduct : RazorComponentBase
 
             if (validationResult.IsValid)
             {
-                try
-                {
-                    await _productService.CreateProductAsync(Model, base64Files, HasBestUsageDate);
-                    LayoutValue.ShowMessage("Ürün başarıyla eklendi.", MessageType.Success);
-                }
-                catch (Exception ex)
-                {
-                    // Log the exception details for debugging
-                    Console.WriteLine($"Error creating product: {ex.Message}");
-                    LayoutValue.ShowMessage("Ürün eklenirken bir hata oluştu.", MessageType.Error);
-                }
+                await _productService.CreateProductAsync(Model, base64Files, HasBestUsageDate);
+                LayoutValue.ShowMessage("Ürün başarıyla eklendi.", MessageType.Success);
             }
             else
             {
@@ -62,8 +52,7 @@ public partial class CreateProduct : RazorComponentBase
         }
         catch (Exception ex)
         {
-            // Log the exception details for debugging
-            Console.WriteLine($"Error in file processing: {ex.Message}");
+            Console.WriteLine($"Error creating product: {ex.Message}");
             LayoutValue.ShowMessage("Ürün eklenirken bir hata oluştu.", MessageType.Error);
         }
         finally

@@ -21,7 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TKIM.Dto\TKIM.Dto.csproj" />
     <ProjectReference Include="..\TKIM.Entity\TKIM.Entity.csproj" />
+    <ProjectReference Include="..\TKIM.Utils\TKIM.Utils.csproj" />
   </ItemGroup>
 
 </Project>

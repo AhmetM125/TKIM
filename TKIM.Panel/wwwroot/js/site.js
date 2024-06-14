@@ -30,7 +30,8 @@ window.getFileBytes = async function (inputId) {
     return new Promise((resolve, reject) => {
         const fileInput = document.getElementById(inputId);
         if (!fileInput || fileInput.files.length === 0) {
-            reject("No file selected.");
+            /*reject("No file selected.");*/
+            resolve([]);
             return;
         }
 
@@ -46,7 +47,12 @@ window.getFileBytes = async function (inputId) {
                     const base64String = btoa(
                         new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), '')
                     );
-                    res(base64String);
+                    res({
+                        base64: base64String,
+                        type: file.type, // MIME type
+                        size: file.size, // File size in bytes
+                        name: file.name  // File name (optional, useful for display)
+                    });
                 };
 
                 reader.onerror = (error) => {

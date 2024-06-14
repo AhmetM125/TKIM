@@ -4,5 +4,5 @@ namespace TKIM.Panel.Services.Abstract;
 
 public interface IProductService
 {
-    Task CreateProductAsync(ProductInsertRequest model, List<string> files,bool HasBestBeforeDate);
+    Task CreateProductAsync(ProductInsertRequest model, List<FileDetail> files,bool HasBestBeforeDate);
 }

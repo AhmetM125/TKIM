@@ -11,9 +11,14 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.HasKey(x => x.ID);
         builder.Property(x => x.NAME).HasColumnType("nvarchar").HasMaxLength(100).IsRequired();
         builder.Property(x => x.DESCRIPTION).HasMaxLength(200).HasColumnType("nvarchar").IsRequired(false);
-        builder.Property(x => x.PRICE).HasColumnType("decimal(18,2)");
-        builder.Property(x => x.STOCK).HasColumnType("int").IsRequired();
-        builder.Property(x => x.IMAGE);
+        builder.Property(x => x.PRICE).HasColumnType("decimal(18,2)").IsRequired(false);
+        builder.Property(x => x.STOCK).HasColumnType("int").IsRequired(false);
+        builder.Property(x=>x.CATEGORY_ID).IsRequired(false);
+        builder.Property(x => x.COMPANY_ID).IsRequired(false);
+        builder.Property(x => x.BARCODE).HasColumnType("nvarchar").HasMaxLength(50).IsRequired(false);
+        builder.Property(x => x.TAX).HasColumnType("decimal(18,2)").IsRequired(false);
+
+
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
         builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240614072526_product-nullables")]
+    partial class productnullables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,14 +348,6 @@ namespace TKIM.Infastracture.Migrations
                     b.Property<byte[]>("Image")
                         .IsRequired()
                         .HasColumnType("varbinary(max)");
-
-                    b.Property<string>("ImageSize")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("ImageType")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
 
                     b.Property<DateTime?>("InsertDate")
                         .HasColumnType("datetime2");

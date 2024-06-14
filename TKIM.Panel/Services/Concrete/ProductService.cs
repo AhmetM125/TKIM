@@ -13,7 +13,7 @@ public class ProductService : BaseService, IProductService
         ApiName = "v1/Product";
     }
 
-    public async Task CreateProductAsync(ProductInsertRequest model, List<string> files, bool HasBestBeforeDate)
+    public async Task CreateProductAsync(ProductInsertRequest model, List<FileDetail> files, bool HasBestBeforeDate)
     {
         if (HasBestBeforeDate)
             model.BestBeforeDate = null;
