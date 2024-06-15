@@ -7,24 +7,23 @@
 <div class="row justify-content-center mt-4">
     <div class="col-11 card">
         <div class="card-body">
-            <div class="d-flex flex-row-reverse">
-                <div class="width-25">
+            <div class="d-flex flex-row-reverse flex-sm-wrap flex-wrap">
+                <div class="col-md-3 col-sm-10 col-12">
                     <input type="text" placeholder="Ara..." class="form-control" data-toggle="tooltip" data-placement="top" title="Kategori Ismine Göre Ara." />
                 </div>
-                <div class="width-5 text-center pe-2">
+                <div class="col-md-1 col-12 col-sm-2 text-center pe-lg-2  search-category">
                     <button class="btn btn-outline-primary width-100 ">
                         <i class="fas fa-solid fa-magnifying-glass"></i>
                     </button>
                 </div>
             </div>
             <div class="d-flex mt-4">
-                <table class="table table-bordered">
+                <table class="table table-bordered responsive-table">
                     <thead>
                         <tr>
                             <th class="width-10">Kategori İsmi</th>
                             <th class="width-25">Açıklama</th>
                             <th class="width-5">Aktif/Pasif</th>
-                            @* <th class="width-10">Toplam Kalem Ürün</th> *@
                             <th class="width-5"></th>
                         </tr>
 
@@ -77,10 +76,28 @@
 </TKIM.Panel.Layout.Component.Modal>
 
 <style>
-    td {
-        max-width: 100px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    /* Ensure ellipsis for overflow text in table cells */
+td {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Media query for screens smaller than or equal to 574px */
+@@media (max-width: 574px) {
+    .search-category {
+        margin-top: 10px; /* Adjust margin for small screens */
     }
+}
+
+/* Media query for tablets and small desktops */
+@@media (max-width: 768px) {
+    .responsive-table {
+        display: block; /* Display block to enable horizontal scrolling */
+        overflow-x: auto; /* Allow horizontal scrolling */
+        white-space: nowrap; /* Prevent wrapping inside table */
+    }
+}
+
 </style>

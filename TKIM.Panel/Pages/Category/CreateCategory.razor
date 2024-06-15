@@ -3,14 +3,14 @@
 <div class="row justify-content-center mt-4">
     <div class="col-11 card">
         <div class="card-body">
-            <div class="d-flex">
-                <div class="width-20">
+            <div class="d-flex flex-sm-wrap flex-wrap">
+                <div class="col-12 col-sm-12 col-lg-6 col-md-12 col-6">
                     <p>
                         Kategori İsmi
                     </p>
                     <input maxlength="100" placeholder="Kategori İsmi" type="text" @bind="@Category.Name" class="form-control" />
                 </div>
-                <div class="width-40 ml-4">
+                <div class="col-12 col-sm-12  col-md-12 col-6 ml-lg-6 mt-lg-4">
                     <p>
                         Kategori Açıklama
                     </p>
@@ -20,8 +20,8 @@
                 </div>
 
             </div>
-            <div class="d-flex flex-row-reverse">
-                <div class="width-25">
+            <div class="d-flex flex-row-reverse mt-4">
+                <div class="width-25 col-12 col-sm-12 col-m-3 col-lg-3">
                     <button class="btn btn-primary width-100" @onclick="Submit">
                         Kaydet
                     </button>
@@ -30,5 +30,8 @@
         </div>
     </div>
 </div>
+<style>
+    @@media 
+</style>
 
 
