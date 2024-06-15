@@ -1,4 +1,5 @@
-﻿using TKIM.Dto.File;
+﻿using Microsoft.EntityFrameworkCore;
+using TKIM.Dto.File;
 using TKIM.Entity.Entity;
 using TKIM.Infastracture.DA.Abstract;
 using TKIM.Infastracture.Database.Context;
@@ -17,29 +18,47 @@ public class ProductService : IProductService
 
     public async Task<Guid> CreateAsync(Product product, List<FileDetail> files, CancellationToken cancellationToken)
     {
-        product.ID = Guid.NewGuid();
-
-        var productImages = new List<ProductImage>();
-
-        foreach (var file in files)
+        try
         {
-            var productImage = new ProductImage
+            product.ID = Guid.NewGuid();
+
+            var productImages = new List<ProductImage>();
+
+            foreach (var file in files)
             {
-                ID = Guid.NewGuid(),
-                PRODUCT_ID = product.ID,
-                Image = file.Base64.ConvertBase64ToBinary(),
-                ImageSize = file.ToString(),
-                ImageType = file.Type
-            };
-            productImages.Add(productImage);
+                var productImage = new ProductImage
+                {
+                    ID = Guid.NewGuid(),
+                    PRODUCT_ID = product.ID,
+                    Image = Base64ToBinary.ConvertBase64ToBinary(file.Base64),
+                    ImageSize = file.ToString(),
+                    ImageType = file.Type
+                };
+                productImages.Add(productImage);
+            }
+
+            product.ProductImages = productImages;
+
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync(cancellationToken);
+            return product.ID;
         }
+        catch (Exception ex)
+        {
 
-        product.ProductImages = productImages;
-
-        await _context.Products.AddAsync(product);
-        await _context.SaveChangesAsync(cancellationToken);
-        return product.ID;
+            throw;
+        }
     }
 
-    
+    public async Task<List<Product>> GetProductList(CancellationToken cancellationToken)
+    {
+        return await _context.Products.Select(x => new Product
+        {
+            ID = x.ID,
+            NAME = x.NAME,
+            DESCRIPTION = x.DESCRIPTION,
+            PRICE = x.PRICE,
+            STOCK = x.STOCK
+        }).AsNoTracking().ToListAsync();
+    }
 }

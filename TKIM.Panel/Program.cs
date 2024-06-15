@@ -28,6 +28,9 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddServices();
 //builder.Services.AddScoped<ClientAuthenticationStateProvider>();
 builder.Services.AddBlazoredToast();
+builder.Services.AddBlazorBootstrap();
+
+
 
 
 

@@ -14,4 +14,11 @@ public class ProductController : BaseController
     [HttpPost("Create")]
     public async Task<IActionResult> CreateProduct([FromBody] RequestProduct request)
      => await HandleResponse(new CreateProductCommand(request.Model, request.Files));
+
+    [HttpGet("GetList")]
+    [ProducesResponseType(typeof(List<ProductListResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<IActionResult> GetProductList()
+     => await HandleResponse(new GetProductListQuery());
 }

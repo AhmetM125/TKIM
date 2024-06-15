@@ -1,7 +1,6 @@
 ﻿@inherits RazorComponentBase
 
 
-
 <TKIM.Panel.Layout.Component.Loader IsLoading="@ShowLoader" />
 
 <div class="row justify-content-center mt-4">
@@ -30,24 +29,15 @@
 
                     </thead>
                     <tbody>
-                        @if (ProductList is not null && ProductList.Any())
-                        {
-                            @foreach (var item in ProductList)
-                            {
-                                <tr>
-                                    <td>@item.Name</td>
-                                    <td>@item.Description</td>
-                                    <td>@item.Stock</td>
-                                    <td>@item.Price</td>
-                                    <td class="d-flex justify-content-evenly">
 
-                                        <button class="btn btn-outline-secondary" @onclick="()=>Modify(item.Id)">
-                                            <i class="fa-solid fa-gear"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            }
-                        }
+                        <tr>
+                            <td>Data</td>
+                            <td>Data</td>
+                            <td>Data</td>
+                            <td>Data</td>
+                            <td>Data</td>
+                        </tr>
+                        
 
                     </tbody>
                 </table>
@@ -56,10 +46,3 @@
     </div>
 </div>
 
-
-<Modal Id="ProductModify" Size="ModalSize.xl" Title="Ürün Detayları">
-    <Body>
-        <ModifyComponent OnSubmit="LoadGrid" ProductId="SelectedProductId" ></ModifyComponent>
-
-    </Body>
-</Modal>

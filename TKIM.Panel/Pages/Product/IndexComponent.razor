@@ -10,13 +10,13 @@
     </nav>
 </div>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center mt-4">
     <div class="col-11 card">
         <div class="card-body">
             <div class="d-flex justify-content-start">
                 <div class="width-15 text-center">
                     <button class="btn @(IsButtonActive(PageType.Insert)) width-90" @onclick="@(()=>ChangePage(PageType.Insert))">
-                        Ürün Tanımlama
+                        Yeni  Ürün Ekle
                     </button>
                 </div>
                 <div class="width-15 text-center">
@@ -39,7 +39,7 @@
     case PageType.List:
         <ListComponent />
         break;
-   
+
 
 }
 

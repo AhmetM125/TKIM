@@ -35,4 +35,12 @@ public class ProductService : BaseService, IProductService
             throw new Exception(errorMessage);
         }
     }
+
+    public Task<ProductModifyResponse?> GetProductById(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<List<ProductListResponse>?> GetProductList()
+     => await HandleReadResponse<List<ProductListResponse>>("GetList");
 }

@@ -1,0 +1,37 @@
+﻿@inherits RazorComponentBase
+@page "/customer"
+
+<div class="d-flex flex-row-reverse">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+            <li class="breadcrumb-item ">Müşteri</li>
+        </ol>
+    </nav>
+</div>
+
+
+<div class="row justify-content-center mt-4">
+    <div class="col-11 card">
+        <div class="card-body d-flex">
+            <div class="width-15 text-center">
+                <button class="width-90 btn @(IsButtonActive(PageType.Insert))" @onclick="()=>ChangeCategory(PageType.Insert)">Yeni Müşteri Ekle</button>
+            </div>
+            <div class="width-15 text-center">
+                <button class="width-90 btn @(IsButtonActive(PageType.List))" @onclick="()=>ChangeCategory(PageType.List)">Müşteri Listesi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@switch (PageType)
+{
+    case PageType.Main:
+        break;
+    case PageType.Insert:
+        <CreateComponent />
+        break;
+    case PageType.List:
+        <ListComponent />
+        break;
+}

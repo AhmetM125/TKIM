@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="3.0.0-preview.1" />
     <PackageReference Include="Blazored.LocalStorage" Version="4.5.0" />
     <PackageReference Include="Blazored.Toast" Version="4.2.1" />
     <PackageReference Include="Blazorise.Bootstrap5" Version="1.5.3" />
@@ -18,8 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Pages\Customer\" />
-    <Folder Include="Pages\Finance\" />
     <Folder Include="Pages\Receipt\" />
     <Folder Include="ViewModels\Customer\" />
     <Folder Include="ViewModels\Finance\" />

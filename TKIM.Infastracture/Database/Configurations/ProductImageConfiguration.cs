@@ -12,8 +12,8 @@ public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage>
         builder.HasKey(x => x.ID);
         builder.Property(x => x.PRODUCT_ID).IsRequired();
         builder.Property(x => x.Image).IsRequired();
-        builder.Property(x => x.ImageSize).HasMaxLength(20).IsRequired(false);
-        builder.Property(x => x.ImageType).HasMaxLength(20).IsRequired(false);
+        builder.Property(x => x.ImageSize).HasMaxLength(100).IsRequired(false);
+        builder.Property(x => x.ImageType).HasMaxLength(100).IsRequired(false);
 
 
 

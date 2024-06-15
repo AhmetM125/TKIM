@@ -1,0 +1,59 @@
+﻿@inherits RazorComponentBase
+
+<div class="col-12 mt-4 card shadow">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-4">
+                <label>Ürün İsmi</label>
+                <input type="text" class="form-control" />
+            </div>
+            <div class="col-4">
+                <label>Açıklama</label>
+                <input type="text" class="form-control" />
+            </div>
+            <div class="col-4">
+                <label> Stok </label>
+                <input type="text" class="form-control" />
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-4">
+                <label>Barkod</label>
+                <input type="text" class="form-control" />
+            </div>
+            <div class="col-4">
+                <label>Kategori</label>
+                <select class="form-control"></select>
+            </div>
+
+            <div class="col-4">
+                <label>Şirket</label>
+                <select class="form-control"></select>
+            </div>
+
+        </div>
+        <div class="row mt-4">
+            <div class="col-4">
+                <label>KDV</label>
+                <input type="text" class="form-control @(ShakeCss)" />
+            </div>
+            <div class="col-4">
+                <label>Alış Fiyatı</label>
+                <input type="text" class="form-control @(ShakeCss)" />
+            </div>
+            <div class="col-4">
+                <label>Satış Fiyatı</label>
+                <input type="text" class="form-control " />
+            </div>
+        </div>
+    </div>
+
+
+    <div class="d-flex flex-row-reverse mt-4 mb-4">
+
+        <button onclick="test" class="btn btn-outline-primary width-20 me-3">Kaydet</button>
+        <button id="calculateprice" @onclick="CalculatePrice" class="btn btn-outline-primary width-20 me-3">Ürün Fiyatını Hesapla</button>
+    </div>
+</div>
+

@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Entity", "TKIM.Entity\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Dto", "TKIM.Dto\TKIM.Dto.csproj", "{99E303F1-050E-4743-BEAA-74A21EA83473}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TKIM.Utils", "TKIM.Utils\TKIM.Utils.csproj", "{4BCC4839-0FB6-4532-B23C-FBF538315FF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TKIM.Utils", "TKIM.Utils\TKIM.Utils.csproj", "{4BCC4839-0FB6-4532-B23C-FBF538315FF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

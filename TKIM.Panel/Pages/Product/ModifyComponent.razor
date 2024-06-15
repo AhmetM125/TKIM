@@ -1,0 +1,34 @@
+﻿@inherits RazorComponentBase
+
+<div style="height:600px;overflow-y:scroll">
+
+    <div class="col-12 card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <button class="btn @(IsSelectedPage(ProductModalType.Detail)) width-100" @onclick="()=>ChangeModalType(ProductModalType.Detail)">Ürün Detayları</button>
+                </div>
+                <div class="col-3">
+                    <button class="btn @(IsSelectedPage(ProductModalType.PurchaseHistory)) width-100" @onclick="()=>ChangeModalType(ProductModalType.PurchaseHistory)">Ürün Alış Geçmişi</button>
+                </div>
+                <div class="col-3">
+                    <button class="btn @(IsSelectedPage(ProductModalType.SaleHistory)) width-100" @onclick="()=>ChangeModalType(ProductModalType.SaleHistory)">Ürün Satış Geçmişi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @switch (modalType)
+    {
+        case ProductModalType.Detail:
+            <ProductDetailComponent ProductId="@ProductId" />
+            break;
+        case ProductModalType.PurchaseHistory:
+            <ProductPurchaseHistoryComponent ProductId="@ProductId" />
+            break;
+        case ProductModalType.SaleHistory:
+            <ProductSalesHistoryComponent ProductId="@ProductId" />
+            break;
+    }
+</div>
