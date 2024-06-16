@@ -10,21 +10,22 @@
     </nav>
 </div>
 
+
+
+
 <div class="row justify-content-center mt-4">
     <div class="col-11 card">
-        <div class="card-body">
-            <div class="d-flex justify-content-start">
-                <div class="width-15 text-center">
+        <div class="card-body d-flex flex-sm-wrap flex-wrap">
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12 col-12 text-center product-button text-center">
                     <button class="btn @(IsButtonActive(PageType.Insert)) width-90" @onclick="@(()=>ChangePage(PageType.Insert))">
-                        Yeni  Ürün Ekle
+                          Ürün Ekle
                     </button>
                 </div>
-                <div class="width-15 text-center">
+                <div class="col-xl-2 col-lg-4 col-md-6 col-sm-12 col-12 col-xs-12 text-center">
                     <button class="btn @(IsButtonActive(PageType.List)) width-90" @onclick="@(()=>ChangePage(PageType.List))">
                         Ürün Listesi
                     </button>
                 </div>
-            </div>
         </div>
     </div>
 </div>
@@ -42,6 +43,14 @@
 
 
 }
+<style>
+
+    @@media screen and (max-width:764px) {
+        .product-button {
+            margin-bottom: 10px;
+        }
+    }
+</style>
 
 
 

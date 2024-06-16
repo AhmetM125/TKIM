@@ -12,49 +12,66 @@
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/")) cursor-pointer" @onclick='()=>ActiveNavigator("/")'>
-            <i class="fas fa-address-card"></i>
+    <li class="nav-item @(IsActiveLink("/"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/")'>
+            <i class="fa-solid fa-house"></i>
             <span> Ana Sayfa</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/category")) cursor-pointer" @onclick='()=>ActiveNavigator("/category")'>
-            <i class="fa-solid fa-k"></i>
+
+    <li class="nav-item @(IsActiveLink("/sale"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/sale")'>
+            <i class="fal fa-solid fa-basket-shopping"></i>
+            <span> Satış</span>
+        </a>
+    </li> 
+    <li class="nav-item @(IsActiveLink("/receipt"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/receipt")'>
+            <i class="fa-solid fa-boxes-stacked"></i>
+            <span> Tedarik</span>
+        </a>
+    </li>
+
+
+    <li class="nav-item @(IsActiveLink("/category"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/category")'>
+            <i class="fal fa-solid fa-k"></i>
             <span> Kategori</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/product")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")' >
-            <i class="fa-solid fa-box"></i>
+    <li class="nav-item @(IsActiveLink("/product"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/product")' >
+            <i class="fal fa-solid fa-box"></i>
             <span> Ürün</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/company")) cursor-pointer" @onclick='()=>ActiveNavigator("/company")'>
-            <i class="fa-solid fa-building"></i>
+    <li class="nav-item @(IsActiveLink("/company"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/company")'>
+            <i class="fal fa-solid fa-building"></i>
             <span> Şirket</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/customer")) cursor-pointer" @onclick='()=>ActiveNavigator("/customer")'>
-            <i class="fa-regular fa-address-book"></i>
+    <li class="nav-item @(IsActiveLink("/customer"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/customer")'>
+            <i class="fal fa-regular fa-address-book"></i>
             <span> Müşteriler</span>
         </a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/finance")) cursor-pointer" @onclick='()=>ActiveNavigator("/finance")'>
-            <i class="fa-solid fa-chart-simple"></i>
+    <li class="nav-item @(IsActiveLink("/finance"))">
+        <a class=" nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/finance")'>
+            <i class="fal fa-solid fa-chart-simple"></i>
             <span> Finans</span>
         </a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link @(IsActiveLink("/finance")) cursor-pointer" @onclick='()=>ActiveNavigator("/product")'>
-            <i class="fa-solid fa-receipt"></i>
+    <li class="nav-item @(IsActiveLink("/receipt"))">
+        <a class="nav-link  cursor-pointer" @onclick='()=>ActiveNavigator("/receipt")'>
+            <i class="fal fa-solid fa-receipt"></i>
             <span> Faturalar</span>
         </a>
     </li>
+
+    
    
  
 
