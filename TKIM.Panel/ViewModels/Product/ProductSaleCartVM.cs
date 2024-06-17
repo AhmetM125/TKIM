@@ -8,5 +8,9 @@ public class ProductSaleCartVM
     public decimal PurchasePrice { get; set; }
     public int Stock { get; set; }
     public int QuantityInCart { get; set; } = 0; // quantity that is in the cart
-    public decimal TotalPrice { get; set; }
+    public decimal TotalPrice { get; set; } = 0;
+    public decimal Kdv { get; set; } = 0;
+    public decimal Discount { get; set; } = 0;
+    public decimal Profit { get; set; } = 1;
+
 } 

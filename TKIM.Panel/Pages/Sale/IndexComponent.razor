@@ -77,9 +77,9 @@
                     <thead>
                         <tr>
                             <th>Ürün Adı</th>
-                            <th>Stok</th>
-                            <th>Alış Fiyatı</th>
-                            <th>Satış Fiyat</th>
+                            <th class="width-15">Stok</th>
+                            <th class="width-15">Alış Fiyatı</th>
+                            <th class="width-15">Satış Fiyat</th>
                             <th class="width-25"></th>
                         </tr>
                     </thead>
@@ -91,15 +91,15 @@
                                 <tr>
                                     <td>@item.Name</td>
                                     <td>@(item.Quantity ?? 0)</td>
-                                    <td>@(item.PurchasePrice.HasValue ? item.PurchasePrice.Value.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")) : 0.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")))</td>
-                                    <td>@(item.SalePrice.HasValue ? item.SalePrice.Value.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")) : 0.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")))</td>
+                                    <td>₺@(item.PurchasePrice.HasValue ? item.PurchasePrice.Value : 0)</td>
+                                    <td>₺@(item.SalePrice.HasValue ? item.SalePrice.Value : 0)</td>
                                     <td>
                                         <div class="d-flex justify-content-evenly">
                                             <button class="btn btn-outline-primary" @onclick="()=>AddCart(item.Id)">
                                                 <i class="fa-solid fa-cart-plus"></i>
                                                 Sepete Ekle
                                             </button>
-                                            <button class="btn btn-outline-success">
+                                            <button class="btn btn-outline-success" @onclick="@(()=>ProductDetails(item.Id))">
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 Detay
                                             </button>
@@ -129,7 +129,7 @@
         {
             if (item.IsCartActive && item.BasketItems is not null)
             {
-                <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent BasketTabVM="@item" BasketNo="@i" />
+                <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent BasketItems="@BasketTabVMs" BasketTabVM="@item" BasketNo="@i" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" OnProductDetail="@((e)=>ChangeProductForDetailModal(e))" />
             }
             i++;
         }
@@ -143,9 +143,15 @@
 </style>
 
 
-<Modal Title="Ürün Detayı" Id="ProductCartDetail" Size="ModalSize.lg">
+<Modal Title="Ürün Sepet" Id="ProductCartDetail" Size="ModalSize.lg">
     <Body>
         <ProductSaleCartDetail ProductSaleCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" />
+    </Body>
+</Modal>
+
+<Modal Title="Ürün Detaylar" Id="ProductDetail" Size="ModalSize.xl">
+    <Body>
+        <TKIM.Panel.Pages.Product.ModifyComponent ProductId="@SelectedProductIdForDetail" OnSubmit="LoadGrid" />
     </Body>
 </Modal>
 

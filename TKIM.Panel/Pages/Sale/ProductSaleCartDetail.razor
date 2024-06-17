@@ -13,7 +13,9 @@
             <label class="fw-bold">Sepet Seçimi</label>
             <select class="form-control" @bind="@SelectedCart">
                 <option value="0">Yeni Sepet</option>
-                @{short i = 1; }
+                @{
+                    short i = 1;
+                }
                 @foreach (var item in BasketTabVMs)
                 {
                     <option value="@i">Sepet @i</option>
@@ -30,10 +32,10 @@
             <label class="form-control"> ₺@ProductSaleCartVM.PurchasePrice</label>
         </div>
         <div class="col-6">
-            <label> Satış Fiyatı</label>
-            <div class="form-control d-flex">
-                ₺
-                <input type="number" class="border-0 w-100" @onchange="SalePriceChange" @bind-value:event="oninput" @bind-value="@ProductSaleCartVM.SalePrice" />
+            <label> Kar Oranı</label>
+            <div class="d-flex form-control">
+                %
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Profit" @bind-value:event="oninput" type="number" @onchange="@SalePriceChange" />
             </div>
         </div>
     </div>
@@ -50,19 +52,43 @@
     </div>
     <div class="row mt-4">
         <div class="col-6">
+            <label> Kdv Oranı</label>
+            <div class="d-flex form-control">
+                %
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Kdv" @bind-value:event="oninput" @onchange="@SalePriceChange" type="number" />
+            </div>
+        </div>
+
+    </div>
+    <hr class="" />
+    <div class="row mt-4">
+        <div class="col-6">
+            <label> Miktar Fiyatı</label>
+            <div class="form-control d-flex">
+                ₺
+                <input type="number" class="border-0 w-100" @onchange="PriceChange" @bind-value:event="oninput" @bind-value="@ProductSaleCartVM.SalePrice" />
+            </div>
+
+        </div>
+        <div class="col-6">
             <label> Toplam Fiyat</label>
             <div class="d-flex form-control">
                 ₺
-                <input class="border-0 w-100"  @bind="@ProductSaleCartVM.TotalPrice" type="number" />
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.TotalPrice"  type="number" />
             </div>
         </div>
+
     </div>
 
 
     <div class="d-flex flex-row-reverse mt-5">
         <button class="btn btn-outline-secondary w-25" @onclick="@(()=>InsertCart(SelectedCart))">
-            <i class="fa-solid fa-plus"></i>
+            <i class="fa-solid fa-cart-plus"></i>
             Sepete Ekle
+        </button>
+        <button class="btn btn-outline-primary w-25 mr-3">
+            <i class="fa-solid fa-check"></i>
+            Ürünü Güncelle
         </button>
 
     </div>

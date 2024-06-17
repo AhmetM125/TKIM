@@ -24,8 +24,8 @@
                         <tr>
                             <th>Ürün Adı</th>
                             <th>Adet</th>
-                            <th class="width-15">Alışveriş Sonrası Stok</th>
-                            <th>Satış Fiyatı</th>
+                            <th class="width-20">Alışveriş Sonrası Stok</th>
+                            <th class="width-20">Satış Fiyatı</th>
                             <th class="width-30"></th>
                         </tr>
                     </thead>
@@ -53,14 +53,18 @@
 
                                     <input type="number" value="@remain" class="form-control @quantityCss @quantityTextColor">
                                 </td>
-                                <td>@item.SalePrice</td>
+                                <td>
+                                    <div class="form-control d-flex">
+                                        ₺<input type="number" class="border-0 w-100" @bind="@item.SalePrice" />
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="d-flex">
                                         <button class="btn btn-outline-danger ">
                                             <i class="fa-solid fa-basket-shopping"></i>
                                             Sepetten Kaldır
                                         </button>
-                                        <button class="btn btn-outline-success ml-2 width-40">
+                                        <button class="btn btn-outline-success ml-2 width-40" @onclick="@(()=>ProductDetail(item))">
                                             <i class="fa-solid fa-circle-info"></i>
                                             Detay
                                         </button>
@@ -72,6 +76,12 @@
 
                     </tbody>
                 </table>
+                <div class="d-flex flex-row-reverse">
+                    <button class="btn btn-outline-success">
+                        <i class="fa-solid fa-check"></i>
+                        Sepeti Onayla
+                    </button>
+                </div>
             </div>
         </div>
     </div>

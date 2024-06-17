@@ -23,7 +23,15 @@ public partial class ProductSaleCartDetail : RazorComponentBase
     }
 
     void SalePriceChange()
-     => ProductSaleCartVM.TotalPrice = ProductSaleCartVM.SalePrice * ProductSaleCartVM.QuantityInCart;
+    {
+        ProductSaleCartVM.TotalPrice = ((ProductSaleCartVM.PurchasePrice * (decimal)ProductSaleCartVM.QuantityInCart) 
+            + (ProductSaleCartVM.PurchasePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.PurchasePrice * ProductSaleCartVM.Profit / 100));
+    }
+    void PriceChange()
+    {
+        ProductSaleCartVM.TotalPrice = ProductSaleCartVM.SalePrice * ProductSaleCartVM.QuantityInCart;
+    }
+
 
 
 

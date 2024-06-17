@@ -14,6 +14,7 @@ public partial class IndexComponent : RazorComponentBase
     private List<ProductListPosResponse>? ProductList;
     private ProductSaleCartVM SelectedProduct = new ProductSaleCartVM();
     private List<BasketTabVM> BasketTabVMs { get; set; } = new List<BasketTabVM>();
+    private Guid SelectedProductIdForDetail { get; set; }
     private int CurrentPage { get; set; } = 1;
 
 
@@ -57,13 +58,23 @@ public partial class IndexComponent : RazorComponentBase
     }
 
     private void ClearCarts()
-    {
-        BasketTabVMs = new List<BasketTabVM>();
-    }
+    => BasketTabVMs = new List<BasketTabVM>();
 
-    private void  CreateNewCart()
+    private void CreateNewCart()
+    => BasketTabVMs.Add(new BasketTabVM { });
+
+    private async Task ProductDetails(Guid productId)
     {
-        BasketTabVMs.Add(new BasketTabVM{});
+        try
+        {
+            SelectedProductIdForDetail = productId;
+            await LayoutValue.OpenModal("ProductDetail");
+        }
+        catch (Exception)
+        {
+            LayoutValue.ShowMessage("Ürün detayları yüklenirken bir hata oluştu.", MessageType.Error);
+        }
+
     }
 
     private string IsButtonActive(PageType pageType)
@@ -93,5 +104,10 @@ public partial class IndexComponent : RazorComponentBase
             LayoutValue.ShowMessage("Ürün seçilirken bir hata oluştu.", MessageType.Error);
         }
 
+    }
+    private async Task ChangeProductForDetailModal(ProductSaleCartVM productDetail)
+    {
+        SelectedProduct = productDetail;
+        await LayoutValue.OpenModal("ProductCartDetail");
     }
 }
