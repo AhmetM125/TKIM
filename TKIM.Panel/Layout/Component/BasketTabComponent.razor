@@ -1,0 +1,37 @@
+﻿@inherits RazorComponentBase
+
+
+<div class="main-basket" @onmouseenter="@BasketVisibility" @onmouseleave="@BasketVisibility" style="">
+
+    <div class="d-flex justify-content-center mb-3" >
+        <i class="fa-solid fa-xmark fa-lg cursor-pointer @BasketClose" @onclick="DeleteCart"></i>
+    </div>
+    
+    <div class=" btn @(IsChartActive(BasketTabVM.IsCartActive))  cursor-pointer position-relative" @onclick="@(()=>CartStatusChange(BasketTabVM.IsCartActive))">
+        <div class="text-center">
+            <i class="fa-solid fa-basket-shopping"</i>
+            Sepet @BasketNumber
+        </div>
+    </div>
+</div>
+
+<style>
+    .main-basket{ 
+        height: 70px;
+    }
+    .basket-close {
+        display: none;
+    }
+</style>
+
+@code {
+    private string BasketClose = "basket-close";
+    void BasketVisibility()
+    {
+        if (BasketClose == "")
+            BasketClose = "basket-close";
+        else
+            BasketClose = "";
+
+    }
+}

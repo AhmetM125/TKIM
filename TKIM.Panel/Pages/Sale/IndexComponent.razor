@@ -1,5 +1,151 @@
-﻿<h3>IndexComponent</h3>
+﻿@inherits RazorComponentBase
+@page "/sale"
+@using System.Globalization
 
-@code {
+<div class="d-flex flex-row-reverse">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Ana Sayfa</a></li>
+            <li class="breadcrumb-item ">Satış Ekranı</li>
+        </ol>
+    </nav>
+</div>
 
+<div class="row justify-content-center">
+    <div class="col-11">
+        <div class="d-flex flex-row-reverse">
+            Tarih:
+            @DateTime.Now.ToString("dd-MM-yyyy")
+        </div>
+    </div>
+</div>
+
+@if (BasketTabVMs is not null && BasketTabVMs.Select(x => x.BasketItems).Any())
+{
+    <div class="row justify-content-center ">
+        <div class="col-11">
+            <div class="row">
+                @{
+                    short i = 0;
+                }
+                @foreach (var item in BasketTabVMs)
+                {
+                    i++;
+                    <div class="col-1">
+                        <BasketTabComponent BasketNumber="@i" BasketTabVM="item" OnCartStatusChange="@(()=>StateHasChanged())" OnCartRemove="@(()=>StateHasChanged())" BasketTabVMs="BasketTabVMs" />
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
 }
+
+@if (ShowLoader)
+{
+    <Loader IsLoading="@ShowLoader" />
+}
+
+<div class="row justify-content-center mt-4 ">
+    <div class="col-11 card ">
+
+        <div class="d-flex justify-content-between mt-3 ">
+            <h5 class="card-title mt-3 ml-3">Ürün Seçme Ekranı</h5>
+            <div class="d-flex">
+                <button class="btn btn-outline-primary" @onclick="CreateNewCart">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                    Yeni Sepet
+                </button>
+                <button class="btn btn-outline-danger ml-2" @onclick="ClearCarts">
+                    <i class="fa-solid fa-trash"></i>
+                    Sepetleri Sil
+                </button>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+            <div class="input-group mb-3 col-3">
+                <input type="text" class="form-control" @oninput="SearchProduct" placeholder="Ürün Ara" aria-label="Ürün Ara" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary" type="button" id="button-addon2">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body d-flex flex-sm-wrap flex-wrap">
+            <div class="point-of-sale col-12">
+                <table class="table table-hover table-bordered ">
+                    <thead>
+                        <tr>
+                            <th>Ürün Adı</th>
+                            <th>Stok</th>
+                            <th>Alış Fiyatı</th>
+                            <th>Satış Fiyat</th>
+                            <th class="width-25"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ProductList is not null && ProductList.Count > 0)
+                        {
+                            @foreach (var item in ProductList)
+                            {
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@(item.Quantity ?? 0)</td>
+                                    <td>@(item.PurchasePrice.HasValue ? item.PurchasePrice.Value.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")) : 0.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")))</td>
+                                    <td>@(item.SalePrice.HasValue ? item.SalePrice.Value.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")) : 0.ToString("C", CultureInfo.CreateSpecificCulture("tr-TR")))</td>
+                                    <td>
+                                        <div class="d-flex justify-content-evenly">
+                                            <button class="btn btn-outline-primary" @onclick="()=>AddCart(item.Id)">
+                                                <i class="fa-solid fa-cart-plus"></i>
+                                                Sepete Ekle
+                                            </button>
+                                            <button class="btn btn-outline-success">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                                Detay
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@if (BasketTabVM is not null && BasketTabVM.BasketItems is not null)
+{
+    <div class="d-flex flex-column">
+
+        @{
+            short i = 1;
+        }
+        @foreach (var item in BasketTabVMs)
+        {
+            if (item.IsCartActive && item.BasketItems is not null)
+            {
+                <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent BasketTabVM="@item" BasketNo="@i" />
+            }
+            i++;
+        }
+    </div>
+}
+
+<style>
+    .product-search {
+        background-color: #e6e6e6;
+    }
+</style>
+
+
+<Modal Title="Ürün Detayı" Id="ProductCartDetail" Size="ModalSize.lg">
+    <Body>
+        <ProductSaleCartDetail ProductSaleCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" />
+    </Body>
+</Modal>
+

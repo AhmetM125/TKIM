@@ -21,4 +21,10 @@ public class ProductController : BaseController
 
     public async Task<IActionResult> GetProductList()
      => await HandleResponse(new GetProductListQuery());
+
+    [HttpGet("GetListForPos")]
+    [ProducesResponseType(typeof(List<ProductListPosResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetProductListForPos([FromQuery] string? searchText, [FromQuery] int currentPage)
+     => await HandleResponse(new GetProductListForPosQuery(searchText, currentPage));
 }

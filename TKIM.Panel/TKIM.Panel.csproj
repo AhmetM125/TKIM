@@ -22,6 +22,7 @@
     <Folder Include="ViewModels\Customer\" />
     <Folder Include="ViewModels\Finance\" />
     <Folder Include="ViewModels\Receipt\" />
+    <Folder Include="ViewModels\Supply\" />
   </ItemGroup>
 
 </Project>

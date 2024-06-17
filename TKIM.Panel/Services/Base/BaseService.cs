@@ -13,7 +13,33 @@ public class BaseService
     {
         _httpClient = httpClient;
     }
+    public async Task<BaseResponseWithPagination<T>> HandleReadResponseWithPagination<T>(string requestUrl)
+    {
+        try
+        {
+            var response = await _httpClient.GetAsync($"{ApiName}/{requestUrl}");
 
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<BaseResponseWithPagination<T>>();
+                if (result != null)
+                    return result;
+                else
+                    return default;
+            }
+            else
+            {
+                var errorMessage = await response.Content.ReadAsStringAsync();
+                throw new Exception(errorMessage);
+            }
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            throw;
+        }
+    }
     public async Task<TItem?> HandleReadResponse<TItem>(string requestUrl)
     {
         try
@@ -33,13 +59,15 @@ public class BaseService
                 var errorMessage = await response.Content.ReadAsStringAsync();
                 throw new Exception(errorMessage);
             }
+
         }
         catch (Exception ex)
         {
-            Console.WriteLine("Error");
+            Console.WriteLine(ex.Message);
             throw;
         }
     }
+   
     public async Task HandlePostResponse<T>(string requestUrl, T entity)
     {
         try

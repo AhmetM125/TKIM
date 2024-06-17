@@ -1,7 +1,9 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 using System.Text.Json;
 using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.Services.Base;
+using TKIM.Panel.ViewModels.BaseResponse;
 using TKIM.Panel.ViewModels.Product;
 
 namespace TKIM.Panel.Services.Concrete;
@@ -43,4 +45,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<List<ProductListResponse>?> GetProductList()
      => await HandleReadResponse<List<ProductListResponse>>("GetList");
+
+    public async Task<BaseResponseWithPagination<List<ProductListPosResponse>>> ProductListForPos(string searchText, int currentPage)
+     => await HandleReadResponseWithPagination<List<ProductListPosResponse>>($"GetListForPos?searchText={searchText}&currentPage={currentPage}");
 }

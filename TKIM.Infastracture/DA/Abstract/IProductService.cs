@@ -7,4 +7,5 @@ public interface IProductService
 {
     Task<Guid> CreateAsync(Product product,List<FileDetail> files,CancellationToken cancellationToken);
     Task<List<Product>> GetProductList(CancellationToken cancellationToken);
+    Task<(List<Product>,int)> GetProductListForPos(string? searchText, int currentPage,CancellationToken cancellationToken);
 }
