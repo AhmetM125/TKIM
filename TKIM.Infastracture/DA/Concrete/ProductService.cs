@@ -42,6 +42,12 @@ public class ProductService : IProductService
         return product.ID;
     }
 
+    public async Task<Product?> GetProductById(Guid id)
+    {
+        var response =  await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
+        return response;
+    }
+
     public async Task<List<Product>> GetProductList(CancellationToken cancellationToken)
     {
         return await _context.Products.Select(x => new Product
@@ -67,7 +73,7 @@ public class ProductService : IProductService
                   DESCRIPTION = x.DESCRIPTION,
                   PRICE = x.PRICE,
                   STOCK = x.STOCK
-              }).Skip(skip).Take(take).AsNoTracking();
+              }).OrderBy(x=>x.NAME).Skip(skip).Take(take).AsNoTracking();
 
         var totalCount = await query.CountAsync(cancellationToken);
         var data = await query.ToListAsync(cancellationToken);

@@ -58,10 +58,6 @@
                 <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Kdv" @bind-value:event="oninput" @onchange="@SalePriceChange" type="number" />
             </div>
         </div>
-
-    </div>
-    <hr class="" />
-    <div class="row mt-4">
         <div class="col-6">
             <label> Miktar Fiyatı</label>
             <div class="form-control d-flex">
@@ -70,13 +66,17 @@
             </div>
 
         </div>
-        <div class="col-6">
+    </div>
+    <hr class="" />
+    <div class="row mt-4">
+        <div class="col-12">
             <label> Toplam Fiyat</label>
             <div class="d-flex form-control">
                 ₺
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.TotalPrice"  type="number" />
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.TotalPrice" type="number" />
             </div>
         </div>
+
 
     </div>
 

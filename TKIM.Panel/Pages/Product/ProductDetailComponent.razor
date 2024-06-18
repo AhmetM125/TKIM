@@ -24,29 +24,54 @@
             </div>
             <div class="col-4">
                 <label>Kategori</label>
-                <select class="form-control"></select>
+                <select class="form-control">
+                    <option value="0">Seçiniz</option>
+                    @if (Categories is not null)
+                    {
+                        foreach (var item in Categories)
+                        {
+                            <option value="@item.ID">@item.Name</option>
+                        }
+                    }
+                </select>
             </div>
 
             <div class="col-4">
                 <label>Şirket</label>
-                <select class="form-control"></select>
+                <select class="form-control">
+                    <option value="0">Seçiniz</option>
+                    @if (Companies is not null)
+                    {
+                        foreach (var item in Companies)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    }
+                </select>
             </div>
 
         </div>
         <div class="row mt-4">
             <div class="col-4">
                 <label>KDV</label>
-                <input type="text" class="form-control @(ShakeCss)" />
+                @* <TypeSpesificInput Type="%"  DecimalValue="@Product.SalePrice" Css="@(ShakeCss)" /> *@
             </div>
             <div class="col-4">
                 <label>Alış Fiyatı</label>
-                <input type="text" class="form-control @(ShakeCss)" />
+                @* <TypeSpesificInput Type="TRY" Value="@Product.PurchasePrice" Css="@(ShakeCss)" /> *@
             </div>
             <div class="col-4">
                 <label>Satış Fiyatı</label>
-                <input type="text" class="form-control " />
+                @* <TypeSpesificInput Type="TRY" Value="@Product.SalePrice" /> *@
             </div>
         </div>
+        <div class="row mt-4">
+            <div class="col-4">
+                <label>Kar Oranı</label>
+                @* <TypeSpesificInput Type="%" Value="@Product.Profit"/> *@
+            </div>
+        </div>
+
     </div>
 
 

@@ -1,0 +1,13 @@
+﻿@inherits RazorComponentBase
+@typeparam T
+
+    <div>
+        <select @bind-value="SelectedValue" @bind-value:event="oninput" @onchange="HandleSelectionChange" class="form-control">
+            @foreach (var item in Items)
+            {
+                <option value="@ValueSelector(item)">
+                    @DisplaySelector(item)
+                </option>
+            }
+        </select>
+    </div>

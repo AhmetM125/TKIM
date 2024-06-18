@@ -30,6 +30,7 @@ public partial class CreateProduct : RazorComponentBase
     {
         try
         {
+            ShowLoader = true;
             // Get the files as a list of base64 strings from JavaScript
             var base64Files = await JsRuntime.InvokeAsync<List<FileDetail>>("getFileBytes", "file-product");
 
@@ -58,6 +59,7 @@ public partial class CreateProduct : RazorComponentBase
         finally
         {
             Model = new ProductInsertRequest(); // Reset the form or model
+            ShowLoader = false;
         }
 
     }
@@ -70,22 +72,32 @@ public partial class CreateProduct : RazorComponentBase
     {
         try
         {
+            ShowLoader = true;
             Categories = await _categoryService.GetCategoryForDropdown();
         }
         catch (Exception)
         {
             LayoutValue.ShowMessage("Kategori bilgileri yüklenirken bir hata oluştu.", MessageType.Error);
         }
+        finally
+        {
+            ShowLoader = false;
+        }
     }
     async Task LoadCompanyDropdown()
     {
         try
         {
+            ShowLoader = true;
             Companies = await _companyService.GetCompanyForDropdown();
         }
         catch (Exception)
         {
             LayoutValue.ShowMessage("Firma bilgileri yüklenirken bir hata oluştu.", MessageType.Error);
+        }
+        finally
+        {
+            ShowLoader = false;
         }
     }
     //async Task FileInput()

@@ -24,8 +24,8 @@ public partial class ProductSaleCartDetail : RazorComponentBase
 
     void SalePriceChange()
     {
-        ProductSaleCartVM.TotalPrice = ((ProductSaleCartVM.PurchasePrice * (decimal)ProductSaleCartVM.QuantityInCart) 
-            + (ProductSaleCartVM.PurchasePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.PurchasePrice * ProductSaleCartVM.Profit / 100));
+        ProductSaleCartVM.TotalPrice = ((ProductSaleCartVM.SalePrice * (decimal)ProductSaleCartVM.QuantityInCart) 
+            + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Profit / 100));
     }
     void PriceChange()
     {

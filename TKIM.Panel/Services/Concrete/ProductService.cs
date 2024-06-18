@@ -38,10 +38,8 @@ public class ProductService : BaseService, IProductService
         }
     }
 
-    public Task<ProductModifyResponse?> GetProductById(Guid id)
-    {
-        throw new NotImplementedException();
-    }
+    public async Task<ProductModifyResponse?> GetProductById(Guid id)
+     => await HandleReadResponse<ProductModifyResponse>($"GetById?id={id}");
 
     public async Task<List<ProductListResponse>?> GetProductList()
      => await HandleReadResponse<List<ProductListResponse>>("GetList");
