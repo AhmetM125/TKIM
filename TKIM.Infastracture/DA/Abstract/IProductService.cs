@@ -9,4 +9,5 @@ public interface IProductService
     Task<Product> GetProductById(Guid id);
     Task<List<Product>> GetProductList(CancellationToken cancellationToken);
     Task<(List<Product>,int)> GetProductListForPos(string? searchText, int currentPage,CancellationToken cancellationToken);
+    Task UpdateProductAsync(Product product,CancellationToken cancellation);
 }

@@ -11,4 +11,5 @@ public interface IProductService
 
     Task<ProductModifyResponse?> GetProductById(Guid id);
     Task<BaseResponseWithPagination<List<ProductListPosResponse>>> ProductListForPos(string searchText, int currentPage);
+    Task UpdateProductAsync(ProductModifyResponse product);
 }

@@ -3,5 +3,5 @@
 
 <div class="form-control d-flex">
     @Type
-    <input type="number" @bind="@DecimalValue" class="border-0 w-100 @Css" />
+    <input type="number" @bind-value="@DecimalValue" @bind-value:event="oninput" class="border-0 w-100 @Css" @onchange="OnValueChanged" />
 </div>

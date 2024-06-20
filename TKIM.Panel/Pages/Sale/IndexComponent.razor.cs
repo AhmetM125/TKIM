@@ -91,9 +91,9 @@ public partial class IndexComponent : RazorComponentBase
                 {
                     Id = product.Id,
                     Name = product.Name,
-                    SalePrice = product.SalePrice ?? 0,
-                    PurchasePrice = product.PurchasePrice ?? 0,
-                    Stock = product.Quantity ?? 0,
+                    SalePrice = product.SalePrice,
+                    PurchasePrice = product.PurchasePrice ,
+                    Stock = product.Quantity ,
                     QuantityInCart = 1
                 };
                 await LayoutValue.OpenModal("ProductCartDetail");

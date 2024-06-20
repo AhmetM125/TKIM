@@ -44,7 +44,7 @@ public class GetProductListForPosQueryHandler : QueryHandler<GetProductListForPo
     {
         (List<Entity.Entity.Product> data, int totalCount) = await _productService.GetProductListForPos(query.SearchText, query.CurrentPage, cancellationToken);
 
-        return new ProductListPosResponse(data.Select(x => new ProductListPos(x.ID, x.NAME, x.STOCK, x.PRICE, x.PRICE)).ToList(), totalCount);
+        return new ProductListPosResponse(data.Select(x => new ProductListPos(x.ID, x.NAME, x.STOCK, x.PURCHASE_PRICE, x.SALE_PRICE)).ToList(), totalCount);
     }
 
 
@@ -52,7 +52,7 @@ public class GetProductListForPosQueryHandler : QueryHandler<GetProductListForPo
 
 public record class ProductListPos
 {
-    public ProductListPos(Guid id, string name, int? quantity, decimal? purchasePrice, decimal? salePrice)
+    public ProductListPos(Guid id, string name, int quantity, decimal purchasePrice, decimal salePrice)
     {
         Id = id;
         Name = name;
@@ -63,9 +63,9 @@ public record class ProductListPos
 
     public Guid Id { get; set; }
     public string Name { get; set; }
-    public int? Quantity { get; set; }
-    public decimal? PurchasePrice { get; set; }
-    public decimal? SalePrice { get; set; }
+    public int Quantity { get; set; }
+    public decimal PurchasePrice { get; set; }
+    public decimal SalePrice { get; set; }
 }
 public record class ProductListPosResponse
 {

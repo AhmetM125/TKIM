@@ -46,4 +46,7 @@ public class ProductService : BaseService, IProductService
 
     public async Task<BaseResponseWithPagination<List<ProductListPosResponse>>> ProductListForPos(string searchText, int currentPage)
      => await HandleReadResponseWithPagination<List<ProductListPosResponse>>($"GetListForPos?searchText={searchText}&currentPage={currentPage}");
+
+    public async Task UpdateProductAsync(ProductModifyResponse product)
+    => await HandlePutResponse($"Update", product);
 }

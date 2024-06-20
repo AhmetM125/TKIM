@@ -33,4 +33,22 @@ public class ProductController : BaseController
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetProductById([FromQuery] Guid id)
      => await HandleResponse(new GetProductByIdQuery(id));
+
+    [HttpPut("Update")]
+    [ProducesResponseType(StatusCodes.Status202Accepted)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> UpdateProduct([FromBody] UpdateProductRequest product)
+     => await HandleResponse(new UpdateProductCommand(
+         product.Id,
+         product.Name,
+         product.Desc,
+         product.Stock,
+         product.Barkod,
+         product.Category,
+         product.Company,
+         product.Kdv,
+         product.PurchasePrice,
+         product.SalePrice,
+         product.Profit
+         ));
 }

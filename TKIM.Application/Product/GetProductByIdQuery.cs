@@ -35,8 +35,13 @@ public class GetProductByIdQueryHandler : QueryHandler<GetProductByIdQuery, Prod
 
     public override async Task<ProductModifyResponse> ExecuteQuery(GetProductByIdQuery query, CancellationToken cancellationToken)
     {
-        var productResponse = await _productService.GetProductById(query.Id);
-        return null;
+        var responseProduct = await _productService.GetProductById(query.Id);
+
+        return new ProductModifyResponse(responseProduct.ID, responseProduct.NAME,
+            responseProduct.DESCRIPTION, responseProduct.STOCK, responseProduct.BARCODE,
+            responseProduct.CATEGORY_ID, responseProduct.COMPANY_ID, responseProduct.KDV,
+            responseProduct.PURCHASE_PRICE, responseProduct.SALE_PRICE, responseProduct.PROFIT);
+
     }
 }
 
@@ -50,13 +55,29 @@ public class GetProductByIdValidator : AbstractValidator<GetProductByIdQuery>
 
 public record ProductModifyResponse
 {
+    public ProductModifyResponse(Guid id, string name, string desc, int stock, string barkod, Guid? category, Guid? company, decimal kdv,
+        decimal purchasePrice, decimal salePrice, decimal profit)
+    {
+        Id = id;
+        Name = name;
+        Desc = desc;
+        Stock = stock;
+        Barkod = barkod;
+        Category = category;
+        Company = company;
+        Kdv = kdv;
+        PurchasePrice = purchasePrice;
+        SalePrice = salePrice;
+        Profit = profit;
+    }
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Desc { get; set; }
-    public string Stock { get; set; }
+    public int Stock { get; set; }
     public string Barkod { get; set; }
-    public string Category { get; set; }
-    public string Company { get; set; }
+    public Guid? Category { get; set; }
+    public Guid? Company { get; set; }
     public decimal Kdv { get; set; }
     public decimal PurchasePrice { get; set; }
     public decimal SalePrice { get; set; }

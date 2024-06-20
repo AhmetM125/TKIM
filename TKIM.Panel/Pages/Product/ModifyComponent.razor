@@ -22,7 +22,7 @@
     @switch (modalType)
     {
         case ProductModalType.Detail:
-            <ProductDetailComponent ProductId="@ProductId" />
+            <ProductDetailComponent ProductId="@ProductId" OnUpdate="UpdateGrid"/>
             break;
         case ProductModalType.PurchaseHistory:
             <ProductPurchaseHistoryComponent ProductId="@ProductId" />

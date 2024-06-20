@@ -37,14 +37,14 @@ public class ProductService : IProductService
 
         product.ProductImages = productImages;
 
-        await _context.Products.AddAsync(product);
+        await _context.Products.AddAsync(product, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken);
         return product.ID;
     }
 
     public async Task<Product?> GetProductById(Guid id)
     {
-        var response =  await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
+        var response = await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
         return response;
     }
 
@@ -55,28 +55,62 @@ public class ProductService : IProductService
             ID = x.ID,
             NAME = x.NAME,
             DESCRIPTION = x.DESCRIPTION,
-            PRICE = x.PRICE,
+            SALE_PRICE = x.SALE_PRICE,
             STOCK = x.STOCK
-        }).AsNoTracking().ToListAsync();
+        }).AsNoTracking().ToListAsync(cancellationToken);
     }
+    public async Task UpdateProductAsync(Product product, CancellationToken cancellation)
+    {
+        var productResponse = await _context.Products.FirstOrDefaultAsync(x => x.ID == product.ID);
 
+        if (productResponse is null)
+            throw new Exception("Product not found");
+
+        productResponse.Update(product);
+
+        _context.Update(productResponse);
+        await _context.SaveChangesAsync(cancellation);
+    }
     public async Task<(List<Product>, int)> GetProductListForPos(string? searchText, int currentPage, CancellationToken cancellationToken)
     {
         var skip = (currentPage - 1) * 10;
         var take = 10;
 
-        var query = _context.Products.Where(x =>  !string.IsNullOrEmpty(searchText) ? x.NAME.ToLower().Contains(searchText.ToLower()) : true)
-              .Select(x => new Product
-              {
-                  ID = x.ID,
-                  NAME = x.NAME,
-                  DESCRIPTION = x.DESCRIPTION,
-                  PRICE = x.PRICE,
-                  STOCK = x.STOCK
-              }).OrderBy(x=>x.NAME).Skip(skip).Take(take).AsNoTracking();
+        // Base query to apply filtering
+        var baseQuery = _context.Products
+            .Where(x => string.IsNullOrEmpty(searchText) || x.NAME.ToLower().Contains(searchText.ToLower()));
 
-        var totalCount = await query.CountAsync(cancellationToken);
-        var data = await query.ToListAsync(cancellationToken);
+        // Combined query to fetch both paginated data and total count
+        var query = baseQuery
+            .OrderBy(x => x.NAME)
+            .Skip(skip)
+            .Take(take)
+            .Select(x => new
+            {
+                Product = new Product
+                {
+                    ID = x.ID,
+                    NAME = x.NAME,
+                    DESCRIPTION = x.DESCRIPTION,
+                    SALE_PRICE = x.SALE_PRICE,
+                    STOCK = x.STOCK,
+                    KDV = x.KDV,
+                    PROFIT = x.PROFIT,
+                    PURCHASE_PRICE = x.PURCHASE_PRICE,
+                },
+                TotalCount = baseQuery.Count() // Subquery to get the total count
+            })
+            .AsNoTracking();
+
+        // Execute the query and fetch the results
+        var result = await query.ToListAsync(cancellationToken);
+
+        // Extract the data and the total count
+        var data = result.Select(r => r.Product).ToList();
+        var totalCount = result.FirstOrDefault()?.TotalCount ?? 0;
+
         return (data, totalCount);
     }
+
+
 }

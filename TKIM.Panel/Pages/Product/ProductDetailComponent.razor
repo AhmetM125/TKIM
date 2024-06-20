@@ -1,84 +1,90 @@
 ﻿@inherits RazorComponentBase
 
-<div class="col-12 mt-4 card shadow">
-    <div class="card-body">
-        <div class="row">
-            <div class="col-4">
-                <label>Ürün İsmi</label>
-                <input type="text" class="form-control" />
-            </div>
-            <div class="col-4">
-                <label>Açıklama</label>
-                <input type="text" class="form-control" />
-            </div>
-            <div class="col-4">
-                <label> Stok </label>
-                <input type="text" class="form-control" />
-            </div>
 
-        </div>
-        <div class="row mt-4">
-            <div class="col-4">
-                <label>Barkod</label>
-                <input type="text" class="form-control" />
+@if (Product is not null)
+{
+
+    <div class="col-12 mt-4 card shadow">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4">
+                    <label>Ürün İsmi</label>
+                    <input type="text" @bind="@Product.Name" class="form-control" />
+                </div>
+                <div class="col-4">
+                    <label>Açıklama</label>
+                    <input type="text" @bind="@Product.Desc" class="form-control" />
+                </div>
+                <div class="col-4">
+                    <label> Stok </label>
+                    <input type="number" @bind="@Product.Stock" class="form-control" />
+                </div>
+
             </div>
-            <div class="col-4">
-                <label>Kategori</label>
-                <select class="form-control">
-                    <option value="0">Seçiniz</option>
-                    @if (Categories is not null)
-                    {
-                        foreach (var item in Categories)
+            <div class="row mt-4">
+                <div class="col-4">
+                    <label>Barkod</label>
+                    <input type="text" class="form-control" @bind="@Product.Barkod" />
+                </div>
+                <div class="col-4">
+                    <label>Kategori</label>
+                    <select class="form-control">
+                        <option value="0">Seçiniz</option>
+                        @if (Categories is not null)
                         {
-                            <option value="@item.ID">@item.Name</option>
+                            foreach (var item in Categories)
+                            {
+                                <option value="@item.ID">@item.Name</option>
+                            }
                         }
-                    }
-                </select>
-            </div>
+                    </select>
+                </div>
 
-            <div class="col-4">
-                <label>Şirket</label>
-                <select class="form-control">
-                    <option value="0">Seçiniz</option>
-                    @if (Companies is not null)
-                    {
-                        foreach (var item in Companies)
+                <div class="col-4">
+                    <label>Şirket</label>
+                    <select class="form-control">
+                        <option value="0">Seçiniz</option>
+                        @if (Companies is not null)
                         {
-                            <option value="@item.Id">@item.Name</option>
+                            foreach (var item in Companies)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
                         }
-                    }
-                </select>
+                    </select>
+                </div>
+
+            </div>
+            <div class="row mt-4">
+                <div class="col-4">
+                    <label>KDV</label>
+                    <TypeSpesificInput Type="%" DecimalValueChanged="@(value=>Product.Kdv = value)" DecimalValue="@Product.Kdv" Product="@Product" Css="@(ShakeCss)" />
+                </div>
+                <div class="col-4">
+                    <label>Alış Fiyatı</label>
+                    <TypeSpesificInput Type="TRY" DecimalValueChanged="@(value=>Product.PurchasePrice = value)" DecimalValue="@Product.PurchasePrice" Product="@Product" Css="@(ShakeCss)" />
+                </div>
+                <div class="col-4">
+                    <label>Kar Oranı</label>
+                    <TypeSpesificInput Type="%" DecimalValueChanged="@(value=>Product.Profit = value)" DecimalValue="@Product.Profit" Product="@Product" />
+
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-12">
+                    <label>Satış Fiyatı</label>
+                    <TypeSpesificInput Type="TRY" DecimalValueChanged="@(value=>Product.SalePrice = value)" DecimalValue="@Product.SalePrice" Product="@Product" IsSalePrice="true" />
+                </div>
             </div>
 
         </div>
-        <div class="row mt-4">
-            <div class="col-4">
-                <label>KDV</label>
-                @* <TypeSpesificInput Type="%"  DecimalValue="@Product.SalePrice" Css="@(ShakeCss)" /> *@
-            </div>
-            <div class="col-4">
-                <label>Alış Fiyatı</label>
-                @* <TypeSpesificInput Type="TRY" Value="@Product.PurchasePrice" Css="@(ShakeCss)" /> *@
-            </div>
-            <div class="col-4">
-                <label>Satış Fiyatı</label>
-                @* <TypeSpesificInput Type="TRY" Value="@Product.SalePrice" /> *@
-            </div>
-        </div>
-        <div class="row mt-4">
-            <div class="col-4">
-                <label>Kar Oranı</label>
-                @* <TypeSpesificInput Type="%" Value="@Product.Profit"/> *@
-            </div>
-        </div>
 
+
+        <div class="d-flex flex-row-reverse mt-4 mb-4">
+
+            <button class="btn btn-outline-primary width-20 me-3" @onclick="Update">Kaydet</button>
+            <button id="calculateprice" @onclick="CalculatePrice" class="btn btn-outline-primary width-20 me-3">Ürün Fiyatını Hesapla</button>
+        </div>
     </div>
 
-
-    <div class="d-flex flex-row-reverse mt-4 mb-4">
-
-        <button onclick="test" class="btn btn-outline-primary width-20 me-3">Kaydet</button>
-        <button id="calculateprice" @onclick="CalculatePrice" class="btn btn-outline-primary width-20 me-3">Ürün Fiyatını Hesapla</button>
-    </div>
-</div>
-
+}

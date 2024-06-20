@@ -39,7 +39,7 @@ public class GetProductListQueryHandler : QueryHandler<GetProductListQuery, IEnu
     public async override Task<IEnumerable<ProductListResponse>> ExecuteQuery(GetProductListQuery query, CancellationToken cancellationToken)
     {
         return (await _productService.GetProductList(cancellationToken)).Select(x =>
-         new ProductListResponse(x.ID, x.NAME, x.DESCRIPTION, x.PRICE, x.STOCK));
+         new ProductListResponse(x.ID, x.NAME, x.DESCRIPTION, x.SALE_PRICE, x.STOCK));
     }
 
     
@@ -48,7 +48,7 @@ public class GetProductListQueryHandler : QueryHandler<GetProductListQuery, IEnu
 
 public record ProductListResponse
 {
-    public ProductListResponse(Guid id, string name, string description, decimal? price, int? stock)
+    public ProductListResponse(Guid id, string name, string description, decimal price, int? stock)
     {
         Id = id;
         Name = name;
@@ -60,7 +60,7 @@ public record ProductListResponse
     public Guid Id { get; init; }
     public string Name { get; init; }
     public string Description { get; init; }
-    public decimal? Price { get; init; }
+    public decimal Price { get; init; }
     public int? Stock { get; init; }
 
 }

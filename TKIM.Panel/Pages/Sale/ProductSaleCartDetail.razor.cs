@@ -14,6 +14,11 @@ public partial class ProductSaleCartDetail : RazorComponentBase
 
     private short SelectedCart { get; set; }
 
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        SetTotalPrice();
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -22,7 +27,7 @@ public partial class ProductSaleCartDetail : RazorComponentBase
             BasketTabVMs = new List<BasketTabVM>();
     }
 
-    void SalePriceChange()
+    void SetTotalPrice()
     {
         ProductSaleCartVM.TotalPrice = ((ProductSaleCartVM.SalePrice * (decimal)ProductSaleCartVM.QuantityInCart) 
             + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Profit / 100));

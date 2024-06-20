@@ -10,6 +10,7 @@ namespace TKIM.Panel.Pages.Product;
 public partial class ProductDetailComponent : RazorComponentBase
 {
     [Parameter] public Guid ProductId { get; set; }
+    [Parameter] public EventCallback OnUpdate { get; set; }
     [Inject] private IProductService _productService { get; set; }
     [Inject] private ICategoryService _categoryService { get; set; }
     [Inject] private ICompanyService _companyService { get; set; }
@@ -35,6 +36,7 @@ public partial class ProductDetailComponent : RazorComponentBase
         await base.SetParametersAsync(parameters);
         if (ProductId != Guid.Empty)
             await GetProduct();
+        StateHasChanged();
     }
 
     private async Task LoadCategoryDropdown()
@@ -57,8 +59,7 @@ public partial class ProductDetailComponent : RazorComponentBase
         }
         catch (Exception)
         {
-
-            throw;
+            LayoutValue.ShowMessage("An error occurred while loading the product.", MessageType.Error);
         }
     }
     private async Task LoadCompanyDropdown()
@@ -72,15 +73,39 @@ public partial class ProductDetailComponent : RazorComponentBase
         {
             LayoutValue.ShowMessage("An error occurred while loading the company dropdown.", MessageType.Error);
         }
-
+    }
+    private async Task Update()
+    {
+        try
+        {
+            await _productService.UpdateProductAsync(Product);
+            LayoutValue.ShowMessage("Product updated successfully.", MessageType.Success);
+            await OnUpdate.InvokeAsync();
+        }
+        catch (Exception)
+        {
+            LayoutValue.ShowMessage("An error occurred while updating the product.", MessageType.Error);
+        }
+        finally
+        {
+            await GetProduct();
+            StateHasChanged();
+        }
     }
 
-    private async void CalculatePrice()
+    private async Task CalculatePrice()
     {
-        ShakeCss = "shake";
-
-        // Calculate price
-
+        if (Product.PurchasePrice == 0 || Product.Profit == 0 || Product.Kdv == 0)
+        {
+            LayoutValue.ShowMessage("Please enter the purchase price, profit and VAT values.", MessageType.Error);
+            Product.PurchasePrice = Product.PurchasePrice == 0 ? 1 : Product.PurchasePrice;
+            Product.Profit = Product.Profit == 0 ? 1 : Product.Profit;
+            Product.Kdv = Product.Kdv == 0 ? 1 : Product.Kdv;
+            ShakeCss = "shake";
+        }
+        else
+            Product.SalePrice = Product.PurchasePrice + (Product.PurchasePrice * Product.Profit / 100) + (Product.PurchasePrice * Product.Kdv / 100);
+        
         await Task.Delay(1000);
         ShakeCss = "";
         StateHasChanged();

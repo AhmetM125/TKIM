@@ -90,9 +90,9 @@
                             {
                                 <tr>
                                     <td>@item.Name</td>
-                                    <td>@(item.Quantity ?? 0)</td>
-                                    <td>₺@(item.PurchasePrice.HasValue ? item.PurchasePrice.Value : 0)</td>
-                                    <td>₺@(item.SalePrice.HasValue ? item.SalePrice.Value : 0)</td>
+                                    <td>@item.Quantity</td>
+                                    <td>₺@item.PurchasePrice</td>
+                                    <td>₺@item.SalePrice </td>
                                     <td>
                                         <div class="d-flex justify-content-evenly">
                                             <button class="btn btn-outline-primary" @onclick="()=>AddCart(item.Id)">
@@ -151,7 +151,7 @@
 
 <Modal Title="Ürün Detaylar" Id="ProductDetail" Size="ModalSize.xl">
     <Body>
-        <TKIM.Panel.Pages.Product.ModifyComponent ProductId="@SelectedProductIdForDetail" OnSubmit="LoadGrid" />
+        <TKIM.Panel.Pages.Product.ModifyComponent ProductId="@SelectedProductIdForDetail" OnUpdateProduct="LoadGrid" />
     </Body>
 </Modal>
 

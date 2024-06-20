@@ -35,7 +35,7 @@
             <label> Kar Oranı</label>
             <div class="d-flex form-control">
                 %
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Profit" @bind-value:event="oninput" type="number" @onchange="@SalePriceChange" />
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Profit" @bind-value:event="oninput" type="number" @onchange="@SetTotalPrice" />
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
         </div>
         <div class="col-6">
             <label> Satılacak Miktar</label>
-            <input type="number" class="form-control" @bind-value="ProductSaleCartVM.QuantityInCart" @bind-value:event="oninput" @onchange="SalePriceChange" />
+            <input type="number" class="form-control" @bind-value="ProductSaleCartVM.QuantityInCart" @bind-value:event="oninput" @onchange="SetTotalPrice" />
         </div>
     </div>
     <div class="row mt-4">
@@ -55,7 +55,7 @@
             <label> Kdv Oranı</label>
             <div class="d-flex form-control">
                 %
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Kdv" @bind-value:event="oninput" @onchange="@SalePriceChange" type="number" />
+                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Kdv" @bind-value:event="oninput" @onchange="@SetTotalPrice" type="number" />
             </div>
         </div>
         <div class="col-6">
