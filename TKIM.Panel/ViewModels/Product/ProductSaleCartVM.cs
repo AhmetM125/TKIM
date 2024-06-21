@@ -12,5 +12,6 @@ public class ProductSaleCartVM
     public decimal Kdv { get; set; } = 0;
     public decimal Discount { get; set; } = 0;
     public decimal Profit { get; set; } = 1;
+    public bool IsModifying { get; set; } = false;
 
 } 

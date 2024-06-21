@@ -16,6 +16,7 @@ public partial class IndexComponent : RazorComponentBase
     private List<BasketTabVM> BasketTabVMs { get; set; } = new List<BasketTabVM>();
     private Guid SelectedProductIdForDetail { get; set; }
     private int CurrentPage { get; set; } = 1;
+    private short SelectedBasket { get; set; } = 0;
 
 
 
@@ -105,9 +106,17 @@ public partial class IndexComponent : RazorComponentBase
         }
 
     }
-    private async Task ChangeProductForDetailModal(ProductSaleCartVM productDetail)
+
+    async Task PaymentModal(BasketTabVM basketTab)
+    {
+        BasketTabVM = basketTab;
+        await LayoutValue.OpenModal("PaymentSection");
+    }
+
+    private async Task ChangeProductForDetailModal(ProductSaleCartVM productDetail,short basket)
     {
         SelectedProduct = productDetail;
+        SelectedBasket = basket;
         await LayoutValue.OpenModal("ProductCartDetail");
     }
 }

@@ -9,20 +9,25 @@
             <label class="fw-bold"> Ürün İsmi: </label>
             <label class="fw-bold form-control"> @ProductSaleCartVM.Name </label>
         </div>
-        <div class="col-6 ">
-            <label class="fw-bold">Sepet Seçimi</label>
-            <select class="form-control" @bind="@SelectedCart">
-                <option value="0">Yeni Sepet</option>
-                @{
-                    short i = 1;
-                }
-                @foreach (var item in BasketTabVMs)
-                {
-                    <option value="@i">Sepet @i</option>
-                    @(i++)
-                }
-            </select>
-        </div>
+        @if (!ProductSaleCartVM.IsModifying)
+        {
+
+            <div class="col-6 ">
+                <label class="fw-bold">Sepet Seçimi</label>
+                <select class="form-control" @bind="@SelectedCart">
+                    <option value="0">Yeni Sepet</option>
+                    @{
+                        short i = 1;
+                    }
+                    @foreach (var item in BasketTabVMs)
+                    {
+                        <option value="@i">Sepet @i</option>
+                        @(i++)
+                    }
+                </select>
+            </div>
+        }
+
 
     </div>
 
@@ -82,15 +87,20 @@
 
 
     <div class="d-flex flex-row-reverse mt-5">
-        <button class="btn btn-outline-secondary w-25" @onclick="@(()=>InsertCart(SelectedCart))">
-            <i class="fa-solid fa-cart-plus"></i>
-            Sepete Ekle
-        </button>
-        <button class="btn btn-outline-primary w-25 mr-3">
-            <i class="fa-solid fa-check"></i>
-            Ürünü Güncelle
-        </button>
-
+        @if (!ProductSaleCartVM.IsModifying)
+        {
+            <button class="btn btn-outline-secondary w-25" @onclick="@(()=>InsertCart(SelectedCart))">
+                <i class="fa-solid fa-cart-plus"></i>
+                Sepete Ekle
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-outline-secondary w-25" @onclick="@(()=>UpdateCart())">
+                <i class="fa-solid fa-cart-plus"></i>
+                Güncelle
+            </button>
+        }
     </div>
 
 }

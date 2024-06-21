@@ -129,7 +129,7 @@
         {
             if (item.IsCartActive && item.BasketItems is not null)
             {
-                <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent BasketItems="@BasketTabVMs" BasketTabVM="@item" BasketNo="@i" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" OnProductDetail="@((e)=>ChangeProductForDetailModal(e))" />
+                <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent OnModalMaximize="@((modal)=>PaymentModal(modal))" BasketItems="@BasketTabVMs" BasketTabVM="@item" BasketNo="@i" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" OnProductDetail="@((e)=>ChangeProductForDetailModal(e.Item1,e.Item2))" />
             }
             i++;
         }
@@ -145,13 +145,19 @@
 
 <Modal Title="Ürün Sepet" Id="ProductCartDetail" Size="ModalSize.lg">
     <Body>
-        <ProductSaleCartDetail ProductSaleCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" />
+        <ProductSaleCartDetail ProductSaleCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" SelectedBasket="SelectedBasket" />
     </Body>
 </Modal>
 
 <Modal Title="Ürün Detaylar" Id="ProductDetail" Size="ModalSize.xl">
     <Body>
         <TKIM.Panel.Pages.Product.ModifyComponent ProductId="@SelectedProductIdForDetail" OnUpdateProduct="LoadGrid" />
+    </Body>
+</Modal>
+
+<Modal Id="PaymentSection" Title="Sepet Onay" Size="ModalSize.FullScreen">
+    <Body>
+        <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent BasketTabVM="BasketTabVM" BasketItems="@BasketTabVMs" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" />
     </Body>
 </Modal>
 

@@ -13,7 +13,7 @@ public record class CompanyGetAllQuery : Query<IEnumerable<CompanyResponse>>
     }
     public override ValidationResult Validate()
     {
-        return new CompanyGetAllValidator().Validate(this); 
+        return new CompanyGetAllValidator().Validate(this);
     }
 }
 public class CompanyGetAllValidator : AbstractValidator<CompanyGetAllQuery>
@@ -36,7 +36,7 @@ public class CompanyGetAllQueryHandler : QueryHandler<CompanyGetAllQuery, IEnume
         return (await _companyService.GetAllAsync(cancellationToken))
              .Select(x => new CompanyResponse
              (x.ID, x.NAME, x.DESCRIPTION, x.ADDRESS
-             , x.PHONE_NUMBER, x.NUMBER,x.IS_ACTIVE));
+             ,x.PHONE_NUMBER,x.NUMBER,x.IS_ACTIVE));
     }
 }
 

@@ -1,7 +1,7 @@
 ﻿@inherits RazorComponentBase
 
 
-<div class="row justify-content-center mt-4  @CartStatus">
+<div class="row justify-content-center mt-4  @CartStatus @DisapperCssAnimation">
     <div class="col-11 card">
         <div class="d-flex justify-content-between mt-3">
             <h5 class=" ml-1"> @BasketNo. Sepet </h5>
@@ -11,7 +11,7 @@
                     <i class="fa-solid fa-window-minimize"></i>
                 </button>
                 <button class="btn btn-outline-danger btn-sm" @onclick="RemoveCart">
-                    <i class="fa-solid fa-trash"></i>
+                    <i class="fas fa-light fa-xmark"></i>
                 </button>
             </div>
         </div>
@@ -35,7 +35,11 @@
 
                             <tr>
                                 <td>@item.Name</td>
-                                <td>@item.QuantityInCart</td>
+                                <td>
+                                    <label class="form-control">
+                                        @item.QuantityInCart
+                                    </label>
+                                </td>
                                 @{
                                     var remain = item.Stock - item.QuantityInCart;
                                     var quantityCss = QuantityAlert(remain);
@@ -43,23 +47,25 @@
                                     if (!string.IsNullOrEmpty(quantityCss))
                                         quantityTextColor = "text-white";
                                 }
-                                <td class="@quantityCss">
+                                <td>
                                     @if (!string.IsNullOrEmpty(quantityCss))
                                     {
-                                        <div class="d-flex flex-row-reverse ">
-                                            <i class="fa-solid fa-triangle-exclamation" style="color: #ffffff;"></i>
+                                        <div class="position-relative form-control d-flex justify-content-center @quantityCss @quantityTextColor"
+                                             data-toggle="tooltip" data-placement="top" title='@($"'{item.Name}' isimli ürünün alışveriş sonrası kalacak olan stok sayısı: {remain} ")'>
+
+                                            <i class="fa-solid fa-triangle-exclamation position-absolute top-0 end-0 p-2"></i>
+                                            <label>@remain</label>
                                         </div>
                                     }
-                                    <label class="form-control @quantityCss @quantityTextColor"> @remain</label>
                                 </td>
                                 <td>
                                     <div class="form-control d-flex">
-                                        ₺<input type="number" class="border-0 w-100" @bind="@item.SalePrice" />
+                                        <label> ₺@item.SalePrice </label>
                                     </div>
                                 </td>
                                 <td>
                                     <div class="form-control d-flex">
-                                        ₺<input type="number" class="border-0 w-100" @bind="@item.TotalPrice" />
+                                        ₺<label class="border-0 w-100"> @item.TotalPrice </label>
                                     </div>
 
                                 </td>
@@ -71,14 +77,12 @@
                                         </button>
                                         <button class="btn btn-outline-success ml-2 width-40" @onclick="@(()=>ProductDetail(item))">
                                             <i class="fa-solid fa-circle-info"></i>
-                                            Detay
+                                            Düzenle
                                         </button>
-
                                     </div>
                                 </td>
                             </tr>
                         }
-
                     </tbody>
                 </table>
             </div>
@@ -89,19 +93,20 @@
                         <div class="d-flex flex-row form-group mt-2 border-1 p-2 rounded-2">
                             <p class="w-50">Toplam Fiyat</p>
                             <div class="d-flex flex-row-reverse form-control w-50 justify-content-between">
-                                <input type="number" class="w-75 border-0 width-90" @bind="@BasketTabVM.TotalPrice" />
+                                <label class="width-90 "> @BasketTabVM.TotalPrice </label>
                                 <span class="my-auto shadow-sm border-1 px-2 width-10">₺</span>
                             </div>
                         </div>
                         <div class="d-flex flex-row form-group mt-2 border-1 p-2 rounded-2">
                             <p class="w-50">Toplam Ödenecek</p>
                             <div class="d-flex flex-row-reverse form-control w-50 justify-content-between">
-                                <input type="number" class="w-75 border-0 width-90" @bind="@BasketTabVM.PaymentAmount" />
+                                <input type="number" class="border-0 width-90" @bind="@BasketTabVM.PaymentAmount" />
                                 <span class="my-auto shadow-sm border-1 px-2 width-10">₺</span>
                             </div>
                         </div>
                         <div class="d-flex flex-row-reverse mt-3">
-                            <button class="btn btn-outline-secondary">
+                            <button class="btn btn-outline-secondary" @onclick="SubmitBasket">
+                                <i class="fa-solid fa-check"></i>
                                 Sepeti Onayla
                             </button>
                         </div>
@@ -110,14 +115,14 @@
                         <div class="d-flex flex-row form-group mt-2 border-1 p-2 rounded-2">
                             <p class="w-50">Toplam Vergi</p>
                             <div class="d-flex flex-row-reverse form-control w-50 justify-content-between">
-                                <input type="number" class="width-90 border-0" @bind="@BasketTabVM.TotalTax"  />
+                                <label class="width-90 ">  @BasketTabVM.TotalTax </label>
                                 <span class="my-auto shadow-sm border-1 width-10 px-2">₺</span>
                             </div>
                         </div>
                         <div class="d-flex flex-row form-group mt-2 border-1 p-2 rounded-2">
                             <p class="w-50">Indirim</p>
                             <div class="d-flex flex-row-reverse form-control w-50 justify-content-between">
-                                <input type="number" class="border-0 width-90" @bind="@BasketTabVM.TotalDiscount" />
+                                <input type="number" class="border-0 width-90" @bind-value="@BasketTabVM.TotalDiscount" @onchange="Discount" @bind-value:event="oninput" />
                                 <span class="my-auto shadow-sm border-1 px-2 width-0">%</span>
                             </div>
                         </div>
@@ -128,3 +133,15 @@
     </div>
 </div>
 
+
+
+<style>
+    .fade-out {
+        opacity: 1;
+        transition: opacity 2s ease-in-out; /* Transition opacity over 2 seconds */
+    }
+    /* State after applying the fade-out effect */
+    .fade-out.hidden {
+        opacity: 0;
+    }
+</style>
