@@ -14,6 +14,7 @@ public partial class SaleBasketComponent : RazorComponentBase
     [Parameter] public EventCallback OnRemove { get; set; }
     [Parameter] public EventCallback<BasketTabVM> OnModalMaximize { get; set; }
     [Parameter] public EventCallback<(ProductSaleCartVM, short)> OnProductDetail { get; set; }
+    [Parameter] public bool IsBasketFullScreen { get; set; }
 
     private string DisapperCssAnimation = "fade-out";
 
@@ -55,7 +56,7 @@ public partial class SaleBasketComponent : RazorComponentBase
         BasketTabVM.PaymentAmount = BasketTabVM.TotalPrice - (BasketTabVM.TotalPrice * (BasketTabVM.TotalDiscount / 100));
     }
 
-    private async Task SubmitBasket()
+    private async Task MaximixeBasket()
     {
         if (!BasketTabVM.BasketItems.Any())
         {
@@ -64,11 +65,27 @@ public partial class SaleBasketComponent : RazorComponentBase
         }
 
         await OnModalMaximize.InvokeAsync(BasketTabVM);
+    }
+    private void RemoveProductFromCart(ProductSaleCartVM product) 
+    {
+        BasketTabVM.BasketItems.Remove(product);
+        BasketTabVM.TotalPrice -= product.TotalPrice;
+        BasketTabVM.PaymentAmount -= product.TotalPrice;
+        BasketTabVM.TotalTax -= product.Kdv;
+    }
+    private async Task SubmitBasket()
+    {
+        if (!BasketTabVM.BasketItems.Any())
+        {
+            LayoutValue.ShowMessage("Sepetinizde ürün bulunmamaktadır.", MessageType.Error);
+            return;
+        }
 
+        //await LayoutValue.CloseModal("");
         //LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
-        //DisapperCssAnimation = "fade-out hidden";
-        //await Task.Delay(2500);
-        //await RemoveCart();
+        DisapperCssAnimation = "fade-out hidden";
+        await Task.Delay(2500);
+        await RemoveCart();
 
     }
 }

@@ -36,6 +36,7 @@ public partial class IndexComponent : RazorComponentBase
         try
         {
             ShowLoader = true;
+
             var response = await _productService.ProductListForPos(SearchText, CurrentPage);
             ProductList = response.Data.List;
         }

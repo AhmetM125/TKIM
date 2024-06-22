@@ -14,6 +14,7 @@ public partial class ProductSaleCartDetail : RazorComponentBase
     [Parameter] public short SelectedBasket { get; set; }
 
     private short SelectedCart { get; set; }
+    private bool ManualChangePrice { get; set; } = false;
 
     public override async Task SetParametersAsync(ParameterView parameters)
     {
@@ -30,17 +31,21 @@ public partial class ProductSaleCartDetail : RazorComponentBase
 
     void SetTotalPrice()
     {
-        ProductSaleCartVM.TotalPrice = ((ProductSaleCartVM.SalePrice * (decimal)ProductSaleCartVM.QuantityInCart)
-            + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Profit / 100));
+        ProductSaleCartVM.TotalPrice = Math.Round(((ProductSaleCartVM.SalePrice * (decimal)ProductSaleCartVM.QuantityInCart)
+            + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Profit / 100)), 2);
+
+
     }
     void PriceChange()
     {
         ProductSaleCartVM.TotalPrice = ProductSaleCartVM.SalePrice * ProductSaleCartVM.QuantityInCart;
+
     }
     async Task UpdateCart()
     {
         ProductSaleCartVM.IsModifying = false;
         var basket = BasketTabVMs[SelectedBasket - 1];
+
         basket.CalculatePrices();
 
         await OnInsert.InvokeAsync();

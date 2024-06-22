@@ -4,7 +4,14 @@
 <div class="row justify-content-center mt-4  @CartStatus @DisapperCssAnimation">
     <div class="col-11 card">
         <div class="d-flex justify-content-between mt-3">
-            <h5 class=" ml-1"> @BasketNo. Sepet </h5>
+            @if (BasketNo != 0)
+            {
+                <h5 class=" ml-1"> @BasketNo. Sepet </h5>
+            }
+            else
+            {
+                <h5>Sepet Detaylari</h5>
+            }
 
             <div>
                 <button class="btn btn-outline-secondary btn-sm" @onclick="MinimizeCart">
@@ -17,6 +24,25 @@
         </div>
 
         <div class="card-body row flex-sm-wrap flex-wrap">
+            <div class="d-flex flex-row mb-2">
+                <div class="width-15">
+                    <button class="btn btn-outline-secondary w-100">
+                        <i class="fa-solid fa-file-invoice"></i>
+                        Fatura
+                    </button>
+                </div>
+
+                <div class="width-15 ml-2">
+                    <button class="btn btn-outline-success w-100">
+                        <i class="fa-solid fa-file-excel"></i>
+                        Excel
+                    </button>
+                </div>
+                <div class="width-5">
+                </div>
+
+
+            </div>
             <div class="point-of-sale col-12">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -48,15 +74,12 @@
                                         quantityTextColor = "text-white";
                                 }
                                 <td>
-                                    @if (!string.IsNullOrEmpty(quantityCss))
-                                    {
-                                        <div class="position-relative form-control d-flex justify-content-center @quantityCss @quantityTextColor"
-                                             data-toggle="tooltip" data-placement="top" title='@($"'{item.Name}' isimli ürünün alışveriş sonrası kalacak olan stok sayısı: {remain} ")'>
+                                    <div class="position-relative form-control d-flex justify-content-center @quantityCss @quantityTextColor"
+                                         data-toggle="tooltip" data-placement="top" title='@($"'{item.Name}' isimli ürünün alışveriş sonrası kalacak olan stok sayısı: {remain} ")'>
 
-                                            <i class="fa-solid fa-triangle-exclamation position-absolute top-0 end-0 p-2"></i>
-                                            <label>@remain</label>
-                                        </div>
-                                    }
+                                        @((MarkupString)(!string.IsNullOrEmpty(quantityCss) ? "<i class='fa-solid fa-triangle-exclamation position-absolute top-0 end-0 p-2'></i>" : ""))
+                                        <label>@remain</label>
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="form-control d-flex">
@@ -71,7 +94,7 @@
                                 </td>
                                 <td>
                                     <div class="d-flex">
-                                        <button class="btn btn-outline-danger ">
+                                        <button class="btn btn-outline-danger " @onclick="@(()=>RemoveProductFromCart(item))">
                                             <i class="fa-solid fa-basket-shopping"></i>
                                             Sepetten Kaldır
                                         </button>
@@ -105,7 +128,15 @@
                             </div>
                         </div>
                         <div class="d-flex flex-row-reverse mt-3">
-                            <button class="btn btn-outline-secondary" @onclick="SubmitBasket">
+                            @if (!IsBasketFullScreen)
+                            {
+                                <button class="btn btn-outline-secondary ml-2" @onclick="MaximixeBasket">
+                                    <i class="fa-solid fa-expand"></i>
+                                    Tam Ekran
+                                </button>
+                            }
+
+                            <button class="btn btn-outline-success" @onclick="SubmitBasket">
                                 <i class="fa-solid fa-check"></i>
                                 Sepeti Onayla
                             </button>
@@ -138,10 +169,10 @@
 <style>
     .fade-out {
         opacity: 1;
-        transition: opacity 2s ease-in-out; /* Transition opacity over 2 seconds */
+        transition: opacity 1s ease-in-out; /* Transition opacity over 2 seconds */
     }
-    /* State after applying the fade-out effect */
-    .fade-out.hidden {
-        opacity: 0;
-    }
+        /* State after applying the fade-out effect */
+        .fade-out.hidden {
+            opacity: 0;
+        }
 </style>

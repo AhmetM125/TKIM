@@ -34,5 +34,5 @@ public enum ModalSize
     lg,
     sm,
     xl,
-    FullScreen
+    fullscreen
 }

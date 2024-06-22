@@ -21,13 +21,12 @@ public record BasketTabVM
 
         BasketItems.ForEach(x =>
         {
-            TotalPrice += ((x.PurchasePrice * x.Kdv / 100) + (x.PurchasePrice * x.Profit / 100) + x.PurchasePrice) * x.QuantityInCart;
-            TotalTax += x.PurchasePrice * x.Kdv / 100 * x.QuantityInCart;
+                TotalPrice += ((x.SalePrice * x.Kdv / 100) + (x.SalePrice * x.Profit / 100) + x.SalePrice) * x.QuantityInCart;
+           
+            TotalTax += x.SalePrice * x.Kdv / 100 * x.QuantityInCart;
         });
-        this.PaymentAmount = TotalPrice ;
+        this.PaymentAmount = TotalPrice;
     }
-
-
 }
 
 

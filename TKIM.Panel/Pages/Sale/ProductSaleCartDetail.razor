@@ -5,7 +5,7 @@
 {
 
     <div class="row justify-content-between">
-        <div class="col-6">
+        <div class="@(ProductSaleCartVM.IsModifying ? "col-12" : "col-6") ">
             <label class="fw-bold"> Ürün İsmi: </label>
             <label class="fw-bold form-control"> @ProductSaleCartVM.Name </label>
         </div>
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="col-6">
-            <label> Miktar Fiyatı</label>
+            <label> Miktar Fiyat</label>
             <div class="form-control d-flex">
                 ₺
                 <input type="number" class="border-0 w-100" @onchange="PriceChange" @bind-value:event="oninput" @bind-value="@ProductSaleCartVM.SalePrice" />

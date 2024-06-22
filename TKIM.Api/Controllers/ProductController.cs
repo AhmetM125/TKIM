@@ -1,15 +1,32 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TKIM.Api.Controllers.Base;
+using TKIM.Api.Models.Invoice;
+using TKIM.Api.Utils;
 using TKIM.Application.Product;
 
 namespace TKIM.Api.Controllers;
 
 public class ProductController : BaseController
 {
-    public ProductController(IMediator mediator) : base(mediator)
+
+    private readonly IRazorViewToStringRenderer _razorViewToStringRenderer;
+
+    public ProductController(IMediator mediator, IRazorViewToStringRenderer razorViewToStringRenderer) : base(mediator)
     {
+        _razorViewToStringRenderer = razorViewToStringRenderer;
     }
+
+    [HttpPost("GenerateInvoice")]
+
+    public async Task<IActionResult> GenerateInvoice()
+    {
+        var obj = new InvoiceVM();
+        var htmlContent = await _razorViewToStringRenderer.RenderViewToStringAsync("Invoice/Index", obj);
+        return Content(htmlContent, "text/html"); // Return the HTML content
+    }
+
+
 
     [HttpPost("Create")]
     public async Task<IActionResult> CreateProduct([FromBody] RequestProduct request)
@@ -51,4 +68,7 @@ public class ProductController : BaseController
          product.SalePrice,
          product.Profit
          ));
+
+
+  
 }
