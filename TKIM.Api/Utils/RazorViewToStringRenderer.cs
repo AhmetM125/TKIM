@@ -24,7 +24,7 @@ public class RazorViewToStringRenderer : IRazorViewToStringRenderer
     }
 
 
-    public  async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
+    public async Task<string> RenderViewToStringAsync<TModel>(string viewName, TModel model)
     {
         var httpContext = new DefaultHttpContext { RequestServices = _serviceProvider };
         var actionContext = new ActionContext(httpContext, new RouteData(), new ActionDescriptor());
@@ -38,7 +38,8 @@ public class RazorViewToStringRenderer : IRazorViewToStringRenderer
                 throw new ArgumentNullException($"View '{viewName}' not found.");
             }
 
-            var viewDictionary = new ViewDataDictionary<TModel>(new EmptyModelMetadataProvider(), new ModelStateDictionary())
+            var viewDictionary = new ViewDataDictionary<TModel>(
+                new EmptyModelMetadataProvider(), new ModelStateDictionary())
             {
                 Model = model
             };

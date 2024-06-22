@@ -20,7 +20,6 @@ public class InvoiceConfiguration : IEntityTypeConfiguration<Invoice>
         builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
         builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false); 
 
-        builder.HasMany(x => x.Products).WithMany(x => x.Invoices);
         builder.HasOne(x => x.Customer).WithMany(x => x.Invoices).HasForeignKey(x => x.CUSTOMER_ID);
         builder.HasOne(x => x.Company).WithMany(x => x.Invoices).HasForeignKey(x => x.COMPANY_ID);
 

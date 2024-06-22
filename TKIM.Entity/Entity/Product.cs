@@ -13,9 +13,6 @@ public class Product : BaseEntity
     public decimal PROFIT { get; set; }
     public Guid? COMPANY_ID { get; set; }
     public Company Company { get; set; }
-
-    public List<Invoice> Invoices { get; set; }
-
     public Guid? CATEGORY_ID { get; set; }
     public Category Category { get; set; }
 

@@ -21,7 +21,26 @@ public class ProductController : BaseController
 
     public async Task<IActionResult> GenerateInvoice()
     {
-        var obj = new InvoiceVM();
+        var obj = new InvoiceVM()
+        {
+            Invoice = new Entity.Entity.Invoice
+            {
+                Company = new Entity.Entity.Company
+                {
+                    NAME = "Test Company",
+                    ADDRESS = "Test Address",
+                },
+                NAME = "Test Invoice",
+                INVOICE_DATE = DateTime.Now,
+                COMPANY_ID = Guid.NewGuid(),
+                Customer = new Entity.Entity.Customer
+                {
+                    NAME = "Test Customer",
+                    ADDRESS = "Test Address",
+                },
+                INVOICE_NUMBER = "123456",
+            }
+        };
         var htmlContent = await _razorViewToStringRenderer.RenderViewToStringAsync("Invoice/Index", obj);
         return Content(htmlContent, "text/html"); // Return the HTML content
     }
@@ -70,5 +89,5 @@ public class ProductController : BaseController
          ));
 
 
-  
+
 }

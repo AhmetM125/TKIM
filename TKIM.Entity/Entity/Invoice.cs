@@ -8,7 +8,6 @@ public class Invoice : BaseEntity
     public DateTime INVOICE_DATE { get; set; }
     public decimal TOTAL { get; set; }
     public byte[] INVOICE_PDF { get; set; }
-    public List<Product> Products { get; set; }
     public Customer Customer { get; set; }
     public Guid CUSTOMER_ID { get; set; }
     public Company Company { get; set; }

@@ -7,21 +7,16 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using TKIM.Api.Utils;
 
 namespace TKIM.Api.RazorControllers;
+[ApiController]
+[Route("api/[controller]")]
 
 public class InvoiceController : Controller
 {
 
-    public InvoiceController( )
-    {
-    }
 
-  
 
-    public IActionResult Index()
-    {
-        return View();
-    }
 
+    [HttpGet("GenerateInvoice")]
     public async Task<IActionResult> GenerateInvoice()
     {
         object s = new { Name = "John Doe", Date = DateTime.Now, Amount = 1000 };

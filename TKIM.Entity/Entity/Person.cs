@@ -11,5 +11,6 @@ public class Person : BaseEntity
     // S = Super Admin , A = Admin , E = Employee
 
     public Security Security { get; set; }
+    public Guid SECURITY_ID { get; set; }
 
 }
