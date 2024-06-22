@@ -9,7 +9,7 @@ public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
     public void Configure(EntityTypeBuilder<PaymentItems> builder)
     {
         builder.HasKey(x => x.ID);
-        builder.Property(x => x.BASKET_ID).IsRequired();
+        builder.Property(x => x.PAYMENT_ID).IsRequired();
         builder.Property(x => x.PRODUCT_ID).IsRequired();
         builder.Property(x => x.QUANTITY_AFTER).IsRequired();
         builder.Property(x => x.QUANTITY_CURRENT).IsRequired();
