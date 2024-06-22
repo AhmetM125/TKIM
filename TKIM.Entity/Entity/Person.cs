@@ -13,4 +13,5 @@ public class Person : BaseEntity
     public Security Security { get; set; }
     public Guid SECURITY_ID { get; set; }
 
+
 }

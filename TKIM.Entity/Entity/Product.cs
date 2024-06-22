@@ -17,6 +17,9 @@ public class Product : BaseEntity
     public Category Category { get; set; }
 
     public List<ProductImage> ProductImages { get; set; }
+    public IEnumerable<PaymentItems> PaymentItems { get; set; }
+    public IEnumerable<PurchaseRecord> PurchaseRecords { get; set; }
+    public IEnumerable<SaleRecord> SaleRecords { get; set; }
 
     public void Update(Product product)
     {

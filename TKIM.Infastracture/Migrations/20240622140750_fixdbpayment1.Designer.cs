@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622140750_fixdbpayment1")]
+    partial class fixdbpayment1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -246,6 +249,12 @@ namespace TKIM.Infastracture.Migrations
                     b.Property<DateTime>("PAYMENT_DATE")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("PERSON_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PersonID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("TOTAL_DISCOUNT")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("decimal(18,2)")
@@ -282,6 +291,8 @@ namespace TKIM.Infastracture.Migrations
                     b.HasIndex("INVOICE_ID")
                         .IsUnique();
 
+                    b.HasIndex("PersonID");
+
                     b.ToTable("Payment");
                 });
 
@@ -316,6 +327,9 @@ namespace TKIM.Infastracture.Migrations
                     b.Property<Guid>("PRODUCT_ID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QUANTITY_AFTER")
                         .HasColumnType("int");
 
@@ -339,8 +353,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasIndex("PAYMENT_ID");
 
-                    b.HasIndex("PRODUCT_ID")
-                        .IsUnique();
+                    b.HasIndex("ProductID");
 
                     b.ToTable("PaymentItems");
                 });
@@ -583,11 +596,19 @@ namespace TKIM.Infastracture.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("TKIM.Entity.Entity.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Company");
 
                     b.Navigation("Customer");
 
                     b.Navigation("Invoice");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.PaymentItems", b =>
@@ -599,8 +620,8 @@ namespace TKIM.Infastracture.Migrations
                         .IsRequired();
 
                     b.HasOne("TKIM.Entity.Entity.Product", "Product")
-                        .WithOne("PaymentItems")
-                        .HasForeignKey("TKIM.Entity.Entity.PaymentItems", "PRODUCT_ID")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -681,9 +702,6 @@ namespace TKIM.Infastracture.Migrations
 
             modelBuilder.Entity("TKIM.Entity.Entity.Product", b =>
                 {
-                    b.Navigation("PaymentItems")
-                        .IsRequired();
-
                     b.Navigation("ProductImages");
                 });
 

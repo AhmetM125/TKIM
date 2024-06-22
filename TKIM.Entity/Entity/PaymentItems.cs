@@ -4,7 +4,8 @@ public class PaymentItems : BaseEntity
 {
     public Guid ID { get; set; }
     public Product Product { get; set; }
-    public Guid PRODUCT_ID  { get; set; }
+    public Guid PRODUCT_ID { get; set; }
+
     public int QUANTITY_IN_CART { get; set; }
     public int QUANTITY_AFTER { get; set; }
     public int QUANTITY_CURRENT { get; set; }

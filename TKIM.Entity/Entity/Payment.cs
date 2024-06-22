@@ -3,8 +3,6 @@
 public class Payment : BaseEntity
 {
     public Guid ID { get; set; }
-    public Guid PERSON_ID { get; set; }
-    public Person Person { get; set; }
 
     public List<PaymentItems> BasketItems { get; set; }
 
@@ -21,6 +19,7 @@ public class Payment : BaseEntity
     public Guid COMPANY_ID { get; set; }
 
     public Invoice Invoice { get; set; }
+    public Guid INVOICE_ID { get; set; }
 
 
 }

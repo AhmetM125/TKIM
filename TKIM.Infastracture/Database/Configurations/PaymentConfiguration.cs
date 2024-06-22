@@ -9,7 +9,7 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
     public void Configure(EntityTypeBuilder<Payment> builder)
     {
         builder.HasKey(x => x.ID);
-        builder.Property(x => x.PERSON_ID).IsRequired();
+
         builder.Property(x => x.TOTAL_PRICE).HasColumnType("decimal(18,2)").IsRequired().HasDefaultValue(0);
         builder.Property(x => x.TOTAL_TAX).HasColumnType("decimal(18,2)").IsRequired().HasDefaultValue(0);
         builder.Property(x => x.TOTAL_DISCOUNT).HasColumnType("decimal(18,2)").IsRequired().HasDefaultValue(0);

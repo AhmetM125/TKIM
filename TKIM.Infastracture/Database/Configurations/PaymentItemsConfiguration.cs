@@ -10,7 +10,7 @@ public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
     {
         builder.HasKey(x => x.ID);
         builder.Property(x => x.PAYMENT_ID).IsRequired();
-        builder.Property(x => x.PRODUCT_ID).IsRequired();
+
         builder.Property(x => x.QUANTITY_AFTER).IsRequired();
         builder.Property(x => x.QUANTITY_CURRENT).IsRequired();
         builder.Property(x => x.QUANTITY_IN_CART).IsRequired();
@@ -19,6 +19,8 @@ public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
         builder.Property(x => x.CURRENT_PROFIT).HasColumnType("decimal(18,2)").IsRequired();
         builder.Property(x => x.CURRENT_TAX).HasColumnType("decimal(18,2)").IsRequired();
         builder.Property(x => x.TOTAL_PRICE).HasColumnType("decimal(18,2)").IsRequired();
+
+        builder.HasOne(x => x.Product).WithOne(x => x.PaymentItems).HasForeignKey<PaymentItems>(x => x.PRODUCT_ID);
 
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);

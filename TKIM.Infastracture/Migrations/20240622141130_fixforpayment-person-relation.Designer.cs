@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622141130_fixforpayment-person-relation")]
+    partial class fixforpaymentpersonrelation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -316,6 +319,9 @@ namespace TKIM.Infastracture.Migrations
                     b.Property<Guid>("PRODUCT_ID")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("QUANTITY_AFTER")
                         .HasColumnType("int");
 
@@ -339,8 +345,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasIndex("PAYMENT_ID");
 
-                    b.HasIndex("PRODUCT_ID")
-                        .IsUnique();
+                    b.HasIndex("ProductID");
 
                     b.ToTable("PaymentItems");
                 });
@@ -599,8 +604,8 @@ namespace TKIM.Infastracture.Migrations
                         .IsRequired();
 
                     b.HasOne("TKIM.Entity.Entity.Product", "Product")
-                        .WithOne("PaymentItems")
-                        .HasForeignKey("TKIM.Entity.Entity.PaymentItems", "PRODUCT_ID")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -681,9 +686,6 @@ namespace TKIM.Infastracture.Migrations
 
             modelBuilder.Entity("TKIM.Entity.Entity.Product", b =>
                 {
-                    b.Navigation("PaymentItems")
-                        .IsRequired();
-
                     b.Navigation("ProductImages");
                 });
 
