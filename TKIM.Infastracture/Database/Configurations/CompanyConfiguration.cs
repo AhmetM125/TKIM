@@ -23,6 +23,7 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
         builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
         builder.HasMany(x => x.Products).WithOne(x => x.Company).HasForeignKey(x => x.COMPANY_ID).OnDelete(DeleteBehavior.NoAction);
+        builder.HasMany(x => x.Payments).WithOne(x => x.Company).HasForeignKey(x => x.COMPANY_ID).OnDelete(DeleteBehavior.NoAction);
 
     }
 }

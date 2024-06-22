@@ -13,5 +13,6 @@ public class Company : BaseEntity
 
     public IEnumerable<Invoice> Invoices { get; set; }
     public IEnumerable<Product> Products { get; set; }
+    public IEnumerable<Payment> Payments { get; set; }
 
 }

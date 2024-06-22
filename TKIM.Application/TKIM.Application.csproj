@@ -12,6 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="PaymentItems\" />
+    <Folder Include="Payment\" />
     <Folder Include="Security\" />
     <Folder Include="People\" />
     <Folder Include="Invoice\" />

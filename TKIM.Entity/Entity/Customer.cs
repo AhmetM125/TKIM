@@ -8,6 +8,7 @@ public class Customer : BaseEntity
     public string ADDRESS { get; set; }
     public string PHONE_NUMBER { get; set; }
     public string CITY { get; set; }
-    public IEnumerable<Invoice> Invoices { get; set; }
 
+    public IEnumerable<Invoice> Invoices { get; set; }
+    public IEnumerable<Payment> Payments { get; set; }
 }

@@ -1,6 +1,6 @@
 ﻿namespace TKIM.Entity.Entity;
 
-public class BasketItems : BaseEntity
+public class PaymentItems : BaseEntity
 {
     public Guid ID { get; set; }
     public Product Product { get; set; }
@@ -14,7 +14,7 @@ public class BasketItems : BaseEntity
     public decimal CURRENT_TAX { get; set; }
     public decimal TOTAL_PRICE { get; set; }
 
-    public Basket Basket { get; set; }
-    public Guid BASKET_ID { get; set; }
+    public Payment Payment { get; set; }
+    public Guid PAYMENT_ID { get; set; }
 
 }

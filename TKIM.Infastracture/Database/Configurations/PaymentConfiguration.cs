@@ -4,9 +4,9 @@ using TKIM.Entity.Entity;
 
 namespace TKIM.Infastracture.Database.Configurations;
 
-public class BasketConfiguration : IEntityTypeConfiguration<Basket>
+public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
 {
-    public void Configure(EntityTypeBuilder<Basket> builder)
+    public void Configure(EntityTypeBuilder<Payment> builder)
     {
         builder.HasKey(x => x.ID);
         builder.Property(x => x.PERSON_ID).IsRequired();
@@ -15,7 +15,7 @@ public class BasketConfiguration : IEntityTypeConfiguration<Basket>
         builder.Property(x => x.TOTAL_DISCOUNT).HasColumnType("decimal(18,2)").IsRequired().HasDefaultValue(0);
         builder.Property(x => x.TOTAL_PAYMENT).HasColumnType("decimal(18,2)").IsRequired().HasDefaultValue(0);
 
-        builder.HasMany(x=>x.BasketItems).WithOne(x => x.Basket).HasForeignKey(x => x.BASKET_ID);
+        builder.HasMany(x => x.BasketItems).WithOne(x => x.Payment).HasForeignKey(x => x.PAYMENT_ID);
 
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);

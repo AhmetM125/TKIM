@@ -4,9 +4,9 @@ using TKIM.Entity.Entity;
 
 namespace TKIM.Infastracture.Database.Configurations;
 
-public class BasketItemsConfiguration : IEntityTypeConfiguration<BasketItems>
+public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
 {
-    public void Configure(EntityTypeBuilder<BasketItems> builder)
+    public void Configure(EntityTypeBuilder<PaymentItems> builder)
     {
         builder.HasKey(x => x.ID);
         builder.Property(x => x.BASKET_ID).IsRequired();

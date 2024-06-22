@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240622105544_basket-basketitems")]
+    partial class basketbasketitems
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,121 @@ namespace TKIM.Infastracture.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("TKIM.Entity.Entity.Basket", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("InsertDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("InsertUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<Guid>("PERSON_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PersonID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("TOTAL_DISCOUNT")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("TOTAL_PAYMENT")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("TOTAL_PRICE")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<decimal>("TOTAL_TAX")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18,2)")
+                        .HasDefaultValue(0m);
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("UpdateUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PersonID");
+
+                    b.ToTable("Basket");
+                });
+
+            modelBuilder.Entity("TKIM.Entity.Entity.BasketItems", b =>
+                {
+                    b.Property<Guid>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BASKET_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("CURRENT_PROFIT")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CURRENT_PURCHASE_PRICE")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CURRENT_SALE_PRICE")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("CURRENT_TAX")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("InsertDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("InsertUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar");
+
+                    b.Property<Guid>("PRODUCT_ID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("QUANTITY_AFTER")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QUANTITY_CURRENT")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QUANTITY_IN_CART")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("TOTAL_PRICE")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("UpdateUser")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("BASKET_ID");
+
+                    b.HasIndex("ProductID");
+
+                    b.ToTable("BasketItems");
+                });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Category", b =>
                 {
@@ -216,121 +334,6 @@ namespace TKIM.Infastracture.Migrations
                     b.HasIndex("CUSTOMER_ID");
 
                     b.ToTable("Invoices");
-                });
-
-            modelBuilder.Entity("TKIM.Entity.Entity.Payment", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("InsertDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("InsertUser")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar");
-
-                    b.Property<Guid>("PERSON_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("PersonID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("TOTAL_DISCOUNT")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("TOTAL_PAYMENT")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("TOTAL_PRICE")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<decimal>("TOTAL_TAX")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("decimal(18,2)")
-                        .HasDefaultValue(0m);
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("UpdateUser")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PersonID");
-
-                    b.ToTable("Payment");
-                });
-
-            modelBuilder.Entity("TKIM.Entity.Entity.PaymentItems", b =>
-                {
-                    b.Property<Guid>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("BASKET_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<decimal>("CURRENT_PROFIT")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CURRENT_PURCHASE_PRICE")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CURRENT_SALE_PRICE")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CURRENT_TAX")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("InsertDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("InsertUser")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar");
-
-                    b.Property<Guid>("PRODUCT_ID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ProductID")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("QUANTITY_AFTER")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QUANTITY_CURRENT")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QUANTITY_IN_CART")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("TOTAL_PRICE")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime?>("UpdateDate")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("UpdateUser")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BASKET_ID");
-
-                    b.HasIndex("ProductID");
-
-                    b.ToTable("PaymentItems");
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Person", b =>
@@ -532,6 +535,36 @@ namespace TKIM.Infastracture.Migrations
                     b.ToTable("Securities");
                 });
 
+            modelBuilder.Entity("TKIM.Entity.Entity.Basket", b =>
+                {
+                    b.HasOne("TKIM.Entity.Entity.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("TKIM.Entity.Entity.BasketItems", b =>
+                {
+                    b.HasOne("TKIM.Entity.Entity.Basket", "Basket")
+                        .WithMany("BasketItems")
+                        .HasForeignKey("BASKET_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TKIM.Entity.Entity.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Basket");
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("TKIM.Entity.Entity.Invoice", b =>
                 {
                     b.HasOne("TKIM.Entity.Entity.Company", "Company")
@@ -549,36 +582,6 @@ namespace TKIM.Infastracture.Migrations
                     b.Navigation("Company");
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("TKIM.Entity.Entity.Payment", b =>
-                {
-                    b.HasOne("TKIM.Entity.Entity.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Person");
-                });
-
-            modelBuilder.Entity("TKIM.Entity.Entity.PaymentItems", b =>
-                {
-                    b.HasOne("TKIM.Entity.Entity.Payment", "Basket")
-                        .WithMany("BasketItems")
-                        .HasForeignKey("BASKET_ID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TKIM.Entity.Entity.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Basket");
-
-                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Person", b =>
@@ -619,6 +622,11 @@ namespace TKIM.Infastracture.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("TKIM.Entity.Entity.Basket", b =>
+                {
+                    b.Navigation("BasketItems");
+                });
+
             modelBuilder.Entity("TKIM.Entity.Entity.Category", b =>
                 {
                     b.Navigation("Products");
@@ -634,11 +642,6 @@ namespace TKIM.Infastracture.Migrations
             modelBuilder.Entity("TKIM.Entity.Entity.Customer", b =>
                 {
                     b.Navigation("Invoices");
-                });
-
-            modelBuilder.Entity("TKIM.Entity.Entity.Payment", b =>
-                {
-                    b.Navigation("BasketItems");
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Product", b =>

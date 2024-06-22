@@ -19,5 +19,9 @@ public class CustomerConfiguration : IEntityTypeConfiguration<Customer>
         builder.Property(x => x.InsertDate).HasColumnType("datetime").IsRequired(false);
         builder.Property(x => x.UpdateDate).HasColumnType("datetime").IsRequired(false);
 
+        builder.HasMany(x => x.Payments).WithOne(x => x.Customer).HasForeignKey(x => x.CUSTOMER_ID);
+
+
+
     }
 }
