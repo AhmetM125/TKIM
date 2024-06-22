@@ -58,7 +58,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Company", b =>
@@ -113,7 +113,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Companies");
+                    b.ToTable("Companies", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Customer", b =>
@@ -160,7 +160,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Customers");
+                    b.ToTable("Customers", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Invoice", b =>
@@ -218,7 +218,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasIndex("CUSTOMER_ID");
 
-                    b.ToTable("Invoices");
+                    b.ToTable("Invoices", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Payment", b =>
@@ -282,7 +282,7 @@ namespace TKIM.Infastracture.Migrations
                     b.HasIndex("INVOICE_ID")
                         .IsUnique();
 
-                    b.ToTable("Payment");
+                    b.ToTable("Payment", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.PaymentItems", b =>
@@ -342,7 +342,7 @@ namespace TKIM.Infastracture.Migrations
                     b.HasIndex("PRODUCT_ID")
                         .IsUnique();
 
-                    b.ToTable("PaymentItems");
+                    b.ToTable("PaymentItems", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Person", b =>
@@ -391,7 +391,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("People");
+                    b.ToTable("People", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Product", b =>
@@ -464,7 +464,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasIndex("COMPANY_ID");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.ProductImage", b =>
@@ -506,7 +506,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasIndex("PRODUCT_ID");
 
-                    b.ToTable("ProductImages");
+                    b.ToTable("ProductImages", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Security", b =>
@@ -541,7 +541,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Securities");
+                    b.ToTable("Securities", (string)null);
                 });
 
             modelBuilder.Entity("TKIM.Entity.Entity.Invoice", b =>

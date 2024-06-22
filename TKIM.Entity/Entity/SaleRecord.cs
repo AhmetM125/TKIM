@@ -24,5 +24,7 @@ public class SaleRecord : BaseEntity
     public decimal TOTAL { get; set; }
     public decimal TOTAL_EDITED { get; set; }
 
+    public PaymentItems PaymentItems { get; set; }
+
 
 }

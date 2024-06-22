@@ -11,17 +11,13 @@ public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
         builder.HasKey(x => x.ID);
         builder.Property(x => x.PAYMENT_ID).IsRequired();
 
-        builder.Property(x => x.QUANTITY_AFTER).IsRequired();
-        builder.Property(x => x.QUANTITY_CURRENT).IsRequired();
-        builder.Property(x => x.QUANTITY_IN_CART).IsRequired();
-        builder.Property(x => x.CURRENT_PURCHASE_PRICE).HasColumnType("decimal(18,2)").IsRequired();
-        builder.Property(x => x.CURRENT_SALE_PRICE).HasColumnType("decimal(18,2)").IsRequired();
-        builder.Property(x => x.CURRENT_PROFIT).HasColumnType("decimal(18,2)").IsRequired();
-        builder.Property(x => x.CURRENT_TAX).HasColumnType("decimal(18,2)").IsRequired();
-        builder.Property(x => x.TOTAL_PRICE).HasColumnType("decimal(18,2)").IsRequired();
+        builder.HasOne(x=>x.SaleRecord)
+            .WithOne(x=>x.PaymentItems)
+            .HasForeignKey<PaymentItems>(x=>x.SALE_RECORD_ID);
 
-        builder.HasOne(x => x.Product).WithOne(x => x.PaymentItems).HasForeignKey<PaymentItems>(x => x.PRODUCT_ID);
-
+        builder.HasOne(x => x.PurchaseRecord)
+            .WithOne(x => x.PaymentItems)
+            .HasForeignKey<PaymentItems>(x => x.PURCHASE_RECORD_ID);
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
         builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
