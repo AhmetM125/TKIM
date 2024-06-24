@@ -27,5 +27,4 @@ public class PurchaseRecord : BaseEntity
     public decimal SALE_PRICE { get; set; }
     public decimal SALE_PRICE_EDITED { get; set; }
 
-    public PaymentItems PaymentItems { get; set; }
 }

@@ -22,6 +22,11 @@ public class TKIM_DbContext : DbContext
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Security> Securities { get; set; }
     public DbSet<ProductImage> ProductImages { get; set; }
+    public DbSet<PurchaseRecord> PurchaseRecords { get; set; }
+    public DbSet<SaleRecord> SaleRecords { get; set; }
+    public DbSet<Payment> Payments { get; set; }
+    public DbSet<PaymentItems> PaymentItems { get; set; }
+
 
     //public DbSet<PermissionRole> PermissionRoles { get; set; }
     //public DbSet<Permission> Permissions { get; set; }
@@ -50,7 +55,7 @@ public class TKIM_DbContext : DbContext
             }
         }
 
-        return await base.SaveChangesAsync(acceptAllChangesOnSuccess,cancellationToken);
+        return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
     }
     public override int SaveChanges()
     {

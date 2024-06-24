@@ -15,9 +15,6 @@ public class PaymentItemsConfiguration : IEntityTypeConfiguration<PaymentItems>
             .WithOne(x=>x.PaymentItems)
             .HasForeignKey<PaymentItems>(x=>x.SALE_RECORD_ID);
 
-        builder.HasOne(x => x.PurchaseRecord)
-            .WithOne(x => x.PaymentItems)
-            .HasForeignKey<PaymentItems>(x => x.PURCHASE_RECORD_ID);
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
         builder.Property(x => x.UpdateUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);
