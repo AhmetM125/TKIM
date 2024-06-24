@@ -2,6 +2,8 @@
 using TKIM.Panel.Base;
 using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.ViewModels.BaseResponse;
+using TKIM.Panel.ViewModels.Payment;
+using TKIM.Panel.ViewModels.PaymentItems;
 using TKIM.Panel.ViewModels.Product;
 using TKIM.Panel.ViewModels.Sale;
 
@@ -9,11 +11,11 @@ namespace TKIM.Panel.Pages.Sale;
 
 public partial class IndexComponent : RazorComponentBase
 {
-    private BasketTabVM BasketTabVM { get; set; } = new BasketTabVM();
+    private PaymentTabVM PaymentTabVM { get; set; } = new PaymentTabVM();
     private string SearchText { get; set; } = "";
     private List<ProductListPosResponse>? ProductList;
-    private ProductSaleCartVM SelectedProduct = new ProductSaleCartVM();
-    private List<BasketTabVM> BasketTabVMs { get; set; } = new List<BasketTabVM>();
+    private PaymentItemVM SelectedProduct = new PaymentItemVM();
+    private List<PaymentTabVM> BasketTabVMs { get; set; } = new List<PaymentTabVM>();
     private Guid SelectedProductIdForDetail { get; set; }
     private int CurrentPage { get; set; } = 1;
     private short SelectedBasket { get; set; } = 0;
@@ -60,10 +62,10 @@ public partial class IndexComponent : RazorComponentBase
     }
 
     private void ClearCarts()
-    => BasketTabVMs = new List<BasketTabVM>();
+    => BasketTabVMs = new List<PaymentTabVM>();
 
     private void CreateNewCart()
-    => BasketTabVMs.Add(new BasketTabVM { });
+    => BasketTabVMs.Add(new PaymentTabVM { });
 
     private async Task ProductDetails(Guid productId)
     {
@@ -85,11 +87,11 @@ public partial class IndexComponent : RazorComponentBase
     {
         try
         {
-            SelectedProduct = new ProductSaleCartVM();
+            SelectedProduct = new PaymentItemVM();
             var product = ProductList.FirstOrDefault(x => x.Id == productId);
             if (product is not null)
             {
-                SelectedProduct = new ProductSaleCartVM
+                SelectedProduct = new PaymentItemVM
                 {
                     Id = product.Id,
                     Name = product.Name,
@@ -108,13 +110,13 @@ public partial class IndexComponent : RazorComponentBase
 
     }
 
-    async Task PaymentModal(BasketTabVM basketTab)
+    async Task PaymentModal(PaymentTabVM paymentTab)
     {
-        BasketTabVM = basketTab;
+        PaymentTabVM = paymentTab;
         await LayoutValue.OpenModal("PaymentSection");
     }
 
-    private async Task ChangeProductForDetailModal(ProductSaleCartVM productDetail,short basket)
+    private async Task ChangeProductForDetailModal(PaymentItemVM productDetail,short basket)
     {
         SelectedProduct = productDetail;
         SelectedBasket = basket;

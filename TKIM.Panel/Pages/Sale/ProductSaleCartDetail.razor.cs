@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
 using TKIM.Panel.Layout.Component;
+using TKIM.Panel.ViewModels.Payment;
+using TKIM.Panel.ViewModels.PaymentItems;
 using TKIM.Panel.ViewModels.Product;
 using TKIM.Panel.ViewModels.Sale;
 
@@ -8,8 +10,8 @@ namespace TKIM.Panel.Pages.Sale;
 
 public partial class ProductSaleCartDetail : RazorComponentBase
 {
-    [Parameter] public ProductSaleCartVM ProductSaleCartVM { get; set; }
-    [Parameter] public List<BasketTabVM> BasketTabVMs { get; set; }
+    [Parameter] public PaymentItemVM PaymentItemCartVM { get; set; }
+    [Parameter] public List<PaymentTabVM> BasketTabVMs { get; set; }
     [Parameter] public EventCallback OnInsert { get; set; }
     [Parameter] public short SelectedBasket { get; set; }
 
@@ -26,24 +28,24 @@ public partial class ProductSaleCartDetail : RazorComponentBase
     {
         await base.OnInitializedAsync();
         if (BasketTabVMs is null)
-            BasketTabVMs = new List<BasketTabVM>();
+            BasketTabVMs = new List<PaymentTabVM>();
     }
 
     void SetTotalPrice()
     {
-        ProductSaleCartVM.TotalPrice = Math.Round(((ProductSaleCartVM.SalePrice * (decimal)ProductSaleCartVM.QuantityInCart)
-            + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) + (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Profit / 100)), 2);
+        PaymentItemCartVM.TotalPrice = Math.Round(((PaymentItemCartVM.SalePrice * (decimal)PaymentItemCartVM.QuantityInCart)
+            + (PaymentItemCartVM.SalePrice * PaymentItemCartVM.Kdv / 100) + (PaymentItemCartVM.SalePrice * PaymentItemCartVM.Profit / 100)), 2);
 
 
     }
     void PriceChange()
     {
-        ProductSaleCartVM.TotalPrice = ProductSaleCartVM.SalePrice * ProductSaleCartVM.QuantityInCart;
+        PaymentItemCartVM.TotalPrice = PaymentItemCartVM.SalePrice * PaymentItemCartVM.QuantityInCart;
 
     }
     async Task UpdateCart()
     {
-        ProductSaleCartVM.IsModifying = false;
+        PaymentItemCartVM.IsModifying = false;
         var basket = BasketTabVMs[SelectedBasket - 1];
 
         basket.CalculatePrices();
@@ -63,19 +65,19 @@ public partial class ProductSaleCartDetail : RazorComponentBase
                 && BasketTabVMs.ElementAtOrDefault(selectedBasket - 1).BasketItems is not null && selectedBasket != 0)
             {
                 var selectedBasketResponse = BasketTabVMs.ElementAt(selectedBasket - 1);
-                selectedBasketResponse.BasketItems.Add(ProductSaleCartVM);
+                selectedBasketResponse.BasketItems.Add(PaymentItemCartVM);
                 selectedBasketResponse.CalculatePrices();
             }
             else
             {
-                BasketTabVMs.Add(new BasketTabVM
+                BasketTabVMs.Add(new PaymentTabVM
                 {
-                    BasketItems = new List<ProductSaleCartVM> { ProductSaleCartVM },
+                    BasketItems = new List<PaymentItemVM> { PaymentItemCartVM },
                     IsCartActive = true,
-                    PaymentAmount = ProductSaleCartVM.TotalPrice,
-                    TotalPrice = ProductSaleCartVM.TotalPrice,
+                    PaymentAmount = PaymentItemCartVM.TotalPrice,
+                    TotalPrice = PaymentItemCartVM.TotalPrice,
                     TotalDiscount = 0,
-                    TotalTax = (ProductSaleCartVM.SalePrice * ProductSaleCartVM.Kdv / 100) * ProductSaleCartVM.QuantityInCart,
+                    TotalTax = (PaymentItemCartVM.SalePrice * PaymentItemCartVM.Kdv / 100) * PaymentItemCartVM.QuantityInCart,
                     TotalPriceAfterDiscount = 0
                 });
             }

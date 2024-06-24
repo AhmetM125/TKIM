@@ -134,7 +134,7 @@
 
 
 
-@if (BasketTabVM is not null && BasketTabVM.BasketItems is not null)
+@if (PaymentTabVM is not null && PaymentTabVM.BasketItems is not null)
 {
     <div class="d-flex flex-column">
 
@@ -161,7 +161,7 @@
 
 <Modal Title="Ürün Sepet" Id="ProductCartDetail" Size="ModalSize.lg">
     <Body>
-        <ProductSaleCartDetail ProductSaleCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" SelectedBasket="SelectedBasket" />
+        <ProductSaleCartDetail PaymentItemCartVM="@SelectedProduct" BasketTabVMs="@BasketTabVMs" OnInsert="@(()=> StateHasChanged())" SelectedBasket="SelectedBasket" />
     </Body>
 </Modal>
 
@@ -173,7 +173,7 @@
 
 <Modal Id="PaymentSection" Title="Sepet Onay" Size="ModalSize.fullscreen">
     <Body>
-        <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent IsBasketFullScreen="true" BasketTabVM="BasketTabVM" BasketItems="@BasketTabVMs" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" />
+        <TKIM.Panel.Pages.Sale.Component.SaleBasketComponent IsBasketFullScreen="true" BasketTabVM="PaymentTabVM" BasketItems="@BasketTabVMs" OnMinimize="@(()=>StateHasChanged())" OnRemove="@(()=>StateHasChanged())" />
     </Body>
 </Modal>
 

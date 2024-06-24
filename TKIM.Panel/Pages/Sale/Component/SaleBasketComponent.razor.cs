@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
+using TKIM.Panel.ViewModels.Payment;
+using TKIM.Panel.ViewModels.PaymentItems;
 using TKIM.Panel.ViewModels.Product;
 using TKIM.Panel.ViewModels.Sale;
 
@@ -7,13 +9,13 @@ namespace TKIM.Panel.Pages.Sale.Component;
 
 public partial class SaleBasketComponent : RazorComponentBase
 {
-    [Parameter] public BasketTabVM BasketTabVM { get; set; }
-    [Parameter] public List<BasketTabVM> BasketItems { get; set; }
+    [Parameter] public PaymentTabVM BasketTabVM { get; set; }
+    [Parameter] public List<PaymentTabVM> BasketItems { get; set; }
     [Parameter] public short BasketNo { get; set; }
     [Parameter] public EventCallback OnMinimize { get; set; }
     [Parameter] public EventCallback OnRemove { get; set; }
-    [Parameter] public EventCallback<BasketTabVM> OnModalMaximize { get; set; }
-    [Parameter] public EventCallback<(ProductSaleCartVM, short)> OnProductDetail { get; set; }
+    [Parameter] public EventCallback<PaymentTabVM> OnModalMaximize { get; set; }
+    [Parameter] public EventCallback<(PaymentItemVM, short)> OnProductDetail { get; set; }
     [Parameter] public bool IsBasketFullScreen { get; set; }
 
     private string DisapperCssAnimation = "fade-out";
@@ -40,7 +42,7 @@ public partial class SaleBasketComponent : RazorComponentBase
         else
             return "";
     }
-    private async Task ProductDetail(ProductSaleCartVM product)
+    private async Task ProductDetail(PaymentItemVM product)
     {
         product.IsModifying = true;
         await OnProductDetail.InvokeAsync((product, BasketNo));
@@ -66,7 +68,7 @@ public partial class SaleBasketComponent : RazorComponentBase
 
         await OnModalMaximize.InvokeAsync(BasketTabVM);
     }
-    private void RemoveProductFromCart(ProductSaleCartVM product) 
+    private void RemoveProductFromCart(PaymentItemVM product) 
     {
         BasketTabVM.BasketItems.Remove(product);
         BasketTabVM.TotalPrice -= product.TotalPrice;
@@ -81,11 +83,11 @@ public partial class SaleBasketComponent : RazorComponentBase
             return;
         }
 
-        //await LayoutValue.CloseModal("");
-        //LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
+        LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
         DisapperCssAnimation = "fade-out hidden";
         await Task.Delay(2500);
         await RemoveCart();
+        await LayoutValue.CloseModal("PaymentSection");
 
     }
 }

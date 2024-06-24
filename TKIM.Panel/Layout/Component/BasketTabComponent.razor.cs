@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
+using TKIM.Panel.ViewModels.Payment;
 using TKIM.Panel.ViewModels.Sale;
 
 namespace TKIM.Panel.Layout.Component;
@@ -7,10 +8,10 @@ namespace TKIM.Panel.Layout.Component;
 public partial class BasketTabComponent : RazorComponentBase
 {
     [Parameter] public int BasketNumber { get; set; }
-    [Parameter] public BasketTabVM BasketTabVM { get; set; }
+    [Parameter] public PaymentTabVM BasketTabVM { get; set; }
     [Parameter] public EventCallback OnCartStatusChange { get; set; }
     [Parameter] public EventCallback OnCartRemove { get; set; }
-    [Parameter] public List<BasketTabVM> BasketTabVMs { get; set; }
+    [Parameter] public List<PaymentTabVM> BasketTabVMs { get; set; }
 
     private string IsChartActive(bool active)
     {

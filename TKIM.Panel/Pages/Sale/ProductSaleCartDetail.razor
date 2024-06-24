@@ -1,15 +1,15 @@
 ﻿@inherits RazorComponentBase
 
 
-@if (ProductSaleCartVM is not null)
+@if (PaymentItemCartVM is not null)
 {
 
     <div class="row justify-content-between">
-        <div class="@(ProductSaleCartVM.IsModifying ? "col-12" : "col-6") ">
+        <div class="@(PaymentItemCartVM.IsModifying ? "col-12" : "col-6") ">
             <label class="fw-bold"> Ürün İsmi: </label>
-            <label class="fw-bold form-control"> @ProductSaleCartVM.Name </label>
+            <label class="fw-bold form-control"> @PaymentItemCartVM.Name </label>
         </div>
-        @if (!ProductSaleCartVM.IsModifying)
+        @if (!PaymentItemCartVM.IsModifying)
         {
 
             <div class="col-6 ">
@@ -34,25 +34,25 @@
     <div class="row mt-4">
         <div class="col-6">
             <label> Alış Fiyatı</label>
-            <label class="form-control"> ₺@ProductSaleCartVM.PurchasePrice</label>
+            <label class="form-control"> ₺@PaymentItemCartVM.PurchasePrice</label>
         </div>
         <div class="col-6">
             <label> Kar Oranı</label>
             <div class="d-flex form-control">
                 %
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Profit" @bind-value:event="oninput" type="number" @onchange="@SetTotalPrice" />
+                <input class="border-0 w-100" @bind-value="@PaymentItemCartVM.Profit" @bind-value:event="oninput" type="number" @onchange="@SetTotalPrice" />
             </div>
         </div>
     </div>
     <div class="row mt-4">
         <div class="col-6">
             <label>  Toplam Stok</label>
-            <label class="form-control"> @ProductSaleCartVM.Stock</label>
+            <label class="form-control"> @PaymentItemCartVM.Stock</label>
 
         </div>
         <div class="col-6">
             <label> Satılacak Miktar</label>
-            <input type="number" class="form-control" @bind-value="ProductSaleCartVM.QuantityInCart" @bind-value:event="oninput" @onchange="SetTotalPrice" />
+            <input type="number" class="form-control" @bind-value="PaymentItemCartVM.QuantityInCart" @bind-value:event="oninput" @onchange="SetTotalPrice" />
         </div>
     </div>
     <div class="row mt-4">
@@ -60,14 +60,14 @@
             <label> Kdv Oranı</label>
             <div class="d-flex form-control">
                 %
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.Kdv" @bind-value:event="oninput" @onchange="@SetTotalPrice" type="number" />
+                <input class="border-0 w-100" @bind-value="@PaymentItemCartVM.Kdv" @bind-value:event="oninput" @onchange="@SetTotalPrice" type="number" />
             </div>
         </div>
         <div class="col-6">
             <label> Miktar Fiyat</label>
             <div class="form-control d-flex">
                 ₺
-                <input type="number" class="border-0 w-100" @onchange="PriceChange" @bind-value:event="oninput" @bind-value="@ProductSaleCartVM.SalePrice" />
+                <input type="number" class="border-0 w-100" @onchange="PriceChange" @bind-value:event="oninput" @bind-value="@PaymentItemCartVM.SalePrice" />
             </div>
 
         </div>
@@ -78,7 +78,7 @@
             <label> Toplam Fiyat</label>
             <div class="d-flex form-control">
                 ₺
-                <input class="border-0 w-100" @bind-value="@ProductSaleCartVM.TotalPrice" type="number" />
+                <input class="border-0 w-100" @bind-value="@PaymentItemCartVM.TotalPrice" type="number" />
             </div>
         </div>
 
@@ -87,7 +87,7 @@
 
 
     <div class="d-flex flex-row-reverse mt-5">
-        @if (!ProductSaleCartVM.IsModifying)
+        @if (!PaymentItemCartVM.IsModifying)
         {
             <button class="btn btn-outline-secondary w-25" @onclick="@(()=>InsertCart(SelectedCart))">
                 <i class="fa-solid fa-cart-plus"></i>

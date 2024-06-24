@@ -1,15 +1,17 @@
-﻿using TKIM.Panel.ViewModels.Product;
+﻿using System.Text.Json.Serialization;
+using TKIM.Panel.ViewModels.PaymentItems;
 
-namespace TKIM.Panel.ViewModels.Sale;
+namespace TKIM.Panel.ViewModels.Payment;
 
-public record BasketTabVM
+public record PaymentTabVM
 {
-    public List<ProductSaleCartVM> BasketItems { get; set; } = new List<ProductSaleCartVM>();
+    public List<PaymentItemVM> BasketItems { get; set; } = new List<PaymentItemVM>();
     public decimal TotalPrice { get; set; }
     public decimal PaymentAmount { get; set; }
     public decimal TotalDiscount { get; set; }
     public decimal TotalPriceAfterDiscount { get; set; }
     public decimal TotalTax { get; set; }
+    [JsonIgnore]
     public bool IsCartActive { get; set; } = true;
 
     public void CalculatePrices()
@@ -21,12 +23,10 @@ public record BasketTabVM
 
         BasketItems.ForEach(x =>
         {
-                TotalPrice += ((x.SalePrice * x.Kdv / 100) + (x.SalePrice * x.Profit / 100) + x.SalePrice) * x.QuantityInCart;
-           
+            TotalPrice += ((x.SalePrice * x.Kdv / 100) + (x.SalePrice * x.Profit / 100) + x.SalePrice) * x.QuantityInCart;
+
             TotalTax += x.SalePrice * x.Kdv / 100 * x.QuantityInCart;
         });
         this.PaymentAmount = TotalPrice;
     }
 }
-
-

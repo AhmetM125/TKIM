@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace TKIM.Panel.ViewModels.Product;
+namespace TKIM.Panel.ViewModels.PaymentItems;
 
-public class ProductSaleCartVM
+public record PaymentItemVM
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
@@ -18,5 +18,4 @@ public class ProductSaleCartVM
 
     [JsonIgnore]
     public bool IsModifying { get; set; } = false;
-
-} 
+}
