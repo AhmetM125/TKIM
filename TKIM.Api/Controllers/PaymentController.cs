@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TKIM.Api.Controllers.Base;
+using TKIM.Application.Payment;
 
 namespace TKIM.Api.Controllers;
 
@@ -10,9 +11,16 @@ public class PaymentController : BaseController
     {
     }
 
-    [HttpPost("Payment/SubmitPayment")]
-    public async Task<IActionResult> SubmitPayment([FromBody] PaymentTabVM paymentTab)
+    [HttpPost("SubmitPayment")]
+    public async Task<IActionResult> SubmitPayment([FromBody] PaymentRequest paymentTab)
     {
-        return Ok(await Mediator.Send(new SubmitPaymentCommand(paymentTab)));
+        return Ok(await HandleResponse(new SubmitPaymentCommand(
+            paymentTab.BasketItems,
+            paymentTab.TotalPrice,
+            paymentTab.PaymentAmount,
+            paymentTab.TotalDiscount,
+            paymentTab.TotalPriceAfterDiscount,
+            paymentTab.TotalTax
+            )));
     }
 }

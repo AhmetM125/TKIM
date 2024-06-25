@@ -8,8 +8,8 @@ public class PaymentService : BaseService, IPaymentService
 {
     public PaymentService(HttpClient httpClient) : base(httpClient)
     {
-
+        ApiName = "v1/Payment";
     }
     public async Task SubmitPaymentAsync(PaymentTabVM paymentTab)
-    => await HandlePostResponse<PaymentTabVM>("Payment/SubmitPayment", paymentTab);
+    => await HandlePostResponse<PaymentTabVM>("SubmitPayment", paymentTab);
 }

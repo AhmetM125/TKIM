@@ -11,6 +11,8 @@ public record PaymentTabVM
     public decimal TotalDiscount { get; set; }
     public decimal TotalPriceAfterDiscount { get; set; }
     public decimal TotalTax { get; set; }
+
+
     [JsonIgnore]
     public bool IsCartActive { get; set; } = true;
 

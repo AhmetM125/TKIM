@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
+using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.ViewModels.Payment;
 using TKIM.Panel.ViewModels.PaymentItems;
-using TKIM.Panel.ViewModels.Product;
-using TKIM.Panel.ViewModels.Sale;
 
 namespace TKIM.Panel.Pages.Sale.Component;
 
@@ -17,6 +16,8 @@ public partial class SaleBasketComponent : RazorComponentBase
     [Parameter] public EventCallback<PaymentTabVM> OnModalMaximize { get; set; }
     [Parameter] public EventCallback<(PaymentItemVM, short)> OnProductDetail { get; set; }
     [Parameter] public bool IsBasketFullScreen { get; set; }
+
+    [Inject] private IPaymentService PaymentService { get; set; }
 
     private string DisapperCssAnimation = "fade-out";
 
@@ -68,7 +69,7 @@ public partial class SaleBasketComponent : RazorComponentBase
 
         await OnModalMaximize.InvokeAsync(BasketTabVM);
     }
-    private void RemoveProductFromCart(PaymentItemVM product) 
+    private void RemoveProductFromCart(PaymentItemVM product)
     {
         BasketTabVM.BasketItems.Remove(product);
         BasketTabVM.TotalPrice -= product.TotalPrice;
@@ -83,11 +84,13 @@ public partial class SaleBasketComponent : RazorComponentBase
             return;
         }
 
-        LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
-        DisapperCssAnimation = "fade-out hidden";
-        await Task.Delay(2500);
-        await RemoveCart();
-        await LayoutValue.CloseModal("PaymentSection");
+        await PaymentService.SubmitPaymentAsync(BasketTabVM);
+
+        //LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
+        //DisapperCssAnimation = "fade-out hidden";
+        //await Task.Delay(2500);
+        //await RemoveCart();
+        //await LayoutValue.CloseModal("PaymentSection");
 
     }
 }

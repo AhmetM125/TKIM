@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
 using TKIM.Panel.Services.Abstract;
-using TKIM.Panel.ViewModels.BaseResponse;
 using TKIM.Panel.ViewModels.Payment;
 using TKIM.Panel.ViewModels.PaymentItems;
 using TKIM.Panel.ViewModels.Product;
-using TKIM.Panel.ViewModels.Sale;
 
 namespace TKIM.Panel.Pages.Sale;
 

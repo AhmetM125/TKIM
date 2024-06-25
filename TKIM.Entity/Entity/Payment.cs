@@ -13,13 +13,11 @@ public class Payment : BaseEntity
     public DateTime PAYMENT_DATE { get; set; }
 
 
-    public Customer Customer { get; set; }
-    public Guid CUSTOMER_ID { get; set; }
-    public Company Company { get; set; }
-    public Guid COMPANY_ID { get; set; }
+    public Customer? Customer { get; set; }
+    public Guid? CUSTOMER_ID { get; set; }
+    public Company? Company { get; set; }
+    public Guid? COMPANY_ID { get; set; }
 
     public Invoice Invoice { get; set; }
     public Guid INVOICE_ID { get; set; }
-
-
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using TKIM.Panel.Base;
 using TKIM.Panel.ViewModels.Payment;
-using TKIM.Panel.ViewModels.Sale;
 
 namespace TKIM.Panel.Layout.Component;
 

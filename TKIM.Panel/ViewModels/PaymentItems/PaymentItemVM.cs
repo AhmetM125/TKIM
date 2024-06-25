@@ -13,7 +13,8 @@ public record PaymentItemVM
     public decimal TotalPrice { get; set; } = 0;
     public decimal Kdv { get; set; } = 0;
     public decimal Discount { get; set; } = 0;
-    public decimal Profit { get; set; } = 1;
+    public decimal Profit { get; set; } = 0;
+
 
 
     [JsonIgnore]
