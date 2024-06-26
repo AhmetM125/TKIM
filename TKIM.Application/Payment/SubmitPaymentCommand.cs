@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using TKIM.Application.Core.CQRS.CommandHandling;
+using TKIM.Entity.Entity;
 using TKIM.Infastracture.DA.Abstract;
 using TKIM.Utils.Invoice;
 
@@ -8,13 +9,12 @@ namespace TKIM.Application.Payment;
 
 public record class SubmitPaymentCommand : Command<Guid>
 {
-    public SubmitPaymentCommand(List<PaymentItemVM> basketItems, decimal totalPrice, decimal paymentAmount, decimal totalDiscount, decimal totalPriceAfterDiscount, decimal totalTax)
+    public SubmitPaymentCommand(List<PaymentItemVM> basketItems, decimal totalPrice, decimal paymentAmount, decimal totalDiscount, decimal totalTax)
     {
         PaymentItems = basketItems;
         TotalPrice = totalPrice;
         PaymentAmount = paymentAmount;
         TotalDiscount = totalDiscount;
-        TotalPriceAfterDiscount = totalPriceAfterDiscount;
         TotalTax = totalTax;
     }
     public List<PaymentItemVM> PaymentItems { get; set; }
@@ -37,7 +37,7 @@ public class PaymentItemValidator : AbstractValidator<PaymentItemVM>
         RuleFor(x => x.Profit)
             .GreaterThanOrEqualTo(0).WithMessage("Profit must be greater than or equal to zero.");
 
-        RuleFor(x => x.QuantityInCart)
+        RuleFor(x => (int)x.QuantityInCart)
             .GreaterThanOrEqualTo(0).WithMessage("Quantity in cart must be greater than or equal to zero.");
 
         RuleFor(x => x.TotalPrice)
@@ -89,40 +89,70 @@ public class SubmitPaymentValidator : AbstractValidator<SubmitPaymentCommand>
 public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, Guid>
 {
     private readonly IPaymentService _paymentService;
-    public SubmitPaymentCommandHandler(IPaymentService paymentService)
+    private readonly IProductService _productService;
+    public SubmitPaymentCommandHandler(IPaymentService paymentService, IProductService productService)
     {
         _paymentService = paymentService;
+        _productService = productService;
     }
     public override async Task<Guid> ExecuteCommand(SubmitPaymentCommand command, CancellationToken cancellationToken = default)
     {
 
         var saleRecord = Guid.NewGuid();
 
+        var productListDictionary = await _productService.GetProductListForPaymentSection(command.PaymentItems.Select(x => x.Id));
 
-        await _paymentService.InsertPayment(new Entity.Entity.Payment
+        var basketItems = new List<PaymentItems>();
+        var paymentId = Guid.NewGuid();
+
+
+        foreach (var item in command.PaymentItems)
+        {
+            var productId = item.Id;
+            var productDetails = productListDictionary[productId];
+
+            var paymentItem = new PaymentItems
+            {
+                ID = Guid.NewGuid(),
+                SALE_RECORD_ID = Guid.NewGuid(),
+                PAYMENT_ID = paymentId,
+                SaleRecord = new SaleRecord
+                {
+                    PRODUCT_ID = productDetails.ID,
+                    SALE_PRICE = productDetails.SALE_PRICE,
+                    SALE_PRICE_EDITED = item.SalePrice,
+                    PROFIT_EDITED = productDetails.PROFIT,
+                    QUANTITY_SOLD = item.QuantityInCart,
+                    PROFIT = productDetails.PROFIT,
+                    PURCHASE_PRICE = productDetails.PURCHASE_PRICE,
+                    QUANTITY_CURRENT = (ushort)productDetails.STOCK,
+                    TAX = productDetails.KDV,
+                    TAX_EDITED = item.Kdv,
+                    TOTAL = item.TotalPrice,
+                    TOTAL_EDITED = item.TotalPrice,
+                    QUANTITY_AFTER = (ushort)item.QuantityInCart,
+                    ID = Guid.NewGuid() // Ensure this is unique
+                }
+            };
+
+            basketItems.Add(paymentItem);
+
+        }
+
+        var payment = new Entity.Entity.Payment
         {
             TOTAL_PRICE = command.TotalPrice,
+            PAYMENT_DATE = DateTime.Now,
             TOTAL_PAYMENT = command.PaymentAmount,
             TOTAL_DISCOUNT = command.TotalDiscount,
             TOTAL_TAX = command.TotalTax,
-            ID = Guid.NewGuid(),
-            BasketItems = command.PaymentItems.Select(x => new Entity.Entity.PaymentItems
-            {
-                ID = Guid.NewGuid(),
-                SALE_RECORD_ID = Guid.NewGuid(), // Unique ID for each SaleRecord
-                SaleRecord = new Entity.Entity.SaleRecord
-                {
-                    ID = Guid.NewGuid(), // Ensure this is unique
-                    PRODUCT_ID = x.Id,
-                    SALE_PRICE = x.SalePrice,
-                    PROFIT_EDITED = x.Profit,
-                    PURCHASE_PRICE = x.PurchasePrice,
-                    QUANTITY_SOLD = (ushort)x.QuantityInCart,
-                    QUANTITY_AFTER = (ushort)x.QuantityInCart,
-                }
-            }).ToList(),
+            ID = paymentId,
+            BasketItems = basketItems,
             INVOICE_ID = Guid.NewGuid(),
-        });
+            
+        };
+
+        await _paymentService.InsertPayment(payment);
 
         return saleRecord;
     }
@@ -134,7 +164,6 @@ public record PaymentRequest
     public decimal TotalPrice { get; init; }
     public decimal PaymentAmount { get; init; }
     public decimal TotalDiscount { get; init; }
-    public decimal TotalPriceAfterDiscount { get; init; }
     public decimal TotalTax { get; init; }
 
 }
@@ -145,7 +174,7 @@ public record PaymentItemVM
     public decimal SalePrice { get; init; }
     public decimal PurchasePrice { get; init; }
     public int Stock { get; init; }
-    public int QuantityInCart { get; init; } = 0; // quantity that is in the cart
+    public ushort QuantityInCart { get; init; } = 0; // quantity that is in the cart
     public decimal TotalPrice { get; init; } = 0;
     public decimal Kdv { get; init; } = 0;
     public decimal Discount { get; init; } = 0;

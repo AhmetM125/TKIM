@@ -22,6 +22,9 @@ public class PaymentConfiguration : IEntityTypeConfiguration<Payment>
         builder.HasOne(x=>x.Customer).WithMany(x=>x.Payments).HasForeignKey(x => x.CUSTOMER_ID);
         builder.HasOne(x => x.Company).WithMany(x => x.Payments).HasForeignKey(x => x.COMPANY_ID);
 
+        builder.Property(x=>x.INVOICE_ID).IsRequired(false);
+        builder.HasOne(x => x.Invoice).WithOne(x => x.Payment).HasForeignKey<Invoice>(x => x.PAYMENT_ID);
+
 
 
         builder.Property(x => x.InsertUser).HasColumnType("nvarchar").HasMaxLength(20).IsRequired(false);

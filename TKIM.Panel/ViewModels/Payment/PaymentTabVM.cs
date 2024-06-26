@@ -9,7 +9,6 @@ public record PaymentTabVM
     public decimal TotalPrice { get; set; }
     public decimal PaymentAmount { get; set; }
     public decimal TotalDiscount { get; set; }
-    public decimal TotalPriceAfterDiscount { get; set; }
     public decimal TotalTax { get; set; }
 
 
@@ -20,7 +19,6 @@ public record PaymentTabVM
     {
         this.TotalPrice = 0;
         this.TotalDiscount = 0;
-        this.TotalPriceAfterDiscount = 0;
         this.TotalTax = 0;
 
         BasketItems.ForEach(x =>

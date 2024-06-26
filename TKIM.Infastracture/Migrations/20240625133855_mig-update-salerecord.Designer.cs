@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240625133855_mig-update-salerecord")]
+    partial class migupdatesalerecord
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -520,6 +523,9 @@ namespace TKIM.Infastracture.Migrations
                     b.Property<decimal>("PURCHASE_PRICE_EDITED")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<Guid>("ProductID")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<short>("QUANTITY_AFTER")
                         .HasColumnType("smallint");
 
@@ -558,7 +564,7 @@ namespace TKIM.Infastracture.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("PRODUCT_ID");
+                    b.HasIndex("ProductID");
 
                     b.ToTable("PurchaseRecords");
                 });
@@ -770,8 +776,8 @@ namespace TKIM.Infastracture.Migrations
                 {
                     b.HasOne("TKIM.Entity.Entity.Product", "Product")
                         .WithMany("PurchaseRecords")
-                        .HasForeignKey("PRODUCT_ID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .HasForeignKey("ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");

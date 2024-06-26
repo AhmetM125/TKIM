@@ -26,5 +26,9 @@ internal class SaleRecordConfiguration : IEntityTypeConfiguration<SaleRecord>
         builder.Property(x => x.TOTAL).HasColumnType("decimal(18,2)");
         builder.Property(x => x.TOTAL_EDITED).HasColumnType("decimal(18,2)");
 
+        builder.Property(x => x.PRODUCT_ID).IsRequired(true);
+        builder.HasOne(x => x.Product).WithMany(x => x.SaleRecords).HasForeignKey(x => x.PRODUCT_ID);
+
+
     }
 }

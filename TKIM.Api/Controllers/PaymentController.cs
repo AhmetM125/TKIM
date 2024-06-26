@@ -19,7 +19,6 @@ public class PaymentController : BaseController
             paymentTab.TotalPrice,
             paymentTab.PaymentAmount,
             paymentTab.TotalDiscount,
-            paymentTab.TotalPriceAfterDiscount,
             paymentTab.TotalTax
             )));
     }

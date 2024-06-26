@@ -78,19 +78,28 @@ public partial class SaleBasketComponent : RazorComponentBase
     }
     private async Task SubmitBasket()
     {
-        if (!BasketTabVM.BasketItems.Any())
+        try
         {
-            LayoutValue.ShowMessage("Sepetinizde ürün bulunmamaktadır.", MessageType.Error);
-            return;
+            ShowLoader = true;
+            if (!BasketTabVM.BasketItems.Any())
+            {
+                LayoutValue.ShowMessage("Sepetinizde ürün bulunmamaktadır.", MessageType.Error);
+                return;
+            }
+
+            await PaymentService.SubmitPaymentAsync(BasketTabVM);
+            LayoutValue.ShowMessage("Ödeme işlemi başarıyla gerçekleştirildi.", MessageType.Success);
+            DisapperCssAnimation = "fade-out hidden";
+            await RemoveCart();
         }
-
-        await PaymentService.SubmitPaymentAsync(BasketTabVM);
-
-        //LayoutValue.ShowMessage("Sepet Başarıyla Sisteme Kaydedildi.", MessageType.Success);
-        //DisapperCssAnimation = "fade-out hidden";
-        //await Task.Delay(2500);
-        //await RemoveCart();
-        //await LayoutValue.CloseModal("PaymentSection");
+        catch (Exception)
+        {
+            LayoutValue.ShowMessage("Ödeme işlemi sırasında bir hata oluştu.", MessageType.Error);
+        }
+        finally
+        {
+            ShowLoader = false;
+        }
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Immutable;
 using TKIM.Dto.File;
 using TKIM.Entity.Entity;
 using TKIM.Infastracture.DA.Abstract;
@@ -24,6 +25,9 @@ public class ProductService : IProductService
 
         foreach (var file in files)
         {
+            if (string.IsNullOrEmpty(file.Base64))
+                continue;
+
             var productImage = new ProductImage
             {
                 ID = Guid.NewGuid(),
@@ -43,10 +47,8 @@ public class ProductService : IProductService
     }
 
     public async Task<Product?> GetProductById(Guid id)
-    {
-        var response = await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
-        return response;
-    }
+        => await _context.Products.AsNoTracking().FirstOrDefaultAsync(x => x.ID == id);
+
 
     public async Task<List<Product>> GetProductList(CancellationToken cancellationToken)
     {
@@ -71,6 +73,17 @@ public class ProductService : IProductService
         _context.Update(productResponse);
         await _context.SaveChangesAsync(cancellation);
     }
+
+
+    public async Task<Dictionary<Guid, Product>> GetProductListForPaymentSection(IEnumerable<Guid> enumerable)
+    {
+        var responseProduct = await _context.Products.Where(x => enumerable.Contains(x.ID)).ToListAsync();
+        var dictionary = new Dictionary<Guid, Product>();
+        responseProduct.ForEach(x => { dictionary.Add(x.ID, x); });
+        return dictionary;
+    }
+
+
     public async Task<(List<Product>, int)> GetProductListForPos(string? searchText, int currentPage, CancellationToken cancellationToken)
     {
         var skip = (currentPage - 1) * 10;
@@ -111,6 +124,5 @@ public class ProductService : IProductService
 
         return (data, totalCount);
     }
-
 
 }

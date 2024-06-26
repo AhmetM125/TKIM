@@ -10,7 +10,7 @@ internal class PurchaseRecordConfiguration : IEntityTypeConfiguration<PurchaseRe
     {
         builder.HasKey(x => x.ID);
 
-        builder.Property(x=>x.QUANTITY_CURRENT).HasColumnType("smallint");
+        builder.Property(x => x.QUANTITY_CURRENT).HasColumnType("smallint");
         builder.Property(x => x.QUANTITY_AFTER).HasColumnType("smallint");
         builder.Property(x => x.QUANTITY_PURCHASED).HasColumnType("smallint");
 
@@ -30,6 +30,9 @@ internal class PurchaseRecordConfiguration : IEntityTypeConfiguration<PurchaseRe
 
         builder.Property(x => x.SALE_PRICE).HasColumnType("decimal(18,2)");
         builder.Property(x => x.SALE_PRICE_EDITED).HasColumnType("decimal(18,2)");
+
+        builder.HasOne(x => x.Product).WithMany(x => x.PurchaseRecords).HasForeignKey(x => x.PRODUCT_ID).OnDelete(DeleteBehavior.NoAction);
+        builder.Property(x => x.PRODUCT_ID).IsRequired();
 
     }
 }

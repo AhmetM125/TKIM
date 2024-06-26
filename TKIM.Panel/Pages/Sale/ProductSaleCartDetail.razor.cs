@@ -74,8 +74,7 @@ public partial class ProductSaleCartDetail : RazorComponentBase
                     PaymentAmount = PaymentItemCartVM.TotalPrice,
                     TotalPrice = PaymentItemCartVM.TotalPrice,
                     TotalDiscount = 0,
-                    TotalTax = (PaymentItemCartVM.SalePrice * PaymentItemCartVM.Kdv / 100) * PaymentItemCartVM.QuantityInCart,
-                    TotalPriceAfterDiscount = 0
+                    TotalTax = (PaymentItemCartVM.SalePrice * PaymentItemCartVM.Kdv / 100) * PaymentItemCartVM.QuantityInCart
                 });
             }
 

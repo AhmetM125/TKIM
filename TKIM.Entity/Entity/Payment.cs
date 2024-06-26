@@ -18,6 +18,6 @@ public class Payment : BaseEntity
     public Company? Company { get; set; }
     public Guid? COMPANY_ID { get; set; }
 
-    public Invoice Invoice { get; set; }
-    public Guid INVOICE_ID { get; set; }
+    public Invoice? Invoice { get; set; }
+    public Guid? INVOICE_ID { get; set; }
 }
