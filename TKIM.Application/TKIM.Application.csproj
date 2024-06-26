@@ -15,12 +15,12 @@
     <Folder Include="PaymentItems\" />
     <Folder Include="Security\" />
     <Folder Include="People\" />
-    <Folder Include="Invoice\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TKIM.Entity\TKIM.Entity.csproj" />
     <ProjectReference Include="..\TKIM.Infastracture\TKIM.Infastracture.csproj" />
+    <ProjectReference Include="..\TKIM.Utils\TKIM.Utils.csproj" />
   </ItemGroup>
 
 </Project>

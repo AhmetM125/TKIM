@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
+using System.Runtime.CompilerServices;
 using TKIM.Panel.Base;
 using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.ViewModels.Payment;
@@ -47,6 +49,19 @@ public partial class SaleBasketComponent : RazorComponentBase
     {
         product.IsModifying = true;
         await OnProductDetail.InvokeAsync((product, BasketNo));
+    }
+    private async Task GenerateReceipt()
+    {
+        try
+        {
+            await JsRuntime.InvokeVoidAsync("downloadFileFromUrlWithObject", $"https://localhost:7205/api/v1/Invoice/GenerateInvoice", $"{DateTime.Now.ToString("dd-MM-yyyy-HH-mm").Replace("-", "")} - Fatura", BasketTabVM);
+            LayoutValue.ShowMessage("Fatura başarıyla oluşturuldu.", MessageType.Success);
+        }
+        catch (Exception)
+        {
+            LayoutValue.ShowMessage("Fatura oluşturulurken bir hata oluştu!", MessageType.Error);
+        }
+
     }
     private void Discount()
     {

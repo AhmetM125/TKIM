@@ -62,7 +62,12 @@ public partial class ProductSaleCartDetail : RazorComponentBase
                 && BasketTabVMs.ElementAtOrDefault(selectedBasket - 1).BasketItems is not null && selectedBasket != 0)
             {
                 var selectedBasketResponse = BasketTabVMs.ElementAt(selectedBasket - 1);
-                selectedBasketResponse.BasketItems.Add(PaymentItemCartVM);
+
+                if (selectedBasketResponse.BasketItems.Any(x => x.Id == PaymentItemCartVM.Id))
+                    LayoutValue.ShowMessage("Sepetinizde aynı ürün bulunmaktadır.", MessageType.Error);
+                else
+                    selectedBasketResponse.BasketItems.Add(PaymentItemCartVM);
+
                 selectedBasketResponse.CalculatePrices();
             }
             else
