@@ -8,19 +8,16 @@ namespace TKIM.Api.Utils;
 
 public class PdfGenerator : IPdfGeneratorService
 {
-    public void GeneratePdf()
-    {
-        throw new NotImplementedException();
-    }
 
-    public async Task GenerateInvoice(object value)
+
+    public  byte[] GenerateInvoice(object value)
     {
         try
         {
             using (MemoryStream memoryStream = new MemoryStream())
             {
                 // Create a new Document object
-                iTextSharp.text.Document pdfDoc = new(PageSize.A4, 25, 25, 30, 30);
+                Document pdfDoc = new(PageSize.A3, 25, 25, 30, 30);
 
                 // Create a PdfWriter instance binding the memory stream to the document
                 PdfWriter writer = PdfWriter.GetInstance(pdfDoc, memoryStream);
@@ -34,35 +31,31 @@ public class PdfGenerator : IPdfGeneratorService
                 // Fonts for the document
                 Font companyFont = FontFactory.GetFont("Arial", 18, Font.BOLD, BaseColor.BLUE);
                 Font addressFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
-                Font descFont = FontFactory.GetFont("Arial", 10, Font.ITALIC, BaseColor.GRAY);
+                Font phoneFont = FontFactory.GetFont("Arial", 10, Font.ITALIC, BaseColor.GRAY);
+
                 Font invoiceFont = FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.RED);
                 Font tableHeaderFont = FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.WHITE);
                 Font tableBodyFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
 
                 // Add company name, address, and description to the top left
-                iTextSharp.text.Paragraph companyName = new("Yelim Ecza Ltd", companyFont);
+                Paragraph companyName = new("Yelim Ecza Ltd", companyFont);
                 companyName.Alignment = Element.ALIGN_LEFT;
                 pdfDoc.Add(companyName);
 
+                Paragraph companyAddress = new("Gültekin Şengör Sokak, Aküç Apt. Kumsal / Lefkoşa (Araç Kayıt Dairesi karşı yolu, Mamulcuoğlu karşısı, Keros Kuru Temizleme yanı)", addressFont);
 
-                iTextSharp.text.Paragraph companyAddress = new("Gültekin Şengör Sokak, Aküç Apt. Kumsal / Lefkoşa (Araç Kayıt Dairesi karşı yolu, Mamulcuoğlu karşısı, Keros Kuru Temizleme yanı)", addressFont);
-
-                //
-                //
                 companyAddress.Alignment = Element.ALIGN_LEFT;
                 pdfDoc.Add(companyAddress);
 
-                iTextSharp.text.Paragraph companyMobilePhone = new("0 539 111 07 77", descFont);
+                Paragraph companyMobilePhone = new("0 539 111 07 77", phoneFont);
                 companyMobilePhone.Alignment = Element.ALIGN_LEFT;
                 companyMobilePhone.SpacingAfter = 20;
                 pdfDoc.Add(companyMobilePhone);
 
-                iTextSharp.text.Paragraph companyPhone = new("0(392) 228 - 78 - 66, descFont");
+                Paragraph companyPhone = new("0 (392) 228 - 78 - 66", phoneFont);
                 companyPhone.Alignment = Element.ALIGN_LEFT;
-                companyPhone.SpacingAfter = 20;
+                companyPhone.SpacingAfter = 5;
                 pdfDoc.Add(companyPhone);
-
-
 
                 // Add invoice number to the top right
                 PdfPTable invoiceTable = new PdfPTable(1);
@@ -87,13 +80,16 @@ public class PdfGenerator : IPdfGeneratorService
                 table.SetWidths(columnWidths);
 
                 // Adding table headers
-                AddTableHeader(table, "Name", tableHeaderFont);
-                AddTableHeader(table, "Price", tableHeaderFont);
-                AddTableHeader(table, "Quantity", tableHeaderFont);
-                AddTableHeader(table, "Total", tableHeaderFont);
+                AddTableHeader(table, "Isim", tableHeaderFont);
+                AddTableHeader(table, "Fiyat", tableHeaderFont);
+                AddTableHeader(table, "Miktar", tableHeaderFont);
+                AddTableHeader(table, "Toplam", tableHeaderFont);
 
                 // Adding sample rows
-                AddTableCell(table, "Product 1", tableBodyFont);
+
+                //foreach for real data
+
+                AddTableCell(table, "Ürün", tableBodyFont);
                 AddTableCell(table, "$10.00", tableBodyFont);
                 AddTableCell(table, "2", tableBodyFont);
                 AddTableCell(table, "$20.00", tableBodyFont);
@@ -104,11 +100,8 @@ public class PdfGenerator : IPdfGeneratorService
                 AddTableCell(table, "$15.00", tableBodyFont);
 
                 table.SpacingAfter = 30;
-                // Add more rows as needed
-                // ...
 
                 pdfDoc.Add(table);
-
 
                 var paragraph = new iTextSharp.text.Paragraph();
 
@@ -127,23 +120,18 @@ public class PdfGenerator : IPdfGeneratorService
                 // Add the paragraph to the document
                 pdfDoc.Add(paragraph);
 
-
-
-
                 // Closing the Document
                 pdfDoc.Close();
 
                 // Convert the memory stream to a byte array
                 byte[] pdfData = memoryStream.ToArray();
 
-                // Return the PDF file as a FileContentResult
-                return;
-                //(pdfData, "application/pdf", "Invoice.pdf");
+                return pdfData;
             }
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return;
+            return new byte[0];
         }
 
 
@@ -152,7 +140,7 @@ public class PdfGenerator : IPdfGeneratorService
     private void AddTableHeader(PdfPTable table, string text, Font font)
     {
         PdfPCell cell = new PdfPCell(new Phrase(text, font));
-        cell.BackgroundColor = new BaseColor(0, 119, 204); // Light blue background
+        cell.BackgroundColor = new BaseColor(78, 115, 223); // Light blue background
         cell.HorizontalAlignment = Element.ALIGN_CENTER;
         cell.Padding = 5;
         table.AddCell(cell);

@@ -2,5 +2,5 @@
 
 public interface IPdfGeneratorService
 {
-    void GeneratePdf();
+    byte[] GenerateInvoice(object value); // Payment Class or invoice class will be to change
 }
