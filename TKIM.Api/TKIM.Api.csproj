@@ -8,13 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="itext7.pdfhtml" Version="5.0.4" />
-    <PackageReference Include="iTextSharp" Version="5.5.13.4" />
-    <PackageReference Include="itextsharp.xmlworker" Version="5.5.13.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
