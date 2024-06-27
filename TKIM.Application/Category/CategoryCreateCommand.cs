@@ -41,20 +41,12 @@ public class CreateCategoryCommandHandler : CommandHandler<CategoryCreateCommand
 
     public override async Task<Guid> ExecuteCommand(CategoryCreateCommand command, CancellationToken cancellationToken = default)
     {
-        try
+        var response = await _categoryService.CreateAsync(new Entity.Entity.Category
         {
-            var response = await _categoryService.CreateAsync(new Entity.Entity.Category
-            {
-                NAME = command.Name,
-                DESCRIPTION = command.Description
-            }, cancellationToken);
-            return response;
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            throw;
-        }
+            NAME = command.Name,
+            DESCRIPTION = command.Description
+        }, cancellationToken);
+        return response;
     }
 }
 

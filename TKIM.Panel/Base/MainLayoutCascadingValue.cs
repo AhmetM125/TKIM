@@ -13,7 +13,7 @@ public class MainLayoutCascadingValue
     private readonly ILocalStorageService _localStorage;
     private readonly IServiceScopeFactory _scopeFactory;
 
-    public string LocalStorageKey { get; } = "Company_Key";
+    public string LocalStorageKey { get; } = "";
     public MainLayoutCascadingValue(IToastService toast,
      IJSRuntime js,
      ILocalStorageService localStorage,
