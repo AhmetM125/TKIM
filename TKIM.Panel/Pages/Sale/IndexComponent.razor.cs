@@ -96,6 +96,9 @@ public partial class IndexComponent : RazorComponentBase
                     SalePrice = product.SalePrice,
                     PurchasePrice = product.PurchasePrice ,
                     Stock = product.Quantity ,
+                    Discount = 0,
+                    Kdv = product.Kdv,
+                    Profit = product.Profit,
                     QuantityInCart = 1
                 };
                 await LayoutValue.OpenModal("ProductCartDetail");
@@ -119,5 +122,9 @@ public partial class IndexComponent : RazorComponentBase
         SelectedProduct = productDetail;
         SelectedBasket = basket;
         await LayoutValue.OpenModal("ProductCartDetail");
+    }
+    private async Task OpenHistory()
+    {
+        await LayoutValue.OpenModal("PaymentHistory");
     }
 }

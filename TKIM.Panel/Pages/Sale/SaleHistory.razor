@@ -1,0 +1,48 @@
+﻿@inherits RazorComponentBase
+
+
+
+
+
+ public Guid InvoiceId { get; set; }
+    public string InvoiceNumber { get; set; }
+    public DateTime InvoiceDate { get; set; }
+    public string CustomerFullName { get; set; }
+    public string CompanyName { get; set; }
+    public decimal TotalPayment { get; set; }
+
+<table>
+    <thead>
+        <tr>
+            <th>Fatura Numarası</th>
+            <th>Açıklama</th>
+            <th>Tarih</th>
+            <th>Müşteri İsim</th>
+            <th>Şirket</th>
+            <th>Toplam Ödeme</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in SaleHistory)
+        {
+            <tr>
+                <td>@item.ProductName</td>
+                <td>@item.Quantity</td>
+                <td>@item.Price</td>
+                <td>@item.Total</td>
+                <td>
+                    <button class="btn btn-outline-danger" @onclick="()=>RemoveFromSaleHistory(item)">Sil</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Toplam</td>
+            <td>@SaleHistory.Sum(x => x.Total)</td>
+            <td>
+                <button class="btn btn-outline-success" @onclick="()=>SaveSaleHistory()">Satışı Tamamla</button>
+            </td>
+        </tr>
+    </tfoot>
+</table>

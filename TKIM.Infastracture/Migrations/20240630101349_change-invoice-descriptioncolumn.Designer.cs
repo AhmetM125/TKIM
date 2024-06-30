@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TKIM.Infastracture.Database.Context;
 
@@ -11,9 +12,11 @@ using TKIM.Infastracture.Database.Context;
 namespace TKIM.Infastracture.Migrations
 {
     [DbContext(typeof(TKIM_DbContext))]
-    partial class TKIM_DbContextModelSnapshot : ModelSnapshot
+    [Migration("20240630101349_change-invoice-descriptioncolumn")]
+    partial class changeinvoicedescriptioncolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -169,10 +172,10 @@ namespace TKIM.Infastracture.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("COMPANY_ID")
+                    b.Property<Guid>("COMPANY_ID")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CUSTOMER_ID")
+                    b.Property<Guid>("CUSTOMER_ID")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DESCRIPTION")
@@ -665,11 +668,15 @@ namespace TKIM.Infastracture.Migrations
                 {
                     b.HasOne("TKIM.Entity.Entity.Company", "Company")
                         .WithMany("Invoices")
-                        .HasForeignKey("COMPANY_ID");
+                        .HasForeignKey("COMPANY_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TKIM.Entity.Entity.Customer", "Customer")
                         .WithMany("Invoices")
-                        .HasForeignKey("CUSTOMER_ID");
+                        .HasForeignKey("CUSTOMER_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("TKIM.Entity.Entity.Payment", "Payment")
                         .WithOne("Invoice")

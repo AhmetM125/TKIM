@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 using TKIM.Application.Core.CQRS.CommandHandling;
+using TKIM.Application.Services.Abstract;
+using TKIM.Dto.InvoiceGenerate;
 using TKIM.Entity.Entity;
 using TKIM.Infastracture.DA.Abstract;
 using TKIM.Utils.Invoice;
@@ -88,12 +90,14 @@ public class SubmitPaymentValidator : AbstractValidator<SubmitPaymentCommand>
 
 public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, Guid>
 {
-    private readonly IPaymentService _paymentService;
     private readonly IProductService _productService;
-    public SubmitPaymentCommandHandler(IPaymentService paymentService, IProductService productService)
+    private readonly IInvoiceService _invoiceService;
+    private readonly IPdfGeneratorService _pdfGeneratorService;
+    public SubmitPaymentCommandHandler(IProductService productService, IInvoiceService invoiceService, IPdfGeneratorService pdfGeneratorService)
     {
-        _paymentService = paymentService;
         _productService = productService;
+        _invoiceService = invoiceService;
+        _pdfGeneratorService = pdfGeneratorService;
     }
     public override async Task<Guid> ExecuteCommand(SubmitPaymentCommand command, CancellationToken cancellationToken = default)
     {
@@ -134,25 +138,54 @@ public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, 
                     ID = Guid.NewGuid() // Ensure this is unique
                 }
             };
-
             basketItems.Add(paymentItem);
-
         }
 
-        var payment = new Entity.Entity.Payment
+        var invoiceGenerateDto = new InvoiceGenerateDto
         {
-            TOTAL_PRICE = command.TotalPrice,
-            PAYMENT_DATE = DateTime.Now,
-            TOTAL_PAYMENT = command.PaymentAmount,
-            TOTAL_DISCOUNT = command.TotalDiscount,
-            TOTAL_TAX = command.TotalTax,
-            ID = paymentId,
-            BasketItems = basketItems,
-            INVOICE_ID = Guid.NewGuid(),
-            
+            BasketItems = command.PaymentItems
+            .Select(x => new Dto.InvoiceGenerate.Product
+            {
+                Name = x.Name,
+                QuantityInCart = x.QuantityInCart,
+                SalePrice = x.SalePrice,
+                TotalPrice = x.TotalPrice,
+                Kdv = x.Kdv
+            }).ToList(),
+            TotalPrice = command.TotalPrice,
+            TotalDiscount = command.TotalDiscount,
+            TotalTax = command.TotalTax,
+            PaymentAmount = command.PaymentAmount
         };
 
-        await _paymentService.InsertPayment(payment);
+
+        var response = await _pdfGeneratorService.GenerateInvoiceForSale(invoiceGenerateDto);
+
+        await _invoiceService.InsertInvoce(new Invoice()
+        {
+            DESCRIPTION = "EmptyForNow",
+            Payment = new Entity.Entity.Payment
+            {
+                TOTAL_PRICE = command.TotalPrice,
+                PAYMENT_DATE = DateTime.Now,
+                TOTAL_PAYMENT = command.PaymentAmount,
+                TOTAL_DISCOUNT = command.TotalDiscount,
+                TOTAL_TAX = command.TotalTax,
+                ID = paymentId,
+                BasketItems = basketItems,
+                INVOICE_ID = Guid.NewGuid(),
+
+            },
+            ID = Guid.NewGuid(),
+            INVOICE_DATE = DateTime.Now,
+            INVOICE_PDF = response,
+            PAYMENT_ID = paymentId,
+            INVOICE_NUMBER = ((await _invoiceService.InvoiceCount() + 1).ToString().PadLeft(6, '0')),
+            TOTAL = command.TotalPrice,
+
+        });
+
+
 
         return saleRecord;
     }

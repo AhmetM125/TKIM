@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TKIM.Api.Controllers.Base;
+using TKIM.Application.Invoice;
 using TKIM.Application.Services.Abstract;
 using TKIM.Dto.InvoiceGenerate;
 
@@ -24,4 +25,9 @@ public class InvoiceController : BaseController
         return File(response, "application/pdf");
     }
 
+    [HttpGet("GetInvoiceHistory")]
+    [ProducesResponseType(typeof(List<InvoiceHistoryResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> GetInvoiceHistory()
+     => await HandleResponse(new GetInvoiceHistoryQuery());
 }

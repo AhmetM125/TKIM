@@ -11,5 +11,5 @@ public class PaymentService : BaseService, IPaymentService
         ApiName = "v1/Payment";
     }
     public async Task SubmitPaymentAsync(PaymentTabVM paymentTab)
-    => await HandlePostResponse<PaymentTabVM>("SubmitPayment", paymentTab);
+    => await HandlePostResponse("SubmitPayment", paymentTab);
 }
