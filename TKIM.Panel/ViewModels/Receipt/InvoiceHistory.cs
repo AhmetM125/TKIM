@@ -9,6 +9,8 @@ public record InvoiceHistory
     public string CompanyName { get; set; }
     public decimal TotalPayment { get; set; }
 
+    public List<InvoiceProducts> InvoiceProducts { get; set; }
+
     public bool IsProductListActive { get; set; }
 
 }

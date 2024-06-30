@@ -106,7 +106,7 @@ public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, 
 
         var productListDictionary = await _productService.GetProductListForPaymentSection(command.PaymentItems.Select(x => x.Id));
 
-        var basketItems = new List<PaymentItems>();
+        var basketItems = new List<Entity.Entity.PaymentItems>();
         var paymentId = Guid.NewGuid();
 
 
@@ -115,7 +115,7 @@ public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, 
             var productId = item.Id;
             var productDetails = productListDictionary[productId];
 
-            var paymentItem = new PaymentItems
+            var paymentItem = new  Entity.Entity.PaymentItems
             {
                 ID = Guid.NewGuid(),
                 SALE_RECORD_ID = Guid.NewGuid(),

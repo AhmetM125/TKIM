@@ -1,4 +1,4 @@
-﻿namespace TKIM.Dto.InvoiceGenerate;
+﻿             namespace TKIM.Dto.InvoiceGenerate;
 
 // this is only will be use to generate client for invoice but i dont save it to database i will handle to save database later
 public record InvoiceGenerateDto

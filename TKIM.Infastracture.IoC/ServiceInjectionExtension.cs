@@ -21,6 +21,7 @@ public static class ServiceInjectionExtension
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IInvoiceService, InvoiceService>();
+        services.AddScoped<IPaymentItemService, PaymentItemService>();
 
         // Business Services
         services.AddScoped<IPdfGeneratorService, PdfGenerator>();

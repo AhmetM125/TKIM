@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="PaymentItems\" />
     <Folder Include="Security\" />
     <Folder Include="People\" />
   </ItemGroup>
