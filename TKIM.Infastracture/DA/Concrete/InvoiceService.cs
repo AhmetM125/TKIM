@@ -25,7 +25,7 @@ public class InvoiceService : IInvoiceService
             COMPANY_ID = x.COMPANY_ID,
             TOTAL = x.TOTAL,
             DESCRIPTION = x.DESCRIPTION,
-        }).AsNoTracking().ToListAsync();
+        }).AsNoTracking().OrderBy(x=>x.INVOICE_DATE).ToListAsync();
     }
 
     public async Task InsertInvoce(Invoice invoice)

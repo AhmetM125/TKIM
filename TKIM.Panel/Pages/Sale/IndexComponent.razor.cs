@@ -4,15 +4,20 @@ using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.ViewModels.Payment;
 using TKIM.Panel.ViewModels.PaymentItems;
 using TKIM.Panel.ViewModels.Product;
+using TKIM.Panel.ViewModels.Receipt;
 
 namespace TKIM.Panel.Pages.Sale;
 
 public partial class IndexComponent : RazorComponentBase
 {
+
+    [Inject] private IInvoiceService _invoiceService { get; set; }
+
     private PaymentTabVM PaymentTabVM { get; set; } = new PaymentTabVM();
     private string SearchText { get; set; } = "";
     private List<ProductListPosResponse>? ProductList;
     private PaymentItemVM SelectedProduct = new PaymentItemVM();
+    private List<InvoiceHistory> Invoices;
     private List<PaymentTabVM> BasketTabVMs { get; set; } = new List<PaymentTabVM>();
     private Guid SelectedProductIdForDetail { get; set; }
     private int CurrentPage { get; set; } = 1;
@@ -94,8 +99,8 @@ public partial class IndexComponent : RazorComponentBase
                     Id = product.Id,
                     Name = product.Name,
                     SalePrice = product.SalePrice,
-                    PurchasePrice = product.PurchasePrice ,
-                    Stock = product.Quantity ,
+                    PurchasePrice = product.PurchasePrice,
+                    Stock = product.Quantity,
                     Discount = 0,
                     Kdv = product.Kdv,
                     Profit = product.Profit,
@@ -117,7 +122,7 @@ public partial class IndexComponent : RazorComponentBase
         await LayoutValue.OpenModal("PaymentSection");
     }
 
-    private async Task ChangeProductForDetailModal(PaymentItemVM productDetail,short basket)
+    private async Task ChangeProductForDetailModal(PaymentItemVM productDetail, short basket)
     {
         SelectedProduct = productDetail;
         SelectedBasket = basket;
@@ -125,6 +130,7 @@ public partial class IndexComponent : RazorComponentBase
     }
     private async Task OpenHistory()
     {
+        Invoices = await _invoiceService.GetListInvoiceHistory();
         await LayoutValue.OpenModal("PaymentHistory");
     }
 }

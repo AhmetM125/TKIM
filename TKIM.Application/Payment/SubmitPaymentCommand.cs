@@ -161,7 +161,7 @@ public class SubmitPaymentCommandHandler : CommandHandler<SubmitPaymentCommand, 
 
         var response = await _pdfGeneratorService.GenerateInvoiceForSale(invoiceGenerateDto);
 
-        await _invoiceService.InsertInvoce(new Invoice()
+        await _invoiceService.InsertInvoce(new Entity.Entity.Invoice()
         {
             DESCRIPTION = "EmptyForNow",
             Payment = new Entity.Entity.Payment

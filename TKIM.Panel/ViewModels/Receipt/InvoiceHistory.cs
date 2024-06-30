@@ -9,4 +9,18 @@ public record InvoiceHistory
     public string CompanyName { get; set; }
     public decimal TotalPayment { get; set; }
 
+    public bool IsProductListActive { get; set; }
+
+}
+
+public record InvoiceProducts
+{
+    public Guid ProductId { get; set; }
+    public string Name { get; set; }
+    public decimal SalePrice { get; set; }
+    public int Quantity { get; set; }
+    public decimal TotalPrice { get; set; }
+    public decimal Discount { get; set; }
+    public decimal Tax { get; set; }
+
 }

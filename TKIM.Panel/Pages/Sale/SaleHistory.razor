@@ -4,45 +4,68 @@
 
 
 
- public Guid InvoiceId { get; set; }
-    public string InvoiceNumber { get; set; }
-    public DateTime InvoiceDate { get; set; }
-    public string CustomerFullName { get; set; }
-    public string CompanyName { get; set; }
-    public decimal TotalPayment { get; set; }
+@if (InvoiceHistories is not null && InvoiceHistories.Count > 1)
+{
 
-<table>
-    <thead>
-        <tr>
-            <th>Fatura Numarası</th>
-            <th>Açıklama</th>
-            <th>Tarih</th>
-            <th>Müşteri İsim</th>
-            <th>Şirket</th>
-            <th>Toplam Ödeme</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in SaleHistory)
-        {
+
+    <table class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>@item.ProductName</td>
-                <td>@item.Quantity</td>
-                <td>@item.Price</td>
-                <td>@item.Total</td>
-                <td>
-                    <button class="btn btn-outline-danger" @onclick="()=>RemoveFromSaleHistory(item)">Sil</button>
-                </td>
+                <th>Fatura Numarası</th>
+                <th>Tarih</th>
+                <th>Müşteri İsim</th>
+                <th>Şirket</th>
+                <th>Toplam Ödeme</th>
+                <th>Fatura</th>
+                <th>Ürünler</th>
             </tr>
-        }
-    </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="3">Toplam</td>
-            <td>@SaleHistory.Sum(x => x.Total)</td>
-            <td>
-                <button class="btn btn-outline-success" @onclick="()=>SaveSaleHistory()">Satışı Tamamla</button>
-            </td>
-        </tr>
-    </tfoot>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in InvoiceHistories)
+            {
+                <tr>
+                    <td>@item.InvoiceNumber</td>
+                    <td>@item.InvoiceDate.ToShortDateString()</td>
+                    <td>@item.CustomerFullName</td>
+                    <td>@item.CompanyName</td>
+                    <td>₺ @item.TotalPayment </td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-secondary width-75">
+                            <i class="fa-solid fa-file-invoice"></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn btn-outline-success width-75" @onclick="@(()=>FetchProducts(item.InvoiceId))">
+                            <i class="fa-solid fa-boxes-stacked"></i>
+                        </button>
+                    </td>
+                </tr>
+                @if (item.IsProductListActive)
+                {
+                    <tr>
+                        <td colspan="7">
+                            <table class="table table-bordered table-info">
+                                <thead>
+                                    <tr>
+                                        <th>Ürün Adı</th>
+                                        <th>Adet</th>
+                                        <th>Fiyat</th>
+                                        <th>Toplam</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>test</td>
+                                        <td>test</td>
+                                        <td>test</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
