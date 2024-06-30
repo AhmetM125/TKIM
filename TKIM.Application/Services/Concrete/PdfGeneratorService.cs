@@ -3,14 +3,23 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.draw;
 using TKIM.Application.Services.Abstract;
+using TKIM.Dto.InvoiceGenerate;
+using TKIM.Infastracture.DA.Abstract;
 
 namespace TKIM.Api.Utils;
 
 public class PdfGenerator : IPdfGeneratorService
 {
 
+    private readonly IInvoiceService _invoiceService;
 
-    public  byte[] GenerateInvoice(object value)
+    public PdfGenerator(IInvoiceService invoiceService)
+    {
+        _invoiceService = invoiceService;
+    }
+
+
+    public async Task<byte[]> GenerateInvoiceForSale(InvoiceGenerateDto invoiceGenerate)
     {
         try
         {
@@ -29,12 +38,11 @@ public class PdfGenerator : IPdfGeneratorService
                 Font fontNormal = new Font(font);
 
                 // Fonts for the document
-                Font companyFont = FontFactory.GetFont("Arial", 18, Font.BOLD, BaseColor.BLUE);
+                Font companyFont = FontFactory.GetFont("Arial", 24, Font.BOLD, new BaseColor(78, 115, 223));
                 Font addressFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
                 Font phoneFont = FontFactory.GetFont("Arial", 10, Font.ITALIC, BaseColor.GRAY);
 
-                Font invoiceFont = FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.RED);
-                Font tableHeaderFont = FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.WHITE);
+                Font invoiceFont = FontFactory.GetFont("Arial", 12, Font.BOLD, BaseColor.DARK_GRAY);
                 Font tableBodyFont = FontFactory.GetFont("Arial", 10, Font.NORMAL, BaseColor.BLACK);
 
                 // Add company name, address, and description to the top left
@@ -49,7 +57,7 @@ public class PdfGenerator : IPdfGeneratorService
 
                 Paragraph companyMobilePhone = new("0 539 111 07 77", phoneFont);
                 companyMobilePhone.Alignment = Element.ALIGN_LEFT;
-                companyMobilePhone.SpacingAfter = 20;
+                companyMobilePhone.SpacingAfter = 1;
                 pdfDoc.Add(companyMobilePhone);
 
                 Paragraph companyPhone = new("0 (392) 228 - 78 - 66", phoneFont);
@@ -63,7 +71,9 @@ public class PdfGenerator : IPdfGeneratorService
                 invoiceTable.WidthPercentage = 100;
                 invoiceTable.DefaultCell.HorizontalAlignment = Element.ALIGN_RIGHT;
 
-                PdfPCell invoiceCell = new PdfPCell(new Phrase("Invoice #: 123456", invoiceFont));
+                var invoiceNumber = (await _invoiceService.InvoiceCount() + 1).ToString().PadLeft(6, '0');
+
+                PdfPCell invoiceCell = new PdfPCell(new Phrase($"Fatura No #: {invoiceNumber}", invoiceFont));
                 invoiceCell.HorizontalAlignment = Element.ALIGN_RIGHT;
                 invoiceCell.Border = Rectangle.NO_BORDER;
                 invoiceTable.AddCell(invoiceCell);
@@ -80,30 +90,21 @@ public class PdfGenerator : IPdfGeneratorService
                 table.SetWidths(columnWidths);
 
                 // Adding table headers
-                AddTableHeader(table, "Isim", tableHeaderFont);
-                AddTableHeader(table, "Fiyat", tableHeaderFont);
-                AddTableHeader(table, "Miktar", tableHeaderFont);
-                AddTableHeader(table, "Toplam", tableHeaderFont);
+                BuildTableHeader(table);
 
-                // Adding sample rows
 
-                //foreach for real data
+                //Foreach loop for adding products to the table
+                BuildTableCells(table, invoiceGenerate.BasketItems, tableBodyFont);
 
-                AddTableCell(table, "Ürün", tableBodyFont);
-                AddTableCell(table, "$10.00", tableBodyFont);
-                AddTableCell(table, "2", tableBodyFont);
-                AddTableCell(table, "$20.00", tableBodyFont);
-
-                AddTableCell(table, "Product 2", tableBodyFont);
-                AddTableCell(table, "$15.00", tableBodyFont);
-                AddTableCell(table, "1", tableBodyFont);
-                AddTableCell(table, "$15.00", tableBodyFont);
+                AddTableCellForBottom(table, "Ara Toplam", tableBodyFont, invoiceGenerate.TotalPrice - invoiceGenerate.TotalTax, true);
+                AddTableCellForBottom(table, "Kdv", tableBodyFont, invoiceGenerate.TotalTax, false);
+                AddTableCellForBottom(table, "Toplam Fiyat", tableBodyFont, invoiceGenerate.PaymentAmount, false);
 
                 table.SpacingAfter = 30;
 
                 pdfDoc.Add(table);
 
-                var paragraph = new iTextSharp.text.Paragraph();
+                Paragraph paragraph = new Paragraph();
 
                 // Left aligned text
                 Chunk leftText = new Chunk("Eksiksiz Teslim Eden");
@@ -135,6 +136,50 @@ public class PdfGenerator : IPdfGeneratorService
         }
 
 
+    }
+
+    private void BuildTableHeader(PdfPTable table)
+    {
+        Font tableHeaderFont = FontFactory.GetFont("Arial", 10, Font.BOLD, BaseColor.WHITE);
+
+        AddTableHeader(table, "Isim", tableHeaderFont);
+        AddTableHeader(table, "Fiyat", tableHeaderFont);
+        AddTableHeader(table, "Miktar", tableHeaderFont);
+        AddTableHeader(table, "Toplam", tableHeaderFont);
+    }
+    private void BuildTableCells(PdfPTable table, List<Product> products, Font font)
+    {
+        foreach (var item in products)
+        {
+            AddTableCell(table, item.Name, font);
+            AddTableCell(table, $"{Math.Round((item.SalePrice), 2)} TRY", font);
+            AddTableCell(table, item.QuantityInCart.ToString(), font);
+            AddTableCell(table, $"{Math.Round(item.TotalPrice, 2)} TRY", font);
+        }
+    }
+    private void AddOneEmptyTableRow(PdfPTable table, Font font)
+    {
+        for (int i = 0; i < 1; i++)
+            for (int y = 0; y < 4; y++)
+                AddTableCell(table, " ", font);
+    }
+
+    private void AddTableCellForBottom(PdfPTable table, string text, Font font, decimal value, bool hasGap)
+    {
+        if (hasGap)
+            AddOneEmptyTableRow(table, font);
+
+        for (int i = 0; i < 1; i++)
+            for (int y = 0; y < 2; y++)
+                AddTableCell(table, " ", font);
+
+
+        PdfPCell cell = new PdfPCell(new Phrase(text, font));
+        cell.HorizontalAlignment = Element.ALIGN_CENTER;
+        cell.Padding = 5;
+        table.AddCell(cell);
+
+        AddTableCell(table, $"{Math.Round(value, 2)} TRY", font);
     }
 
     private void AddTableHeader(PdfPTable table, string text, Font font)

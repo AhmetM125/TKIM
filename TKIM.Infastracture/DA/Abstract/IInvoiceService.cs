@@ -2,4 +2,5 @@
 
 public interface IInvoiceService
 {
+    Task<int> InvoiceCount();
 }

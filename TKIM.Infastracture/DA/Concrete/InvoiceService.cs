@@ -1,4 +1,5 @@
-﻿using TKIM.Infastracture.DA.Abstract;
+﻿using Microsoft.EntityFrameworkCore;
+using TKIM.Infastracture.DA.Abstract;
 using TKIM.Infastracture.Database.Context;
 
 namespace TKIM.Infastracture.DA.Concrete;
@@ -12,5 +13,8 @@ public class InvoiceService : IInvoiceService
         _context = context;
     }
 
-
+    public async Task<int> InvoiceCount()
+    {
+        return await _context.Invoices.CountAsync();
+    }
 }

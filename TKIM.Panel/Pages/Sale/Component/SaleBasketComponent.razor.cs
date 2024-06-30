@@ -5,6 +5,7 @@ using TKIM.Panel.Base;
 using TKIM.Panel.Services.Abstract;
 using TKIM.Panel.ViewModels.Payment;
 using TKIM.Panel.ViewModels.PaymentItems;
+using TKIM.Panel.ViewModels.Receipt;
 
 namespace TKIM.Panel.Pages.Sale.Component;
 
@@ -54,7 +55,23 @@ public partial class SaleBasketComponent : RazorComponentBase
     {
         try
         {
-            await JsRuntime.InvokeVoidAsync("downloadFileFromUrlWithObject", $"https://localhost:7205/api/v1/Invoice/GenerateInvoice", $"{DateTime.Now.ToString("dd-MM-yyyy-HH-mm").Replace("-", "")} - Fatura", BasketTabVM);
+            List<TKIM.Panel.ViewModels.Receipt.Product> products = new();
+
+            BasketTabVM.BasketItems.ForEach((item) =>
+            {
+                products.Add(new TKIM.Panel.ViewModels.Receipt.Product
+                {
+                    Name = item.Name,
+                    QuantityInCart = item.QuantityInCart,
+                    SalePrice = item.SalePrice,
+                    TotalPrice = item.TotalPrice,
+                    Kdv = item.Kdv
+                });
+            });
+
+            InvoiceRequest invoiceRequest = new InvoiceRequest(products, BasketTabVM.TotalPrice, BasketTabVM.PaymentAmount, BasketTabVM.TotalDiscount, BasketTabVM.TotalTax);
+
+            await JsRuntime.InvokeVoidAsync("downloadFileFromUrlWithObject", $"https://localhost:7205/api/v1/Invoice/GenerateInvoice", $"{DateTime.Now.ToString("dd-MM-yyyy-HH-mm").Replace("-", "")} - Fatura", invoiceRequest);
             LayoutValue.ShowMessage("Fatura başarıyla oluşturuldu.", MessageType.Success);
         }
         catch (Exception)

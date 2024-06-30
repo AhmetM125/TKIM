@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TKIM.Api.Controllers.Base;
 using TKIM.Application.Services.Abstract;
+using TKIM.Dto.InvoiceGenerate;
 
 namespace TKIM.Api.Controllers;
 
@@ -14,10 +15,12 @@ public class InvoiceController : BaseController
     }
 
     [HttpPost("GenerateInvoice")]
-    [ProducesResponseType(typeof(void), StatusCodes.Status200OK)]
-    public IActionResult GenerateInvoice([FromBody] object value) // Payment Class or invoice class will be to change
+    [ProducesResponseType(typeof(byte[]), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<IActionResult> GenerateInvoice([FromBody] InvoiceGenerateDto invoiceGenerate)
     {
-        var response = _pdfGeneratorService.GenerateInvoice(value);
+        var response = await _pdfGeneratorService.GenerateInvoiceForSale(invoiceGenerate);
         return File(response, "application/pdf");
     }
 

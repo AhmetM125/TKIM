@@ -1,6 +1,8 @@
-﻿namespace TKIM.Application.Services.Abstract;
+﻿using TKIM.Dto.InvoiceGenerate;
+
+namespace TKIM.Application.Services.Abstract;
 
 public interface IPdfGeneratorService
 {
-    byte[] GenerateInvoice(object value); // Payment Class or invoice class will be to change
+    Task<byte[]> GenerateInvoiceForSale(InvoiceGenerateDto invoiceGenerate); // Payment Class or invoice class will be to change
 }
